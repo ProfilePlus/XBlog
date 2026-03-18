@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>XBlog Hero Center Card Variants</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #091122;
+      --panel: rgba(255, 255, 255, 0.055);
+      --panel-strong: rgba(255, 255, 255, 0.07);
+      --border: rgba(255, 255, 255, 0.08);
+      --text: #f6f8ff;
+      --muted: rgba(235, 240, 255, 0.6);
+      --cyan: rgba(110, 231, 255, 0.9);
+      --pink: #ff6fd8;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Space Grotesk", "Noto Sans SC", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 18% 12%, rgba(110, 231, 255, 0.12), transparent 18%),
+        radial-gradient(circle at 84% 10%, rgba(255, 111, 216, 0.14), transparent 22%),
+        linear-gradient(180deg, #0b1427, #050913 72%);
+    }
+
+    .page {
+      width: min(1800px, calc(100vw - 48px));
+      margin: 24px auto;
+      padding: 28px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 28px;
+      background:
+        linear-gradient(180deg, rgba(14, 24, 44, 0.92), rgba(7, 11, 22, 0.92)),
+        rgba(8, 17, 31, 0.9);
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.42);
+    }
+
+    .head {
+      display: grid;
+      gap: 10px;
+      max-width: 920px;
+      margin-bottom: 28px;
+    }
+
+    .eyebrow {
+      margin: 0;
+      color: var(--cyan);
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+    }
+
+    .head h1 {
+      margin: 0;
+      font-size: 34px;
+      line-height: 1.08;
+      letter-spacing: -0.05em;
+    }
+
+    .head p {
+      margin: 0;
+      color: rgba(235, 240, 255, 0.68);
+      font-size: 15px;
+      line-height: 1.78;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 26px;
+    }
+
+    .tile {
+      display: grid;
+      gap: 14px;
+    }
+
+    .tile--wide {
+      grid-column: 1 / -1;
+      max-width: 760px;
+    }
+
+    .summary {
+      display: grid;
+      gap: 8px;
+      max-width: 48rem;
+    }
+
+    .summary h2 {
+      margin: 0;
+      font-size: 28px;
+      line-height: 1.08;
+      letter-spacing: -0.04em;
+    }
+
+    .summary p {
+      margin: 0;
+      color: rgba(235, 240, 255, 0.66);
+      font-size: 14px;
+      line-height: 1.76;
+    }
+
+    .card {
+      position: relative;
+      min-height: 633px;
+      padding: 18px 18px 20px;
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 22% 0%, rgba(110, 231, 255, 0.12), transparent 30%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.032), rgba(255, 255, 255, 0.018)),
+        var(--panel);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.02),
+        0 20px 48px rgba(0, 0, 0, 0.18);
+    }
+
+    .cover {
+      position: relative;
+      overflow: hidden;
+      border-radius: 24px;
+      background: #10192b;
+      box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.07),
+        0 18px 30px rgba(0, 0, 0, 0.16);
+    }
+
+    .cover img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .meta {
+      display: grid;
+      gap: 10px;
+      padding: 16px 2px 0;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text);
+      font-size: 13px;
+    }
+
+    .title {
+      margin: 0;
+      font-weight: 700;
+      letter-spacing: -0.05em;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: rgba(235, 240, 255, 0.6);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: rgba(235, 240, 255, 0.68);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .author .avatar {
+      width: 34px;
+      height: 34px;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 30% 25%, #ffffff, rgba(255, 255, 255, 0.2) 28%, transparent 29%),
+        linear-gradient(135deg, rgba(255, 111, 216, 0.85), rgba(110, 231, 255, 0.85));
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.08);
+    }
+
+    .author span {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .variant-a .cover {
+      height: 420px;
+    }
+
+    .variant-a .title {
+      max-width: 10.4ch;
+      font-size: 31px;
+      line-height: 1.04;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+      overflow: hidden;
+    }
+
+    .variant-a .author {
+      margin-top: auto;
+    }
+
+    .variant-b .cover {
+      height: 388px;
+    }
+
+    .variant-b .title {
+      max-width: 9.2ch;
+      font-size: 30px;
+      line-height: 1.08;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 4;
+      overflow: hidden;
+    }
+
+    .variant-b .author {
+      margin-top: auto;
+    }
+
+    .variant-c .cover {
+      height: 410px;
+    }
+
+    .variant-c .title {
+      max-width: 11.6ch;
+      font-size: 29px;
+      line-height: 1.08;
+    }
+
+    .variant-c .subtitle {
+      max-width: 30ch;
+    }
+
+    .variant-d .cover {
+      height: 404px;
+    }
+
+    .variant-d .title {
+      max-width: 10.8ch;
+      font-size: 30px;
+      line-height: 1.06;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+      overflow: hidden;
+    }
+
+    .variant-d .meta {
+      gap: 12px;
+    }
+
+    .variant-d .author-band {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-top: 2px;
+      padding: 14px 14px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .variant-d .author-band .author {
+      margin-top: 0;
+    }
+
+    .variant-d .band-kicker {
+      color: var(--cyan);
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .variant-e {
+      display: grid;
+      grid-template-columns: 1fr 208px;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .variant-e .left {
+      display: grid;
+      grid-template-rows: 404px auto;
+      min-height: 100%;
+    }
+
+    .variant-e .cover {
+      height: 404px;
+    }
+
+    .variant-e .meta {
+      gap: 10px;
+      padding: 16px 2px 0;
+    }
+
+    .variant-e .title {
+      max-width: 8.5ch;
+      font-size: 30px;
+      line-height: 1.06;
+    }
+
+    .variant-e .rail {
+      display: grid;
+      align-content: end;
+      gap: 14px;
+      padding-left: 18px;
+      border-left: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .variant-e .rail-box {
+      display: grid;
+      gap: 6px;
+    }
+
+    .rail-label {
+      color: var(--cyan);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .rail strong {
+      font-size: 14px;
+      line-height: 1.5;
+      letter-spacing: -0.02em;
+    }
+
+    .rail p {
+      margin: 0;
+      color: rgba(235, 240, 255, 0.56);
+      font-size: 12px;
+      line-height: 1.72;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.04);
+      color: rgba(235, 240, 255, 0.68);
+      font-size: 12px;
+    }
+
+    @media (max-width: 1320px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .tile--wide {
+        grid-column: auto;
+        max-width: none;
+      }
+
+      .variant-e {
+        grid-template-columns: 1fr;
+      }
+
+      .variant-e .rail {
+        border-left: 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        padding-left: 0;
+        padding-top: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="head">
+      <p class="eyebrow">XBlog / Center Card Studies</p>
+      <h1>中间主封面卡标题区的 5 个图片方案。</h1>
+      <p>这组方案只处理你圈出来的这张主卡排版问题，不动 hero 外部骨架。重点是解决“标题太长后排版乱、作者区容易被挤坏”的问题。</p>
+    </header>
+
+    <section class="grid">
+      <article class="tile">
+        <div class="summary">
+          <p class="eyebrow">方案 A / 原型截断型</p>
+          <h2>最像原型，标题压成 3 行</h2>
+          <p>保大封面和强标题，超过的内容直接截断，作者区固定保底。</p>
+        </div>
+        <section class="card variant-a">
+          <div class="cover">
+            <img src="http://127.0.0.1:9000/xblog-assets/d379de06-c61a-4347-af41-fea1070bdf11.png" alt="《克拉拉与太阳》" />
+          </div>
+          <div class="meta">
+            <span class="chip">封面精选</span>
+            <h3 class="title">《克拉拉与太阳》：一个关于 AI 机器人的温柔故事</h3>
+            <div class="author">
+              <div class="avatar"></div>
+              <span>秋芝 / OpenClaw 收录</span>
+            </div>
+          </div>
+        </section>
+        <div class="tag-row">
+          <span class="tag">最像原型</span>
+          <span class="tag">风险最小</span>
+        </div>
+      </article>
+
+      <article class="tile">
+        <div class="summary">
+          <p class="eyebrow">方案 B / 平衡阅读型</p>
+          <h2>封面稍收，标题允许 4 行</h2>
+          <p>把可读性拉回来，整体更稳，也最不容易再炸版。</p>
+        </div>
+        <section class="card variant-b">
+          <div class="cover">
+            <img src="http://127.0.0.1:9000/xblog-assets/d379de06-c61a-4347-af41-fea1070bdf11.png" alt="《克拉拉与太阳》" />
+          </div>
+          <div class="meta">
+            <span class="chip">封面精选</span>
+            <h3 class="title">《克拉拉与太阳》：一个关于 AI 机器人的温柔故事</h3>
+            <div class="author">
+              <div class="avatar"></div>
+              <span>秋芝 / OpenClaw 收录</span>
+            </div>
+          </div>
+        </section>
+        <div class="tag-row">
+          <span class="tag">可读性最佳</span>
+          <span class="tag">最稳</span>
+        </div>
+      </article>
+
+      <article class="tile">
+        <div class="summary">
+          <p class="eyebrow">方案 C / 短标题副标题型</p>
+          <h2>展示标题变短，完整信息放下一行</h2>
+          <p>视觉最优雅，但最好由内容层提供 `displayTitle` 才够稳。</p>
+        </div>
+        <section class="card variant-c">
+          <div class="cover">
+            <img src="http://127.0.0.1:9000/xblog-assets/d379de06-c61a-4347-af41-fea1070bdf11.png" alt="《克拉拉与太阳》" />
+          </div>
+          <div class="meta">
+            <span class="chip">封面精选</span>
+            <h3 class="title">《克拉拉与太阳》：AI 机器人的温柔故事</h3>
+            <p class="subtitle">原始标题更长时，完整语义可以放进这一行 deck，不再让主标题承担全部信息。</p>
+            <div class="author">
+              <div class="avatar"></div>
+              <span>秋芝 / OpenClaw 收录</span>
+            </div>
+          </div>
+        </section>
+        <div class="tag-row">
+          <span class="tag">最优雅</span>
+          <span class="tag">需要内容字段支持</span>
+        </div>
+      </article>
+
+      <article class="tile">
+        <div class="summary">
+          <p class="eyebrow">方案 D / 作者条独立型</p>
+          <h2>作者信息拆成底部信息条</h2>
+          <p>标题区更稳定，作者不会再被挤掉，但会更产品化一些。</p>
+        </div>
+        <section class="card variant-d">
+          <div class="cover">
+            <img src="http://127.0.0.1:9000/xblog-assets/d379de06-c61a-4347-af41-fea1070bdf11.png" alt="《克拉拉与太阳》" />
+          </div>
+          <div class="meta">
+            <span class="chip">封面精选</span>
+            <h3 class="title">《克拉拉与太阳》：一个关于 AI 机器人的温柔故事</h3>
+            <p class="subtitle">标题只和封面同组，作者与来源拆到独立信息条。</p>
+            <div class="author-band">
+              <div class="author">
+                <div class="avatar"></div>
+                <span>秋芝 / OpenClaw 收录</span>
+              </div>
+              <span class="band-kicker">Reading Note</span>
+            </div>
+          </div>
+        </section>
+        <div class="tag-row">
+          <span class="tag">结构最稳定</span>
+          <span class="tag">更产品化</span>
+        </div>
+      </article>
+
+      <article class="tile tile--wide">
+        <div class="summary">
+          <p class="eyebrow">方案 E / 杂志窄栏型</p>
+          <h2>标题窄栏化，右边留 meta 轨道</h2>
+          <p>设计感最强，长标题会更有节奏，但改动也最大，更像重做而不是修补。</p>
+        </div>
+        <section class="card variant-e">
+          <div class="left">
+            <div class="cover">
+              <img src="http://127.0.0.1:9000/xblog-assets/d379de06-c61a-4347-af41-fea1070bdf11.png" alt="《克拉拉与太阳》" />
+            </div>
+            <div class="meta">
+              <span class="chip">封面精选</span>
+              <h3 class="title">《克拉拉与太阳》：一个关于 AI 机器人的温柔故事</h3>
+              <div class="author">
+                <div class="avatar"></div>
+                <span>秋芝 / OpenClaw 收录</span>
+              </div>
+            </div>
+          </div>
+          <aside class="rail">
+            <div class="rail-box">
+              <span class="rail-label">Theme</span>
+              <strong>Aurora Edition</strong>
+              <p>把封面精选和阅读线索做成一条更像杂志边栏的轨道。</p>
+            </div>
+            <div class="rail-box">
+              <span class="rail-label">Issue Data</span>
+              <p>6 个分类 / 12 篇精选 / 7 篇待整理</p>
+            </div>
+          </aside>
+        </section>
+        <div class="tag-row">
+          <span class="tag">设计感最强</span>
+          <span class="tag">改动最大</span>
+        </div>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

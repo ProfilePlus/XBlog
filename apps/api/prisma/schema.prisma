@@ -1,0 +1,180 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ArticleKind {
+  ORIGINAL
+  CURATED
+}
+
+enum ArticleStatus {
+  DRAFT
+  PUBLISHED
+  HIDDEN
+}
+
+enum ReviewStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum CategoryTone {
+  pink
+  blue
+  green
+  aurora
+}
+
+enum HomeIssueStatus {
+  CURRENT
+  ARCHIVED
+}
+
+enum AssetKind {
+  GENERIC
+  CATEGORY_COVER
+}
+
+enum HeroSlotType {
+  MAIN
+  SIDE_1
+  SIDE_2
+}
+
+model AdminUser {
+  id           String         @id @default(cuid())
+  email        String         @unique
+  displayName  String
+  passwordHash String
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  sessions     AdminSession[]
+}
+
+model AdminSession {
+  id           String    @id @default(cuid())
+  sessionToken String    @unique
+  expiresAt    DateTime
+  createdAt    DateTime  @default(now())
+  userId       String
+  user         AdminUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model ApiToken {
+  id         String   @id @default(cuid())
+  label      String
+  prefix     String
+  tokenHash  String   @unique
+  scopes     Json
+  isActive   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  lastUsedAt DateTime?
+}
+
+model Asset {
+  id         String   @id @default(cuid())
+  storageKey String
+  url        String
+  mimeType   String
+  kind       AssetKind @default(GENERIC)
+  tone       CategoryTone?
+  label      String?
+  width      Int?
+  height     Int?
+  sourceUrl  String?
+  createdAt  DateTime @default(now())
+  articles   Article[]
+  categories Category[] @relation("CategoryCoverAsset")
+}
+
+model Category {
+  id                String        @id @default(cuid())
+  name              String
+  slug              String        @unique
+  tone              CategoryTone
+  summary           String
+  coverUrl          String?
+  coverAssetId      String?       @unique
+  coverAsset        Asset?        @relation("CategoryCoverAsset", fields: [coverAssetId], references: [id], onDelete: SetNull)
+  heroTitle         String
+  longSummary       String
+  curatorNote       String
+  focusAreas        Json
+  featuredArticleId String?
+  sortOrder         Int           @default(0)
+  articles          Article[]
+}
+
+model Article {
+  id                String        @id @default(cuid())
+  slug              String        @unique
+  title             String
+  excerpt           String
+  lede              String
+  kind              ArticleKind
+  status            ArticleStatus
+  tone              CategoryTone
+  readingTime       String
+  authorDisplayName String
+  authorRoleLabel   String
+  highlights        Json
+  contentBlocks     Json
+  publishedAt       DateTime?
+  sourceUrl         String?       @unique
+  sourceTitle       String?
+  sourceAuthor      String?
+  sourcePublishedAt DateTime?
+  externalId        String?
+  ingestSource      String?
+  ingestScore       Float?
+  reviewStatus      ReviewStatus?
+  originalLanguage  String?
+  rewriteMode       String?
+  sourceTrail       Json?
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  categoryId        String
+  category          Category      @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  coverAssetId      String?
+  coverAsset        Asset?        @relation(fields: [coverAssetId], references: [id], onDelete: SetNull)
+  heroSlots         HomeIssueHeroSlot[]
+
+  @@index([ingestSource, externalId])
+  @@index([reviewStatus])
+}
+
+model HomeIssue {
+  id                String              @id @default(cuid())
+  issueNumber       String              @unique
+  eyebrow           String
+  title             String
+  lede              String
+  note              String?
+  primaryCtaLabel   String
+  primaryCtaHref    String
+  secondaryCtaLabel String
+  secondaryCtaHref  String
+  stats             Json
+  logoVariant       String              @default("prototype")
+  status            HomeIssueStatus     @default(CURRENT)
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  heroSlots         HomeIssueHeroSlot[]
+}
+
+model HomeIssueHeroSlot {
+  id          String       @id @default(cuid())
+  homeIssueId String
+  articleId   String
+  slot        HeroSlotType
+  homeIssue   HomeIssue    @relation(fields: [homeIssueId], references: [id], onDelete: Cascade)
+  article     Article      @relation(fields: [articleId], references: [id], onDelete: Cascade)
+
+  @@unique([homeIssueId, slot])
+}

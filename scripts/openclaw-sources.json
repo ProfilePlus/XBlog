@@ -1,0 +1,67 @@
+[
+  {
+    "id": "github-blog",
+    "name": "GitHub Blog",
+    "type": "blog",
+    "entryUrl": "https://github.blog/",
+    "rssUrl": "https://github.blog/feed/",
+    "language": "en",
+    "translationMode": "required",
+    "defaultCategory": "toolcraft",
+    "priorityWeight": 0.96,
+    "rewriteEligibility": "original",
+    "active": true
+  },
+  {
+    "id": "cloudflare-blog",
+    "name": "Cloudflare Blog",
+    "type": "blog",
+    "entryUrl": "https://blog.cloudflare.com/",
+    "rssUrl": "https://blog.cloudflare.com/rss/",
+    "language": "en",
+    "translationMode": "required",
+    "defaultCategory": "systems-design",
+    "priorityWeight": 0.98,
+    "rewriteEligibility": "original",
+    "active": true
+  },
+  {
+    "id": "openai-news",
+    "name": "OpenAI News",
+    "type": "media",
+    "entryUrl": "https://openai.com/news/",
+    "rssUrl": "https://openai.com/news/rss.xml",
+    "language": "en",
+    "translationMode": "required",
+    "defaultCategory": "ai-agent",
+    "priorityWeight": 1,
+    "rewriteEligibility": "original",
+    "active": true
+  },
+  {
+    "id": "anthropic-engineering",
+    "name": "Anthropic Engineering",
+    "type": "blog",
+    "entryUrl": "https://www.anthropic.com/engineering",
+    "rssUrl": "https://www.anthropic.com/engineering/rss.xml",
+    "language": "en",
+    "translationMode": "required",
+    "defaultCategory": "ai-agent",
+    "priorityWeight": 0.97,
+    "rewriteEligibility": "original",
+    "active": true
+  },
+  {
+    "id": "infoq-cn",
+    "name": "InfoQ",
+    "type": "media",
+    "entryUrl": "https://www.infoq.cn/",
+    "rssUrl": "https://www.infoq.cn/feed",
+    "language": "zh",
+    "translationMode": "none",
+    "defaultCategory": "systems-design",
+    "priorityWeight": 0.9,
+    "rewriteEligibility": "review",
+    "active": true
+  }
+]

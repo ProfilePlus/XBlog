@@ -1,0 +1,22 @@
+{
+  "name": "xblog-workspace",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev:storage": "powershell -ExecutionPolicy Bypass -File scripts/start-minio.ps1",
+    "dev:web": "pnpm --filter @xblog/web dev",
+    "dev:admin": "pnpm --filter @xblog/admin dev",
+    "dev:api": "pnpm --filter @xblog/api dev",
+    "openclaw:daily": "node apps/api/node_modules/tsx/dist/cli.mjs scripts/openclaw-daily.ts",
+    "storage:doctor": "pnpm --filter @xblog/api object-storage:doctor",
+    "build": "pnpm -r --filter ./packages/contracts --filter @xblog/api --filter @xblog/admin --filter @xblog/web build",
+    "lint": "pnpm -r --filter @xblog/api --filter @xblog/admin --filter @xblog/web lint",
+    "test": "pnpm -r --filter @xblog/api --filter @xblog/admin --filter @xblog/web test",
+    "test:e2e": "powershell -ExecutionPolicy Bypass -File scripts/run-e2e.ps1",
+    "seed:static": "pnpm --filter @xblog/api seed:static"
+  },
+  "devDependencies": {
+    "@types/node": "^24.6.0",
+    "typescript": "^5.9.3"
+  }
+}

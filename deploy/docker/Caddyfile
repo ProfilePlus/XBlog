@@ -1,0 +1,61 @@
+{
+	email {$XBLOG_ACME_EMAIL}
+}
+
+(xblog_common) {
+	encode gzip zstd
+	header {
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "DENY"
+		Referrer-Policy "strict-origin-when-cross-origin"
+	}
+}
+
+xblog.{$XBLOG_BASE_DOMAIN} {
+	import xblog_common
+	reverse_proxy web:3000
+}
+
+admin.xblog.{$XBLOG_BASE_DOMAIN} {
+	import xblog_common
+
+	basic_auth * {
+		{$XBLOG_ADMIN_BASIC_AUTH_USER} {$XBLOG_ADMIN_BASIC_AUTH_HASH}
+	}
+
+	@admin_api path /api/*
+	handle @admin_api {
+		uri strip_prefix /api
+		reverse_proxy api:4000
+	}
+
+	handle {
+		reverse_proxy admin:3001
+	}
+}
+
+ingest.xblog.{$XBLOG_BASE_DOMAIN} {
+	import xblog_common
+
+	@ingest_health path /api/health
+	@ingest_write path /v1/ingest/articles
+	@blocked path /v1/admin/* /v1/auth/* /v1/public/*
+
+	respond @blocked "Forbidden" 403
+
+	handle @ingest_health {
+		reverse_proxy api:4000
+	}
+
+	handle @ingest_write {
+		reverse_proxy api:4000
+	}
+
+	respond "Not Found" 404
+}
+
+assets.xblog.{$XBLOG_BASE_DOMAIN} {
+	import xblog_common
+	reverse_proxy minio:9000
+}
+

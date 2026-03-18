@@ -1,0 +1,28 @@
+{
+  "name": "@xblog/admin",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --hostname 127.0.0.1 --port 3001",
+    "build": "next build",
+    "start": "next start -H 127.0.0.1 -p 3001",
+    "lint": "eslint .",
+    "test": "echo admin unit tests not configured"
+  },
+  "dependencies": {
+    "@xblog/contracts": "workspace:*",
+    "next": "16.1.6",
+    "react": "19.2.3",
+    "react-dom": "19.2.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.7",
+    "@types/node": "^24.6.0",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "eslint": "^9.38.0",
+    "eslint-config-next": "16.1.6",
+    "tailwindcss": "^4.1.7",
+    "typescript": "^5.9.3"
+  }
+}

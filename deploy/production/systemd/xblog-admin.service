@@ -1,0 +1,20 @@
+[Unit]
+Description=XBlog admin app
+After=network-online.target xblog-api.service
+Wants=network-online.target xblog-api.service
+
+[Service]
+Type=simple
+User=xblog
+Group=xblog
+WorkingDirectory=/srv/xblog/current
+Environment=NODE_ENV=production
+EnvironmentFile=/etc/xblog/admin.env
+ExecStart=/usr/bin/env pnpm --filter @xblog/admin start
+Restart=always
+RestartSec=5
+TimeoutStopSec=20
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target

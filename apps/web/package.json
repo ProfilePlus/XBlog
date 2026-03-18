@@ -1,0 +1,33 @@
+{
+  "name": "@xblog/web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --hostname 127.0.0.1 --port 3000",
+    "build": "next build",
+    "start": "next start -H 127.0.0.1 -p 3000",
+    "lint": "eslint .",
+    "test": "echo web unit tests not configured",
+    "test:e2e": "node scripts/run-e2e.mjs",
+    "test:e2e:ui": "playwright test --ui"
+  },
+  "dependencies": {
+    "@xblog/contracts": "workspace:*",
+    "next": "16.1.6",
+    "react": "19.2.3",
+    "react-dom": "19.2.3"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.58.2",
+    "@tailwindcss/postcss": "^4.1.7",
+    "@types/node": "^24.6.0",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "babel-plugin-react-compiler": "1.0.0",
+    "eslint": "^9.38.0",
+    "eslint-config-next": "16.1.6",
+    "start-server-and-test": "^2.1.5",
+    "tailwindcss": "^4.1.7",
+    "typescript": "^5.9.3"
+  }
+}

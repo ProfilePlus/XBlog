@@ -1,0 +1,19 @@
+[Unit]
+Description=XBlog MinIO
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=xblog
+Group=xblog
+EnvironmentFile=/etc/xblog/minio.env
+ExecStartPre=/usr/bin/mkdir -p ${MINIO_DATA_DIR}
+ExecStart=/usr/local/bin/minio server ${MINIO_DATA_DIR} --address 127.0.0.1:9000 --console-address 127.0.0.1:9001
+Restart=always
+RestartSec=5
+TimeoutStopSec=20
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target

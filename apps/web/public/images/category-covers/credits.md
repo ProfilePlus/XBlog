@@ -1,0 +1,22 @@
+Aurora category cover library sources
+
+- aurora-01-frontier.jpg: https://images.unsplash.com/photo-1550656722-8099c82ab00c
+- aurora-02-violet-horizon.jpg: https://images.unsplash.com/photo-1725576415790-a5b4009a7952
+- aurora-03-blue-ridge.jpg: https://images.unsplash.com/photo-1531366599837-ce0c0e17657c
+- aurora-04-violet-lake.jpg: https://images.unsplash.com/photo-1660638205805-59ff7c94a879
+- aurora-05-green-birch.jpg: https://images.unsplash.com/photo-1504913383795-d9cabf8308b6
+- aurora-06-snow-trail.jpg: https://images.unsplash.com/photo-1763117194843-2acaac8d63a9
+- aurora-07-glacier-dusk.jpg: https://images.unsplash.com/photo-1736679022602-84527da32338
+- aurora-08-emerald-veil.jpg: https://images.unsplash.com/photo-1763124505274-0f9cbea78994
+- aurora-09-rose-horizon.jpg: https://images.unsplash.com/photo-1768981931270-3a9c2dd337cc
+- aurora-10-lapland-drift.jpg: https://www.pexels.com/photo/aurora-borealis-over-snowy-lapland-landscape-30820694/
+- aurora-11-midnight-peak.jpg: https://www.pexels.com/photo/stunning-aurora-borealis-over-mountain-landscape-36012507/
+- aurora-12-icefield-lantern.jpg: https://www.pexels.com/photo/aurora-borealis-360912/
+- aurora-13-night-fjord.jpg: https://www.pexels.com/photo/aurora-borealis-1562058/
+- aurora-14-violet-summit.jpg: https://www.pexels.com/photo/aurora-borealis-1938351/
+- aurora-15-polar-silhouette.jpg: https://www.pexels.com/photo/aurora-borealis-1674625/
+- aurora-16-forest-current.jpg: https://www.pexels.com/photo/aurora-borealis-3025005/
+- aurora-17-dawn-ridge.jpg: https://www.pexels.com/photo/stunning-aurora-borealis-over-mountain-landscape-28909951/
+- aurora-18-cobalt-basin.jpg: https://www.pexels.com/photo/mountain-landscape-with-aurora-borealis-shining-in-evening-sky-11180713/
+- aurora-19-polar-canopy.jpg: https://www.pexels.com/photo/beautiful-aurora-borealis-in-the-sky-10012673/
+- aurora-20-alaska-bear-lake.jpg: https://commons.wikimedia.org/wiki/File:Aurora_borealis_over_Eielson_Air_Force_Base,_Alaska.jpg

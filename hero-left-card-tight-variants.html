@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>XBlog Tight Hero Variants</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+  <style>
+    :root {
+      --panel-card: rgba(255, 255, 255, 0.055);
+      --panel-border: rgba(255, 255, 255, 0.08);
+      --muted-strong: rgba(235, 240, 255, 0.62);
+      --muted-soft: rgba(235, 240, 255, 0.48);
+      --cyan-soft: rgba(110, 231, 255, 0.88);
+    }
+
+    body {
+      font-family: "Space Grotesk", "Noto Sans SC", sans-serif;
+    }
+
+    .tight-board {
+      max-width: 1680px;
+      min-height: auto;
+      margin: 0 auto;
+    }
+
+    .tight-header {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 10px;
+      max-width: 860px;
+      margin-bottom: 28px;
+    }
+
+    .tight-header h1 {
+      margin: 0;
+      font-size: 34px;
+      line-height: 1.08;
+      letter-spacing: -0.045em;
+    }
+
+    .tight-header p {
+      margin: 0;
+      color: var(--muted-strong);
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    .tight-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    .tight-tile {
+      display: grid;
+      gap: 16px;
+    }
+
+    .tight-tile--wide {
+      grid-column: 1 / -1;
+      max-width: 860px;
+    }
+
+    .tight-summary {
+      display: grid;
+      gap: 8px;
+      max-width: 44rem;
+    }
+
+    .tight-index {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      color: var(--cyan-soft);
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+    }
+
+    .tight-summary h2 {
+      margin: 0;
+      font-size: 28px;
+      letter-spacing: -0.04em;
+      line-height: 1.08;
+    }
+
+    .tight-summary p {
+      margin: 0;
+      color: var(--muted-strong);
+      font-size: 14px;
+      line-height: 1.76;
+    }
+
+    .hero-study {
+      position: relative;
+      min-height: 651px;
+      padding: 30px 28px 28px;
+      border: 1px solid var(--panel-border);
+      border-radius: 30px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background:
+        radial-gradient(circle at 18% 0%, rgba(110, 231, 255, 0.11), transparent 32%),
+        linear-gradient(135deg, rgba(255, 255, 255, 0.05), transparent 34%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.015), rgba(255, 255, 255, 0.03)),
+        var(--panel-card);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.02),
+        0 20px 48px rgba(0, 0, 0, 0.18);
+      isolation: isolate;
+    }
+
+    .hero-study > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-study .eyebrow {
+      margin: 0;
+      color: var(--cyan-soft);
+      font-size: 11px;
+      letter-spacing: 0.23em;
+      text-transform: uppercase;
+    }
+
+    .hero-study h3 {
+      margin: 0;
+      font-size: 61px;
+      line-height: 0.91;
+      letter-spacing: -0.062em;
+      text-shadow: 0 16px 40px rgba(0, 0, 0, 0.22);
+    }
+
+    .hero-study h3 span {
+      display: block;
+      white-space: nowrap;
+    }
+
+    .study-copy {
+      display: grid;
+      gap: 18px;
+      width: 100%;
+      margin-top: 58px;
+    }
+
+    .study-lede {
+      max-width: 34ch;
+      margin: 0;
+      color: rgba(235, 240, 255, 0.74);
+      font-size: 15px;
+      line-height: 1.84;
+    }
+
+    .study-actions,
+    .study-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .study-btn,
+    .study-pill {
+      border-radius: 999px;
+      font: inherit;
+    }
+
+    .study-btn {
+      padding: 12px 18px;
+      border: 0;
+      font-weight: 700;
+    }
+
+    .study-btn.primary {
+      background: linear-gradient(135deg, #ff6fd8, #6ee7ff);
+      color: #08111f;
+    }
+
+    .study-btn.ghost {
+      background: rgba(255, 255, 255, 0.08);
+      color: #f7f9ff;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .study-pill {
+      padding: 10px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.05);
+      color: rgba(235, 240, 255, 0.58);
+      font-size: 12px;
+    }
+
+    .study-label {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      color: var(--cyan-soft);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .hero-study--ledger::before {
+      content: "";
+      position: absolute;
+      left: 18px;
+      width: 320px;
+      bottom: 26px;
+      height: 180px;
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 26% 42%, rgba(110, 231, 255, 0.14), transparent 44%),
+        radial-gradient(circle at 62% 64%, rgba(255, 255, 255, 0.038), transparent 34%);
+      filter: blur(34px);
+      opacity: 0.92;
+      pointer-events: none;
+    }
+
+    .ledger-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .ledger-card {
+      display: grid;
+      gap: 6px;
+      min-height: 88px;
+      padding: 14px;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.012)),
+        rgba(255, 255, 255, 0.03);
+    }
+
+    .ledger-card strong {
+      font-size: 14px;
+      line-height: 1.5;
+      letter-spacing: -0.02em;
+    }
+
+    .ledger-card p {
+      margin: 0;
+      color: var(--muted-soft);
+      font-size: 12px;
+      line-height: 1.72;
+    }
+
+    .hero-study--rail .study-copy {
+      margin-top: 46px;
+      max-width: 420px;
+    }
+
+    .hero-study--rail .rail-note {
+      position: absolute;
+      top: 194px;
+      right: 28px;
+      width: 168px;
+      display: grid;
+      gap: 10px;
+      padding-left: 18px;
+      border-left: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .hero-study--rail .rail-note p,
+    .hero-study--echo .echo-meta p,
+    .hero-study--index .index-grid p,
+    .hero-study--signal .signal-note p {
+      margin: 0;
+      color: var(--muted-soft);
+      font-size: 12px;
+      line-height: 1.72;
+    }
+
+    .hero-study--rail .rail-note strong,
+    .hero-study--echo .echo-meta strong,
+    .hero-study--index .index-grid strong,
+    .hero-study--signal .signal-note strong {
+      font-size: 14px;
+      line-height: 1.45;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-study--echo::before {
+      content: "04";
+      position: absolute;
+      right: 28px;
+      bottom: 96px;
+      color: rgba(255, 255, 255, 0.04);
+      font-size: 164px;
+      font-weight: 700;
+      letter-spacing: -0.08em;
+      line-height: 0.8;
+    }
+
+    .hero-study--echo .echo-meta {
+      width: 100%;
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 18px;
+      align-items: end;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .hero-study--index .study-copy {
+      margin-top: 44px;
+    }
+
+    .hero-study--index .index-grid {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 18px;
+      padding-top: 15px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .hero-study--index .index-grid > div {
+      display: grid;
+      gap: 8px;
+    }
+
+    .hero-study--signal .study-copy {
+      margin-top: 34px;
+    }
+
+    .hero-study--signal .signal-band {
+      position: relative;
+      width: 100%;
+      height: 132px;
+      margin: 6px 0 4px;
+      border-radius: 24px;
+      background:
+        radial-gradient(circle at 20% 30%, rgba(110, 231, 255, 0.22), transparent 28%),
+        radial-gradient(circle at 76% 64%, rgba(255, 111, 216, 0.18), transparent 30%),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.028), rgba(255, 255, 255, 0.01)),
+        rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      overflow: hidden;
+    }
+
+    .hero-study--signal .signal-band::before {
+      content: "";
+      position: absolute;
+      left: 24px;
+      right: 24px;
+      top: 50%;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(110, 231, 255, 0.42), rgba(255, 111, 216, 0.18), rgba(255, 255, 255, 0.08));
+    }
+
+    .hero-study--signal .signal-band::after {
+      content: "";
+      position: absolute;
+      left: 18%;
+      top: 22%;
+      width: 54%;
+      height: 56%;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 50%, rgba(110, 231, 255, 0.18), transparent 40%);
+      filter: blur(14px);
+    }
+
+    .hero-study--signal .signal-points {
+      position: absolute;
+      inset: 0;
+    }
+
+    .hero-study--signal .signal-points span {
+      position: absolute;
+      top: 50%;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(255, 111, 216, 0.94), rgba(110, 231, 255, 0.94));
+      box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.03);
+      transform: translateY(-50%);
+    }
+
+    .hero-study--signal .signal-points span:nth-child(1) { left: 24%; }
+    .hero-study--signal .signal-points span:nth-child(2) { left: 48%; }
+    .hero-study--signal .signal-points span:nth-child(3) { left: 74%; }
+
+    .hero-study--signal .signal-note {
+      display: grid;
+      gap: 8px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .tile-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .tile-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      color: var(--muted-strong);
+      font-size: 12px;
+    }
+
+    @media (max-width: 1260px) {
+      .tight-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .tight-tile--wide {
+        grid-column: auto;
+        max-width: none;
+      }
+    }
+
+    @media (max-width: 800px) {
+      .hero-study {
+        min-height: auto;
+      }
+
+      .hero-study h3 {
+        font-size: 48px;
+      }
+
+      .hero-study--rail .rail-note {
+        position: static;
+        width: 100%;
+        padding-left: 0;
+        border-left: 0;
+        padding-top: 12px;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+      }
+
+      .ledger-grid,
+      .hero-study--index .index-grid,
+      .hero-study--echo .echo-meta {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="gallery">
+    <section class="board board-d tight-board">
+      <div class="aurora aurora-d1"></div>
+      <div class="aurora aurora-d2"></div>
+      <div class="aurora aurora-d3"></div>
+
+      <header class="tight-header">
+        <p class="eyebrow">XBlog / Tight Hero Studies</p>
+        <h1>在当前这组严格对齐后的 hero 尺寸里，再做几种不显空的左卡方案。</h1>
+        <p>这些方案默认保留你现在这版卡片骨架关系，不再破坏和原型对齐的外部尺寸，只处理左卡内部的视觉密度和信息组织。</p>
+      </header>
+
+      <section class="tight-grid">
+        <article class="tight-tile">
+          <div class="tight-summary">
+            <span class="tight-index">方案 A / Ledger Grid</span>
+            <h2>把下半区做成 2x2 的 editorial 数据面板</h2>
+            <p>最适合当前这版卡高，因为它能稳定吃掉下半区空间，又不会让整体显得很重。</p>
+          </div>
+          <article class="hero-study hero-study--ledger">
+            <p class="eyebrow">XBlog / Aurora Edition</p>
+            <h3><span>让技术、阅读与</span><span>沉淀，在同一片</span><span>极光里发光。</span></h3>
+            <div class="study-copy">
+              <p class="study-lede">这里记录技术文章、收录阅读与个人方法论，也把好内容重新整理成自己的知识版图。</p>
+              <div class="study-actions">
+                <button class="study-btn primary">进入精选</button>
+                <button class="study-btn ghost">查看分类</button>
+              </div>
+              <div class="ledger-grid">
+                <div class="ledger-card">
+                  <span class="study-label">Editor Note</span>
+                  <p>把写作、收录、分类和再组织收束成同一条内容动线。</p>
+                </div>
+                <div class="ledger-card">
+                  <span class="study-label">Issue Data</span>
+                  <strong>4 个分类 / 12 篇精选</strong>
+                </div>
+                <div class="ledger-card">
+                  <span class="study-label">Current Theme</span>
+                  <strong>Aurora Edition</strong>
+                </div>
+                <div class="ledger-card">
+                  <span class="study-label">Reading Mode</span>
+                  <p>像阅读一本数字杂志</p>
+                </div>
+              </div>
+            </div>
+          </article>
+          <div class="tile-tags">
+            <span class="tile-tag">最适合直接落地</span>
+            <span class="tile-tag">不破坏对齐骨架</span>
+          </div>
+        </article>
+
+        <article class="tight-tile">
+          <div class="tight-summary">
+            <span class="tight-index">方案 B / Editorial Rail</span>
+            <h2>把右侧空白做成细窄编者旁注</h2>
+            <p>核心是让标题仍然保持大块，但把原本“无事可做”的右下区变成一条细长信息轨道。</p>
+          </div>
+          <article class="hero-study hero-study--rail">
+            <p class="eyebrow">XBlog / Aurora Edition</p>
+            <h3><span>让技术、阅读与</span><span>沉淀，在同一片</span><span>极光里发光。</span></h3>
+            <div class="rail-note">
+              <span class="study-label">Editor Rail</span>
+              <strong>Issue 04</strong>
+              <p>把内容组织、阅读路径和站点气质绑进同一版式语言。</p>
+            </div>
+            <div class="study-copy">
+              <p class="study-lede">这里记录技术文章、收录阅读与个人方法论，也把好内容重新整理成自己的知识版图。</p>
+              <div class="study-actions">
+                <button class="study-btn primary">进入精选</button>
+                <button class="study-btn ghost">查看分类</button>
+              </div>
+              <div class="study-pills">
+                <span class="study-pill">4 个主分类</span>
+                <span class="study-pill">12 篇精选文章</span>
+                <span class="study-pill">7 篇待整理收录</span>
+              </div>
+            </div>
+          </article>
+          <div class="tile-tags">
+            <span class="tile-tag">最轻</span>
+            <span class="tile-tag">适合继续贴近原型克制感</span>
+          </div>
+        </article>
+
+        <article class="tight-tile">
+          <div class="tight-summary">
+            <span class="tight-index">方案 C / Cover Echo</span>
+            <h2>用“刊号回声”把空白转成视觉锚点</h2>
+            <p>不是再加很多文案，而是在右下区放大号数字和少量 meta，让空白更像设计留白而不是内容缺失。</p>
+          </div>
+          <article class="hero-study hero-study--echo">
+            <p class="eyebrow">XBlog / Aurora Edition</p>
+            <h3><span>让技术、阅读与</span><span>沉淀，在同一片</span><span>极光里发光。</span></h3>
+            <div class="study-copy">
+              <p class="study-lede">这里记录技术文章、收录阅读与个人方法论，也把好内容重新整理成自己的知识版图。</p>
+              <div class="study-actions">
+                <button class="study-btn primary">进入精选</button>
+                <button class="study-btn ghost">查看分类</button>
+              </div>
+              <div class="echo-meta">
+                <div>
+                  <span class="study-label">Issue Data</span>
+                  <p>4 个分类 / 12 篇精选 / 7 篇待整理</p>
+                </div>
+                <div>
+                  <span class="study-label">Theme</span>
+                  <strong>Aurora 04</strong>
+                </div>
+              </div>
+            </div>
+          </article>
+          <div class="tile-tags">
+            <span class="tile-tag">视觉感最强</span>
+            <span class="tile-tag">文案增加最少</span>
+          </div>
+        </article>
+
+        <article class="tight-tile">
+          <div class="tight-summary">
+            <span class="tight-index">方案 D / Reading Index</span>
+            <h2>把底部做成“说明 + 索引”双栏</h2>
+            <p>这是对你当前 05 的收敛版，保留 editorial 感，但把信息量压得更克制，不会让底部太重。</p>
+          </div>
+          <article class="hero-study hero-study--index">
+            <p class="eyebrow">XBlog / Aurora Edition</p>
+            <h3><span>让技术、阅读与</span><span>沉淀，在同一片</span><span>极光里发光。</span></h3>
+            <div class="study-copy">
+              <p class="study-lede">这里记录技术文章、收录阅读与个人方法论，也把好内容重新整理成自己的知识版图。</p>
+              <div class="study-actions">
+                <button class="study-btn primary">进入精选</button>
+                <button class="study-btn ghost">查看分类</button>
+              </div>
+              <div class="index-grid">
+                <div>
+                  <span class="study-label">Editor Note</span>
+                  <p>把写作、收录、分类和再组织收束成同一条内容动线，减少入口分散带来的跳跃感。</p>
+                </div>
+                <div>
+                  <span class="study-label">Issue Data</span>
+                  <strong>4 个分类 / 12 篇精选文章</strong>
+                  <p>Aurora Edition / 像阅读一本数字杂志</p>
+                </div>
+              </div>
+            </div>
+          </article>
+          <div class="tile-tags">
+            <span class="tile-tag">最接近现在的 05</span>
+            <span class="tile-tag">但更紧凑</span>
+          </div>
+        </article>
+
+        <article class="tight-tile tight-tile--wide">
+          <div class="tight-summary">
+            <span class="tight-index">方案 E / Signal Band</span>
+            <h2>在中下区加入一条抽象“阅读信号带”</h2>
+            <p>适合你想保留大留白、又不想堆文字的情况。它会让左卡更像一张封面设计，而不是纯文案面板。</p>
+          </div>
+          <article class="hero-study hero-study--signal">
+            <p class="eyebrow">XBlog / Aurora Edition</p>
+            <h3><span>让技术、阅读与</span><span>沉淀，在同一片</span><span>极光里发光。</span></h3>
+            <div class="study-copy">
+              <p class="study-lede">这里记录技术文章、收录阅读与个人方法论，也把好内容重新整理成自己的知识版图。</p>
+              <div class="signal-band">
+                <div class="signal-points">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
+              <div class="study-actions">
+                <button class="study-btn primary">进入精选</button>
+                <button class="study-btn ghost">查看分类</button>
+              </div>
+              <div class="signal-note">
+                <span class="study-label">Reading Signal</span>
+                <p>把技术、阅读、收录和方法论抽象成一条视觉路径，让“空旷”转成更有张力的版面呼吸。</p>
+              </div>
+            </div>
+          </article>
+          <div class="tile-tags">
+            <span class="tile-tag">最像海报</span>
+            <span class="tile-tag">适合追求设计感</span>
+          </div>
+        </article>
+      </section>
+    </section>
+  </main>
+</body>
+</html>

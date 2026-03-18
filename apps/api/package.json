@@ -1,0 +1,39 @@
+{
+  "name": "@xblog/api",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "pnpm exec prisma generate || pnpm exec prisma generate --no-engine && tsc -p tsconfig.build.json && pnpm exec tsc-alias -p tsconfig.build.json",
+    "start": "node dist/src/server.js",
+    "lint": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "seed:static": "pnpm exec prisma generate && tsx scripts/seed-static.ts",
+    "object-storage:bootstrap": "tsx scripts/bootstrap-object-storage.ts",
+    "object-storage:doctor": "tsx scripts/object-storage-doctor.ts",
+    "object-storage:verify": "tsx scripts/verify-object-storage.ts",
+    "prisma:generate": "prisma generate || prisma generate --no-engine",
+    "prisma:validate": "prisma validate"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.1009.0",
+    "@aws-sdk/s3-request-presigner": "^3.1009.0",
+    "@fastify/cookie": "^11.0.2",
+    "@fastify/cors": "^11.1.0",
+    "@fastify/multipart": "^9.4.0",
+    "@prisma/client": "^6.6.0",
+    "@xblog/contracts": "workspace:*",
+    "bcryptjs": "^3.0.3",
+    "fastify": "^5.6.1",
+    "slugify": "^1.6.6",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^3.0.0",
+    "prisma": "^6.6.0",
+    "tsc-alias": "^1.8.16",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
+  }
+}

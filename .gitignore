@@ -31,6 +31,19 @@ dist
 output/
 .write-test
 
+# root-level workspace leftovers / design drafts
+/index.html
+/styles.css
+/concept-*.html
+/hero-*.html
+/next-env.d.ts
+/next.config.ts
+/eslint.config.mjs
+/postcss.config.mjs
+/playwright.config.ts
+/tsconfig.json
+/xblog-next-app/
+
 # debug
 npm-debug.log*
 yarn-debug.log*

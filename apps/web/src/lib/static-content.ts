@@ -5,19 +5,19 @@ export const creatorTools: CreatorTool[] = [
   {
     badge: "写",
     title: "写新文章",
-    description: "进入专属编辑区，统一处理封面、分类、摘要与发布。",
+    description: "从标题到封面，再到正文与发布，一篇新文章会在这里慢慢成形。",
     href: `${adminAppUrl}/articles/new`,
   },
   {
     badge: "收",
     title: "整理收录内容",
-    description: "把 OpenClaw 带回来的文章转成可沉淀、可检索的知识卡片。",
+    description: "把 OpenClaw 带回来的文章翻成中文、磨去生硬，再收入内容库。",
     href: `${adminAppUrl}/articles`,
   },
   {
     badge: "管",
     title: "维护分类体系",
-    description: "分类、标签、封面图和代表文章都在同一工作流内管理。",
+    description: "把分类标题、摘要、封面与代表文章整理好，让首页分区各有气质。",
     href: `${adminAppUrl}/categories`,
   },
 ];

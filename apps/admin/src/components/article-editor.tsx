@@ -268,7 +268,7 @@ export function ArticleEditor({
       pushFeedback({
         tone: "error",
         title: "封面上传失败",
-        description: "预签名申请没有成功完成，请重试。",
+        description: "封面的预签名还没申请下来，再试一次就好。",
       });
       setAssetPending(false);
       return;
@@ -285,7 +285,7 @@ export function ArticleEditor({
       pushFeedback({
         tone: "error",
         title: "封面上传失败",
-        description: "对象存储没有接受这次上传，请重试。",
+        description: "这张图还没被对象存储收下，再试一次就好。",
       });
       setAssetPending(false);
       return;
@@ -304,7 +304,7 @@ export function ArticleEditor({
       pushFeedback({
         tone: "error",
         title: "资产登记失败",
-        description: "图片已上传，但后台没有完成资产登记。",
+        description: "图片已经送到了存储里，但后台还没替它把名字落进资产库。",
       });
       setAssetPending(false);
       return;
@@ -319,7 +319,7 @@ export function ArticleEditor({
     pushFeedback({
       tone: "success",
       title: "封面已上传",
-      description: "图片已经写入对象存储并绑定到当前文章。",
+      description: "封面已经收进对象存储，也已经安到这篇文章上。",
     });
     setAssetPending(false);
   }
@@ -329,7 +329,7 @@ export function ArticleEditor({
       pushFeedback({
         tone: "error",
         title: "缺少远程图片地址",
-        description: "请先输入一个可访问的图片 URL。",
+        description: "先贴上一张能访问到的图片地址，再把它带回来。",
       });
       return;
     }
@@ -349,7 +349,7 @@ export function ArticleEditor({
       pushFeedback({
         tone: "error",
         title: "远程封面导入失败",
-        description: "请检查图片地址是否可访问，或稍后重试。",
+        description: "那张图暂时还没能从远处取回，检查一下地址，或者稍后再试。",
       });
       setAssetPending(false);
       return;
@@ -365,7 +365,7 @@ export function ArticleEditor({
     pushFeedback({
       tone: "success",
       title: "封面已导入",
-      description: "远程图片已经被抓取并登记为当前文章封面。",
+      description: "远程图片已经被带回站里，也已经挂到这篇文章上。",
     });
     setAssetPending(false);
   }
@@ -407,7 +407,7 @@ export function ArticleEditor({
         pushFeedback({
           tone: "error",
           title: "保存文章失败",
-          description: failure?.message ?? "请检查字段是否完整。",
+          description: failure?.message ?? "这篇文章还没能落稳，看看是不是还有字段没有写完。",
           ttlMs: 7600,
         });
         return;
@@ -417,7 +417,7 @@ export function ArticleEditor({
       pushFeedback({
         tone: "success",
         title: "文章已保存",
-        description: form.id ? "当前修改已经同步到内容库。" : "草稿已经创建，正在进入编辑页。",
+        description: form.id ? "这次改动已经写回内容库。" : "草稿已经落下，正带你走进编辑页。",
       });
       if (!form.id) {
         router.push(`/articles/${saved.id}`);
@@ -428,7 +428,7 @@ export function ArticleEditor({
       pushFeedback({
         tone: "error",
         title: "保存文章失败",
-        description: "网络请求没有成功完成，请重试。",
+        description: "这次保存在路上断开了，再试一次就好。",
       });
     } finally {
       setPending(false);
@@ -449,7 +449,7 @@ export function ArticleEditor({
       pushFeedback({
         tone: "error",
         title: action === "publish" ? "发布失败" : "隐藏失败",
-        description: action === "publish" ? "文章没有成功进入公开状态。" : "文章没有成功切换为隐藏状态。",
+        description: action === "publish" ? "这篇文章还没能走到公开站前台。" : "这篇文章暂时还没能退回幕后。",
       });
       return;
     }
@@ -457,7 +457,7 @@ export function ArticleEditor({
     pushFeedback({
       tone: "success",
       title: action === "publish" ? "文章已发布" : "文章已隐藏",
-      description: action === "publish" ? "公开站现在会展示这篇文章。" : "公开站现在不会再展示这篇文章。",
+      description: action === "publish" ? "它已经走到公开站前台，读者现在能看见它。" : "它已经从公开站退回幕后，读者暂时不会再看见它。",
     });
     router.refresh();
   }
@@ -480,7 +480,7 @@ export function ArticleEditor({
         pushFeedback({
           tone: "error",
           title: "删除文章失败",
-          description: failure?.message ?? "请先处理首页策展或关联状态。",
+          description: failure?.message ?? "这篇文章暂时还牵着别处，先把首页策展或关联状态理顺。",
           ttlMs: 7600,
         });
         return;
@@ -489,7 +489,7 @@ export function ArticleEditor({
       pushFeedback({
         tone: "success",
         title: "文章已删除",
-        description: "这篇文章已经从内容库移除。",
+        description: "这篇文章已经从内容库退场。",
       });
       router.push("/articles");
       router.refresh();
@@ -497,7 +497,7 @@ export function ArticleEditor({
       pushFeedback({
         tone: "error",
         title: "删除文章失败",
-        description: "网络请求没有成功完成，请重试。",
+        description: "删除动作在路上断开了，再试一次就好。",
       });
     } finally {
       setDeletePending(false);
@@ -516,7 +516,7 @@ export function ArticleEditor({
       <AdminConfirmDialog
         cancelLabel="保留文章"
         confirmLabel="删除文章"
-        description="删除后文章会立刻从内容库移除。如果它仍被首页刊期使用，系统会阻止这次删除。"
+        description="删掉之后，这篇文章会立刻从内容库退场；如果首页这一期还在用它，系统会先把你拦下来。"
         onCancel={() => setConfirmOpen(false)}
         onConfirm={() => {
           setConfirmOpen(false);
@@ -524,7 +524,7 @@ export function ArticleEditor({
         }}
         open={confirmOpen}
         pending={deletePending}
-        title="确认删除这篇文章？"
+        title="要把这篇文章从内容库里收走吗？"
         tone="danger"
       />
       <section className="admin-card admin-editor-toolbar admin-editor-hero">
@@ -568,19 +568,19 @@ export function ArticleEditor({
         <article className="admin-card admin-editor-overview-card">
           <p className="admin-kicker">Editorial Pulse</p>
           <strong>{metadataReadyCount}/8</strong>
-          <p className="admin-subtle">基础元信息已就绪，标题、摘要、导语和作者信息会一起决定首页卡片的完成度。</p>
+          <p className="admin-subtle">标题、摘要、导语、作者与分类一旦齐整，文章的门面才算真正站稳。</p>
           <span className="admin-status-pill is-info">Metadata</span>
         </article>
         <article className="admin-card admin-editor-overview-card">
           <p className="admin-kicker">Story Body</p>
           <strong>{contentReadyCount}/{form.blocks.length || 1}</strong>
-          <p className="admin-subtle">正文块已具备有效内容。正文编辑区仍然保持原来的块结构和编辑方式。</p>
+          <p className="admin-subtle">这里数的是已经写实的段落与模块，方便判断一篇文章是否到了能发布的时候。</p>
           <span className="admin-status-pill is-info">Canvas</span>
         </article>
         <article className="admin-card admin-editor-overview-card">
           <p className="admin-kicker">Cover Readiness</p>
           <strong>{form.coverUrl ? "Ready" : "Missing"}</strong>
-          <p className="admin-subtle">封面会直接影响首页和详情页第一屏；无封面时这里会持续提醒你补齐素材。</p>
+          <p className="admin-subtle">封面会先替文章开口。没有封面也能保存，但最好别急着把它推上首页。</p>
           <span className={`admin-status-pill ${form.coverUrl ? "is-ok" : "is-warn"}`}>{form.coverUrl ? "封面已绑定" : "等待封面"}</span>
         </article>
         <article className="admin-card admin-editor-overview-card">
@@ -588,8 +588,8 @@ export function ArticleEditor({
           <strong>{highlightCount} / {form.kind === "CURATED" ? `${sourceReadyCount}/4` : "Optional"}</strong>
           <p className="admin-subtle">
             {form.kind === "CURATED"
-              ? "收录整理稿会更依赖来源链完整度，这里帮助你快速看清引用是否补齐。"
-              : "原创稿仍可补充 highlights 和来源信息，但不会强制占用写作主舞台。"}
+              ? "收录稿的来处要写清，链接、标题、作者与时间，都是回到原文的路。"
+              : "原创稿不必强求来源，但亮点写明了，首页与推荐位才更有分寸。"}
           </p>
           <span className="admin-status-pill is-info">{form.kind === "CURATED" ? "Source-led" : "Original-led"}</span>
         </article>
@@ -601,7 +601,7 @@ export function ArticleEditor({
               <div>
                 <p className="admin-kicker">Story Copy</p>
                 <h2>基础信息</h2>
-                <p className="admin-subtle">标题、导语和摘要会一起决定首页卡片、分类页和文章详情头图的第一印象。</p>
+                <p className="admin-subtle">标题、摘要与导语会先于正文被看见，它们决定读者愿不愿意继续往下。</p>
               </div>
             </div>
             <div className="admin-form">
@@ -635,7 +635,7 @@ export function ArticleEditor({
               <div>
                 <p className="admin-kicker">Body Builder</p>
                 <h2>正文编辑器</h2>
-                <p className="admin-subtle">把正文区提升成页面主舞台，块工具保持在顶部，正文输入区域明显大于元信息区。</p>
+                <p className="admin-subtle">在这里添删段落、标题与图片，让一篇文章真正长出自己的骨架。</p>
               </div>
               <div className="admin-block-toolbar">
                 {(["paragraph", "heading", "image", "quote", "list", "code", "divider"] as const).map((type) => (
@@ -731,7 +731,7 @@ export function ArticleEditor({
                       />
                     </div>
                   ) : null}
-                  {block.type === "divider" ? <p className="admin-subtle">分割线块无需额外编辑。</p> : null}
+                  {block.type === "divider" ? <p className="admin-subtle">分割线只负责换气，不需要再写别的。</p> : null}
                 </div>
               ))}
             </div>
@@ -771,7 +771,7 @@ export function ArticleEditor({
                 </div>
                 <h3>{form.title.trim() || "未命名文章"}</h3>
                 <p className="admin-subtle">
-                  {form.excerpt.trim() || "摘要会出现在首页卡片、分类页和文章头图旁的简介区域。"}
+                  {form.excerpt.trim() || "摘要会先一步出现在首页与分类页，替正文轻轻开场。"}
                 </p>
                 <div className="admin-inline-actions">
                   <span className="admin-chip">
@@ -813,7 +813,7 @@ export function ArticleEditor({
                 </div>
               ) : (
                 <div className="admin-asset-empty">
-                  <p className="admin-subtle">当前还没有封面图片。你可以上传本地图片，或从远程 URL 导入。</p>
+                  <p className="admin-subtle">封面还空着。你可以从本地上传，也可以从远处引一张图过来。</p>
                 </div>
               )}
 
@@ -821,7 +821,7 @@ export function ArticleEditor({
                 <div className="admin-card admin-asset-control">
                   <p className="admin-kicker">Local Upload</p>
                   <h3>上传本地图片</h3>
-                  <p className="admin-subtle">走预签名上传链路，把封面直接写入 MinIO。</p>
+                  <p className="admin-subtle">把一张本地图片送进对象存储，也让它立刻成为这篇文章的封面。</p>
                   <label className="admin-upload-button admin-upload-button-wide">
                     {assetPending ? "上传中..." : "选择并上传图片"}
                     <input
@@ -842,7 +842,7 @@ export function ArticleEditor({
                 <div className="admin-card admin-asset-control">
                   <p className="admin-kicker">Remote Import</p>
                   <h3>导入远程封面</h3>
-                  <p className="admin-subtle">直接粘贴可访问的图片 URL，再由后台拉取并登记资产。</p>
+                  <p className="admin-subtle">贴上一张图片地址，后台会替你把它带回站里，并挂到这篇文章上。</p>
                   <label>
                     远程封面 URL
                     <div className="admin-inline-field">

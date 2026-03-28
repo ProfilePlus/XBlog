@@ -99,8 +99,8 @@ export function HeroShowcase({
             <Link href={issue.primaryCtaHref} className="action-button">
               {issue.primaryCtaLabel}
             </Link>
-            <Link href={issue.secondaryCtaHref} className="action-button ghost">
-              {issue.secondaryCtaLabel}
+            <Link href="/search" className="action-button ghost hero-search-action">
+              搜索文章
             </Link>
           </div>
           <div className="hero-cover-echo">

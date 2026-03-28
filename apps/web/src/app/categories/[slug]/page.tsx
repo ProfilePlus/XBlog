@@ -114,10 +114,10 @@ export default async function CategoryDetailPage({
             >
               <div className="section-head">
                 <h2>浏览建议</h2>
-                <span className="soft-link">从代表文章开始</span>
+                <span className="soft-link">从最能代表这个分区的一篇开始</span>
               </div>
               <p>
-                如果你是第一次进入这个分区，建议先从代表文章看起，再回到列表顺着主题延展阅读。
+                如果这是你第一次走进这个分区，不妨先从代表文章看起，再回到列表，把同一条线慢慢读开。
               </p>
             </Link>
           </aside>

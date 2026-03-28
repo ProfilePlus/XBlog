@@ -239,7 +239,7 @@ export default async function EditorialDeskPage() {
             <p className="admin-kicker">Live Desk</p>
             <span className="admin-chip">Public / Console / API</span>
           </div>
-          <p className="admin-subtle">先处理最值得过稿的一篇，再看次级队列和机器信号。</p>
+          <p className="admin-subtle">先看今天最该放行的一篇，再回头照看那些还差一点火候的稿子。</p>
         </div>
         <div className="admin-inline-actions">
           <span className="admin-status-pill is-info">AI ingest</span>
@@ -251,9 +251,9 @@ export default async function EditorialDeskPage() {
       <section className="admin-card admin-desk-prototype-hero">
         <div className="admin-desk-prototype-hero-copy">
           <p className="admin-kicker">Editorial Queue</p>
-          <h1>方案 A / 主编视角的 Lead Review</h1>
+          <h1>主稿优先审阅</h1>
           <p className="admin-subtle">
-            大 lead card 把判断重心放在主篇价值、来源链和通过动作，适合强调编辑感。
+            先替最重要的一篇定去留，再把其余候选一篇篇摆回合适的位置。
           </p>
         </div>
         <div className="admin-inline-actions">

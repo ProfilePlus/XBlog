@@ -20,14 +20,14 @@ export default async function CategoriesPage() {
             <p className="eyebrow">Category Library</p>
             <h1>按分类进入 XBlog 的知识版图。</h1>
             <p className="lede">
-              这里把技术写作、收录内容和后续方法论整理成清晰的四组主题，既方便阅读，也方便后面持续扩展。
+              技术写作、收录内容与后续方法，都被整理进几条清楚的分区里，让阅读可以慢慢深入，也方便日后继续生长。
             </p>
           </div>
           <article className="hero-side-note card glass">
             <span className="chip">浏览方式</span>
-            <h2>先选主题，再进入文章与收录的具体脉络。</h2>
+            <h2>先选一个分区，再顺着它的脉络往里走。</h2>
             <p>
-              每个分类都保留自己的封面气质、代表文章和关注重点，让首页之后的阅读仍然保持清楚的分区逻辑。
+              每个分类都保留自己的封面、代表文章和关注重点，好让离开首页之后，阅读仍然有清楚的方向。
             </p>
             <div className="hero-side-note-footer">
               <span className="stat-pill">{categories.length} 个主分类</span>

@@ -17,7 +17,7 @@ export function AdminConfirmDialog({
   title,
   description,
   confirmLabel,
-  cancelLabel = "取消",
+  cancelLabel = "先放一放",
   tone = "default",
   pending = false,
   onConfirm,
@@ -37,7 +37,7 @@ export function AdminConfirmDialog({
         role="dialog"
       >
         <div className="admin-dialog-copy">
-          <p className="admin-kicker">{tone === "danger" ? "Danger Zone" : "Confirm Action"}</p>
+          <p className="admin-kicker">{tone === "danger" ? "Last Check" : "Before Continue"}</p>
           <h2 id="admin-confirm-dialog-title">{title}</h2>
           <p className="admin-subtle" id="admin-confirm-dialog-description">
             {description}
@@ -53,7 +53,7 @@ export function AdminConfirmDialog({
             onClick={onConfirm}
             type="button"
           >
-            {pending ? "处理中..." : confirmLabel}
+            {pending ? "正在落定..." : confirmLabel}
           </button>
         </div>
       </div>

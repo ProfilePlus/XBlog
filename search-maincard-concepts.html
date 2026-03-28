@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>XBlog Search Main Card Concepts</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "PingFang SC", sans-serif;
+      background: #0a1020;
+      color: #f4f7ff;
+      padding: 28px;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: 28px;
+    }
+
+    p {
+      margin: 0 0 20px;
+      color: rgba(244, 247, 255, 0.72);
+      line-height: 1.7;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    a {
+      display: grid;
+      gap: 8px;
+      padding: 18px;
+      border-radius: 20px;
+      color: inherit;
+      text-decoration: none;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    strong {
+      font-size: 18px;
+    }
+
+    span {
+      color: rgba(244, 247, 255, 0.62);
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <h1>搜索主卡优化方案</h1>
+  <p>三套都是独立静态图稿，只看“搜索主卡怎么变得更顺眼”。A 主打压缩首屏，B 主打填满左右空白，C 主打主卡绝对中心。</p>
+  <section class="grid">
+    <a href="./search-maincard-a.html">
+      <strong>A / Compact Lift</strong>
+      <span>压缩首屏，把主卡直接抬上来。</span>
+    </a>
+    <a href="./search-maincard-b.html">
+      <strong>B / Split Hero</strong>
+      <span>保留首屏气质，但把左右空白变成信息。</span>
+    </a>
+    <a href="./search-maincard-c.html">
+      <strong>C / Card First</strong>
+      <span>取消大 Hero，把首屏注意力几乎全部交给中间主卡。</span>
+    </a>
+  </section>
+</body>
+</html>

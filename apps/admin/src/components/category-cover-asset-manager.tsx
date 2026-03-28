@@ -105,7 +105,7 @@ export function CategoryCoverAssetManager({
         pushFeedback({
           tone: "error",
           title: "素材列表刷新失败",
-          description: formatErrorMessage("请稍后重试。", failure?.message),
+          description: formatErrorMessage("素材库这一页还没能翻开，稍后再试一次。", failure?.message),
         });
         return;
       }
@@ -119,7 +119,7 @@ export function CategoryCoverAssetManager({
       pushFeedback({
         tone: "error",
         title: "素材列表刷新失败",
-        description: "网络请求没有成功完成，请重试。",
+        description: "这次翻页在路上断开了，再试一次就好。",
       });
     } finally {
       setPagePending(false);
@@ -200,8 +200,8 @@ export function CategoryCoverAssetManager({
           title: files.length > 1 ? "批量导入完成" : "素材已入库",
           description:
             files.length > 1
-              ? `已成功导入 ${imported} 张图片，全部进入分类封面素材库。`
-              : "图片已写入对象存储，并进入分类封面素材库。",
+              ? `一共带回了 ${imported} 张图片，它们都已经落进封面素材库。`
+              : "这张图已经收进对象存储，也已经在封面素材库里落名。",
         });
         return;
       }
@@ -211,14 +211,14 @@ export function CategoryCoverAssetManager({
         title: imported > 0 ? "批量导入部分完成" : "批量导入失败",
         description:
           imported > 0
-            ? `成功 ${imported} 张，失败 ${failed} 张。${failures[0] ?? "请稍后重试。"}`
-            : failures[0] ?? "请稍后重试。",
+            ? `已经带回 ${imported} 张，还有 ${failed} 张没能顺利入库。${failures[0] ?? "稍后再试一次。"}`
+            : failures[0] ?? "这批图片还没能顺利带回来，稍后再试一次。",
       });
     } catch (error) {
       pushFeedback({
         tone: "error",
         title: "批量导入失败",
-        description: error instanceof Error ? error.message : "请稍后重试。",
+        description: error instanceof Error ? error.message : "这批图片还没能顺利带回来，稍后再试一次。",
       });
     } finally {
       setAssetTaskLabel(null);
@@ -231,7 +231,7 @@ export function CategoryCoverAssetManager({
       pushFeedback({
         tone: "error",
         title: "缺少远程图片地址",
-        description: "请先输入一个可访问的图片 URL。",
+        description: "先贴上一张能访问到的图片地址，再把它带回来。",
       });
       return;
     }
@@ -260,13 +260,13 @@ export function CategoryCoverAssetManager({
       pushFeedback({
         tone: "success",
         title: "远程素材已入库",
-        description: "图片已抓取到对象存储，并进入分类封面素材库。",
+        description: "那张图已经从远处带回，也已经落进封面素材库。",
       });
     } catch (error) {
       pushFeedback({
         tone: "error",
         title: "远程素材导入失败",
-        description: error instanceof Error ? error.message : "请稍后重试。",
+        description: error instanceof Error ? error.message : "那张图暂时还没能从远处取回，稍后再试一次。",
       });
     } finally {
       setAssetTaskLabel(null);
@@ -288,7 +288,7 @@ export function CategoryCoverAssetManager({
         pushFeedback({
           tone: "error",
           title: "删除素材失败",
-          description: formatErrorMessage("请稍后重试。", failure?.message),
+          description: formatErrorMessage("这张图暂时还没能从素材库退场，稍后再试一次。", failure?.message),
         });
         return;
       }
@@ -302,14 +302,14 @@ export function CategoryCoverAssetManager({
         tone: "success",
         title: "素材已删除",
         description: asset.isAssigned
-          ? "原先占用它的分类已解除手动绑定，会继续尝试自动匹配剩余素材。"
-          : "素材已经从库中移除。",
+          ? "原来认领它的分类已经松开手，接下来会去剩下的素材里继续寻找合适的一张。"
+          : "这张图已经从素材库里退场。",
       });
     } catch {
       pushFeedback({
         tone: "error",
         title: "删除素材失败",
-        description: "网络请求没有成功完成，请重试。",
+        description: "删除动作在路上断开了，再试一次就好。",
       });
     } finally {
       setDeletePendingId(null);
@@ -323,8 +323,8 @@ export function CategoryCoverAssetManager({
         confirmLabel="删除素材"
         description={
           confirmAsset?.isAssigned
-            ? "删除后，这张图会从素材库移除，当前分类的手动绑定也会被解除；如果没有可分配素材，分类会回退到渐变占位。"
-            : "删除后，这张图会从素材库永久移除。"
+            ? "删掉之后，这张图会从素材库退场，当前分类和它的手动绑定也会一起解开；如果暂时没有别的图可分，分类会先退回渐变占位。"
+            : "删掉之后，这张图会从素材库里彻底退场。"
         }
         onCancel={() => setConfirmAsset(null)}
         onConfirm={() => {
@@ -335,7 +335,7 @@ export function CategoryCoverAssetManager({
         }}
         open={Boolean(confirmAsset)}
         pending={Boolean(confirmAsset && deletePendingId === confirmAsset.id)}
-        title={confirmAsset?.isAssigned ? "确认删除这张已被分类占用的素材吗？" : "确认删除这张素材吗？"}
+        title={confirmAsset?.isAssigned ? "要把这张仍被分类认领的素材收走吗？" : "要把这张素材从库里收走吗？"}
         tone="danger"
       />
 
@@ -345,7 +345,7 @@ export function CategoryCoverAssetManager({
             <p className="admin-kicker">Cover Intake</p>
             <h2>把新图片收入封面素材库</h2>
             <p className="admin-subtle">
-              上传或导入成功后，图片会登记为分类封面素材。未手动指定封面的分类，会按 slug 和色调自动尝试匹配未占用素材。
+              导入后的图片会在这里排成一库。没有手动封面的分类，会先从同色调的空闲图片里认领。
             </p>
           </div>
           <div className="admin-inline-actions">
@@ -359,7 +359,7 @@ export function CategoryCoverAssetManager({
             <p className="admin-kicker">Metadata</p>
             <h3>入库标记</h3>
             <p className="admin-subtle">
-              这里的色调和名称会应用到接下来上传或导入的图片，方便后续自动匹配与人工筛选。批量导入时默认使用原文件名，单张导入时才会优先使用这里的素材名称。
+              这里写下的名称与色调，会跟着接下来导入的图片一起入库，好让它们日后更容易被认出来。
             </p>
             <label>
               素材名称
@@ -392,7 +392,7 @@ export function CategoryCoverAssetManager({
             <div className="admin-card admin-asset-control">
               <p className="admin-kicker">Local Upload</p>
               <h3>批量导入本地图片</h3>
-              <p className="admin-subtle">可一次选择多张图片，统一写入 MinIO 并登记到分类封面素材库。</p>
+              <p className="admin-subtle">一次带回多张图片，让它们一起落进对象存储，也落进素材库。</p>
               <label className="admin-upload-button admin-upload-button-wide">
                 {assetPending ? assetTaskLabel ?? "处理中..." : "选择图片批量导入"}
                 <input
@@ -414,7 +414,7 @@ export function CategoryCoverAssetManager({
             <div className="admin-card admin-asset-control">
               <p className="admin-kicker">Remote Import</p>
               <h3>导入远程图片</h3>
-              <p className="admin-subtle">适合把平时收集到的极光图快速拉回对象存储，后面分类可以直接选。</p>
+              <p className="admin-subtle">贴上一张图片地址，后台会把它从远处取回，等着分类来选。</p>
               <label>
                 图片 URL
                 <div className="admin-inline-field">
@@ -444,7 +444,7 @@ export function CategoryCoverAssetManager({
           <div>
             <p className="admin-kicker">Filter Library</p>
             <h2>按色调和占用状态筛选素材</h2>
-            <p className="admin-subtle">先筛一轮，再分页浏览和删除，素材管理会比现在更顺手。</p>
+            <p className="admin-subtle">先把色调与占用状态筛一遍，再慢慢翻页，会更容易找到那张正合适的图。</p>
           </div>
           <div className="admin-inline-actions">
             <span className="admin-chip">{pagePending ? "筛选中..." : `当前结果 ${total} 张`}</span>
@@ -535,7 +535,7 @@ export function CategoryCoverAssetManager({
                 <p className="admin-subtle">
                   {asset.isAssigned
                     ? `当前用于 ${asset.assignedCategoryName ?? "某个分类"}`
-                    : "当前空闲，可被新分类手动选择，也可参与自动匹配。"}
+                    : "这张图暂时还没有去处，既可以手动分配，也会被自动匹配看见。"}
                 </p>
               </div>
 
@@ -564,7 +564,7 @@ export function CategoryCoverAssetManager({
           <p className="admin-kicker">Empty Library</p>
           <h2>素材库还没有图片</h2>
           <p className="admin-subtle">
-            先上传或导入几张极光图。没有可用素材且分类未手动指定封面时，公开站会回退到渐变占位。
+            先带几张图回来。没有可用素材的时候，未指定封面的分类会先用渐变占位。
           </p>
         </section>
       )}

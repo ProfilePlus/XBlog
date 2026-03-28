@@ -47,6 +47,16 @@ export class MemoryStore implements Store {
     return hash;
   }
 
+  private coverReferenceKey(value: string | null | undefined) {
+    if (!value) {
+      return null;
+    }
+
+    const normalized = value.split(/[?#]/, 1)[0]?.replace(/\\/g, "/") ?? "";
+    const segment = normalized.split("/").filter(Boolean).pop();
+    return segment?.toLowerCase() ?? null;
+  }
+
   private categoryCoverAssets() {
     return [...this.state.assets]
       .filter((asset) => asset.kind === "CATEGORY_COVER")
@@ -90,8 +100,33 @@ export class MemoryStore implements Store {
     return resolved;
   }
 
-  private toCategoryCoverAssetSummary(asset: Asset) {
-    const assignedCategory = this.state.categories.find((category) => category.coverAssetId === asset.id) ?? null;
+  private buildCategoryCoverAssetAssignments(categories: StoredCategory[]) {
+    const coverAssets = this.categoryCoverAssets();
+    const resolvedCoverUrls = this.resolveCategoryCoverUrls(categories);
+    const assignments = new Map<string, StoredCategory>();
+
+    for (const category of [...categories].sort((a, b) => a.sortOrder - b.sortOrder)) {
+      const resolvedCoverUrl = resolvedCoverUrls.get(category.id);
+      const matchedAsset = category.coverAssetId
+        ? coverAssets.find((asset) => asset.id === category.coverAssetId)
+        : coverAssets.find(
+            (asset) =>
+              asset.url === resolvedCoverUrl ||
+              asset.sourceUrl === resolvedCoverUrl ||
+              this.coverReferenceKey(asset.url) === this.coverReferenceKey(resolvedCoverUrl) ||
+              this.coverReferenceKey(asset.sourceUrl) === this.coverReferenceKey(resolvedCoverUrl),
+          );
+
+      if (matchedAsset && !assignments.has(matchedAsset.id)) {
+        assignments.set(matchedAsset.id, category);
+      }
+    }
+
+    return assignments;
+  }
+
+  private toCategoryCoverAssetSummary(asset: Asset, assignments?: Map<string, StoredCategory>) {
+    const assignedCategory = assignments?.get(asset.id) ?? null;
 
     return {
       id: asset.id,
@@ -379,22 +414,19 @@ export class MemoryStore implements Store {
     pageSize: number,
     filters: CategoryCoverAssetListFilters = { assignment: "all" },
   ) {
+    const assignments = this.buildCategoryCoverAssetAssignments(this.state.categories);
     let assets = this.categoryCoverAssets();
 
     if (filters.tone) {
       assets = assets.filter((asset) => asset.tone === filters.tone);
     }
 
-    const assignedAssetIds = new Set(
-      this.state.categories.map((category) => category.coverAssetId).filter(Boolean),
-    );
-
     if (filters.assignment === "assigned") {
-      assets = assets.filter((asset) => assignedAssetIds.has(asset.id));
+      assets = assets.filter((asset) => assignments.has(asset.id));
     }
 
     if (filters.assignment === "unassigned") {
-      assets = assets.filter((asset) => !assignedAssetIds.has(asset.id));
+      assets = assets.filter((asset) => !assignments.has(asset.id));
     }
 
     const start = (page - 1) * pageSize;
@@ -403,7 +435,7 @@ export class MemoryStore implements Store {
       total: assets.length,
       page,
       pageSize,
-      items: assets.slice(start, start + pageSize).map((asset) => this.toCategoryCoverAssetSummary(asset)),
+      items: assets.slice(start, start + pageSize).map((asset) => this.toCategoryCoverAssetSummary(asset, assignments)),
     };
   }
 

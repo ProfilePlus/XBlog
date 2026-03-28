@@ -31,11 +31,11 @@ export default async function Home() {
           essays={home.latestEssays}
           logs={home.readingLogs}
           about={{
-            intro: "把技术文章、工具流和外部好内容编织成一张持续发光的知识星图。",
+            intro: "这里写原创，也收录外部技术文章，把读到的东西慢慢译成自己的知识版图。",
             currentTheme: home.issue.eyebrow.replace(/^XBlog\s*\/\s*/, "") || "Aurora Edition",
             updateStatus: home.readingLogs[0]
               ? `最近更新：${home.readingLogs[0].title}`
-              : "当前正在整理新的收录、分类封面和首页主题。",
+              : "最近在补新的摘要、分类说明和首页这一期的策展。",
             metrics: [
               `${home.topicShelves.length} 个分类分区`,
               `${home.categoryCoverLibrary.total} 张封面素材`,

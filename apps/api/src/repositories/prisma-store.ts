@@ -45,6 +45,12 @@ type CategoryRecord = Prisma.CategoryGetPayload<{
   };
 }>;
 
+type CategoryCoverUsageRecord = Prisma.CategoryGetPayload<{
+  include: {
+    coverAsset: true;
+  };
+}>;
+
 type CategoryCoverAssetRecord = Prisma.AssetGetPayload<{
   include: {
     categories: true;
@@ -106,6 +112,16 @@ export class PrismaStore implements Store {
     return hash;
   }
 
+  private coverReferenceKey(value: string | null | undefined) {
+    if (!value) {
+      return null;
+    }
+
+    const normalized = value.split(/[?#]/, 1)[0]?.replace(/\\/g, "/") ?? "";
+    const segment = normalized.split("/").filter(Boolean).pop();
+    return segment?.toLowerCase() ?? null;
+  }
+
   private async listCategoryCoverAssetRecords() {
     return this.prisma.asset.findMany({
       where: { kind: "CATEGORY_COVER" },
@@ -114,7 +130,7 @@ export class PrismaStore implements Store {
     });
   }
 
-  private resolveCategoryCoverUrls(categories: CategoryRecord[], coverAssets: CategoryCoverAssetRecord[]) {
+  private resolveCategoryCoverUrls(categories: CategoryCoverUsageRecord[], coverAssets: CategoryCoverAssetRecord[]) {
     const manualAssignments = new Set(categories.map((category) => category.coverAssetId).filter(Boolean));
     const unusedAssets = coverAssets.filter((asset) => !manualAssignments.has(asset.id));
     const usedAutoAssetIds = new Set<string>();
@@ -149,8 +165,38 @@ export class PrismaStore implements Store {
     return resolved;
   }
 
-  private toCategoryCoverAssetSummary(record: CategoryCoverAssetRecord) {
-    const assignedCategory = record.categories[0] ?? null;
+  private buildCategoryCoverAssetAssignments(
+    categories: CategoryCoverUsageRecord[],
+    coverAssets: CategoryCoverAssetRecord[],
+  ) {
+    const resolvedCoverUrls = this.resolveCategoryCoverUrls(categories, coverAssets);
+    const assignments = new Map<string, CategoryCoverUsageRecord>();
+
+    for (const category of [...categories].sort((a, b) => a.sortOrder - b.sortOrder)) {
+      const resolvedCoverUrl = resolvedCoverUrls.get(category.id);
+      const matchedAsset = category.coverAssetId
+        ? coverAssets.find((asset) => asset.id === category.coverAssetId)
+        : coverAssets.find(
+            (asset) =>
+              asset.url === resolvedCoverUrl ||
+              asset.sourceUrl === resolvedCoverUrl ||
+              this.coverReferenceKey(asset.url) === this.coverReferenceKey(resolvedCoverUrl) ||
+              this.coverReferenceKey(asset.sourceUrl) === this.coverReferenceKey(resolvedCoverUrl),
+          );
+
+      if (matchedAsset && !assignments.has(matchedAsset.id)) {
+        assignments.set(matchedAsset.id, category);
+      }
+    }
+
+    return assignments;
+  }
+
+  private toCategoryCoverAssetSummary(
+    record: CategoryCoverAssetRecord,
+    assignments?: Map<string, CategoryCoverUsageRecord>,
+  ) {
+    const assignedCategory = assignments?.get(record.id) ?? record.categories[0] ?? null;
 
     return {
       id: record.id,
@@ -766,40 +812,37 @@ export class PrismaStore implements Store {
     const where: Prisma.AssetWhereInput = {
       kind: "CATEGORY_COVER",
       ...(filters.tone ? { tone: filters.tone } : {}),
-      ...(filters.assignment === "assigned"
-        ? {
-            categories: {
-              some: {},
-            },
-          }
-        : {}),
-      ...(filters.assignment === "unassigned"
-        ? {
-            categories: {
-              none: {},
-            },
-          }
-        : {}),
     };
-
-    const [total, assets] = await Promise.all([
-      this.prisma.asset.count({
-        where,
-      }),
+    const [assets, categories] = await Promise.all([
       this.prisma.asset.findMany({
         where,
         include: { categories: true },
         orderBy: { createdAt: "desc" },
-        skip: (page - 1) * pageSize,
-        take: pageSize,
+      }),
+      this.prisma.category.findMany({
+        include: { coverAsset: true },
       }),
     ]);
+
+    const assignments = this.buildCategoryCoverAssetAssignments(categories, [...assets].reverse());
+    let items = assets.map((asset) => this.toCategoryCoverAssetSummary(asset, assignments));
+
+    if (filters.assignment === "assigned") {
+      items = items.filter((asset) => asset.isAssigned);
+    }
+
+    if (filters.assignment === "unassigned") {
+      items = items.filter((asset) => !asset.isAssigned);
+    }
+
+    const total = items.length;
+    items = items.slice((page - 1) * pageSize, page * pageSize);
 
     return {
       total,
       page,
       pageSize,
-      items: assets.map((asset) => this.toCategoryCoverAssetSummary(asset)),
+      items,
     };
   }
 

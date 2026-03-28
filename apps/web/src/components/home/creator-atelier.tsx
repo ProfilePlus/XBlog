@@ -29,12 +29,12 @@ export function CreatorAtelier({
     <aside id="atelier" className="atelier card glass">
       <div className="section-head">
         <h2>创作工作台</h2>
-        <span className="soft-link">统一管理写作与收录</span>
+        <span className="soft-link">写作与收录在这里并桌而坐</span>
       </div>
 
       <p>
-        把写作、草稿、收录整理、分类维护固定在同一个稳定位置，
-        避免像旧博客那样入口分散、逻辑跳跃。
+        写作、草稿、收录整理和分类维护，都被安放在同一处，
+        让内容不再四散，而是沿着一条清楚的路径慢慢成形。
       </p>
 
       <div className="atelier-list">
@@ -57,14 +57,14 @@ export function CreatorAtelier({
         <div className="cover-library-head">
           <div>
             <span className="atelier-step">封面素材库</span>
-            <h3>把分类封面素材也固定进工作台。</h3>
+            <h3>把分类封面也一起收入这张长桌。</h3>
           </div>
           <Link href={`${adminAppUrl}/category-cover-assets`} className="cover-library-more">
             更多素材
           </Link>
         </div>
         <p>
-          当前已收集 {categoryCoverLibrary.total} 张可复用素材。新增分类时可以直接选，也能在没手动指定时自动分配。
+          现在已经收回 {categoryCoverLibrary.total} 张可复用素材。新分类可以手动挑，也能在空着的时候等系统替它认领。
         </p>
         {previewItems.length > 0 ? (
           <div className="cover-library-grid">
@@ -82,7 +82,7 @@ export function CreatorAtelier({
           </div>
         ) : (
           <div className="cover-library-empty">
-            <span className="meta-line">素材库还没有图片，新的未配置分类会先回退到纯渐变封面。</span>
+            <span className="meta-line">素材库还空着。暂时没有封面的分类，会先披上一层渐变夜色。</span>
           </div>
         )}
       </section>

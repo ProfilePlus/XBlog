@@ -26,7 +26,7 @@ export function LoginForm() {
     });
 
     if (!response.ok) {
-      setError("登录失败，请检查邮箱或密码。");
+      setError("这次没能进来，看看邮箱或密码是不是写错了。");
       setPending(false);
       return;
     }
@@ -43,7 +43,7 @@ export function LoginForm() {
           <h2>登录内容后台</h2>
         </div>
       </div>
-      <p className="admin-subtle">本地环境已预填默认账号，你也可以改成自己的后台账号后再进入。</p>
+      <p className="admin-subtle">本地环境已经替你填好默认账号，你也可以换成自己的后台凭据，再从这里进入。</p>
       <label>
         邮箱
         <input
@@ -63,10 +63,10 @@ export function LoginForm() {
       </label>
       {error ? <p className="admin-error">{error}</p> : null}
       <button className="admin-primary-button admin-full-button" type="submit" disabled={pending}>
-        {pending ? "登录中..." : "进入后台"}
+        {pending ? "正在入场..." : "进入后台"}
       </button>
       <p className="admin-subtle admin-login-footnote">
-        登录后可直接继续管理文章、分类、刊期、存储与 OpenClaw 机器令牌。
+        进去之后，文章、分类、刊期、存储和 OpenClaw 的写入令牌都会在同一张桌面上等你。
       </p>
     </form>
   );

@@ -19,7 +19,7 @@ export function EditorialBand({ essays, logs, about }: EditorialBandProps) {
       <article id="latest" className="feature-essay card glass">
         <div className="section-head">
           <h2>最新文章</h2>
-          <span className="soft-link">像阅读一本数字杂志</span>
+          <span className="soft-link">像翻开一本还在续写的数字刊物</span>
         </div>
 
         {essays.map((entry) => (
@@ -42,7 +42,7 @@ export function EditorialBand({ essays, logs, about }: EditorialBandProps) {
       <article id="reading-log" className="reading-stage card dark">
         <div className="section-head">
           <h2>收录日志</h2>
-          <span className="soft-link">把读过的内容留下来</span>
+          <span className="soft-link">把读过的东西慢慢留下来</span>
         </div>
 
         {logs.map((entry) => (
@@ -95,7 +95,7 @@ export function EditorialBand({ essays, logs, about }: EditorialBandProps) {
 
         <div className="quote-panel card glass">
           <blockquote>“不是收集更多文章，而是把每一次阅读变成自己的理解。”</blockquote>
-          <p>XBlog 的核心不是囤积，而是把好内容沉淀成自己的知识语言。</p>
+          <p>XBlog 不是为了囤积链接，而是想把读过的好内容，一点点写成自己的语言。</p>
         </div>
       </aside>
     </section>

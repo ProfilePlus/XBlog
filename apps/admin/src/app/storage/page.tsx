@@ -15,7 +15,7 @@ export default async function StoragePage() {
       <AdminPageHeader
         eyebrow="Storage Ops"
         title="对象存储"
-        description="在后台直接查看 MinIO 配置、可用性检查、诊断提示和上传探针，不用切回终端。"
+        description="对象存储是这条发布链路的河道。这里看配置、看探针，也看它此刻是否仍然通畅。"
         actions={<StorageRefreshButton />}
       >
         <span className="admin-chip">Driver {status.driver}</span>
@@ -110,7 +110,7 @@ export default async function StoragePage() {
               </ul>
             </>
           ) : (
-            <p className="admin-subtle">当前关键配置已齐全，可以直接走健康检查和上传链路。</p>
+            <p className="admin-subtle">关键配置已经齐整，这条上传链路现在可以顺着往前走。</p>
           )}
 
           {status.diagnostics.warnings.length > 0 ? (

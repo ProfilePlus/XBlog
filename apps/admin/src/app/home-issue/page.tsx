@@ -16,7 +16,7 @@ export default async function HomeIssuePage() {
       <AdminPageHeader
         eyebrow="Issue Curation"
         title="刊期管理"
-        description="控制首页期号、导语、CTA 和三张 Hero 卡片，让前台第一屏保持明确的策展意图。"
+        description="替首页这一期定下刊号、导语与三张主卡，也替第一屏决定今天的语气。"
       >
         <span className="admin-chip">当前刊号 {issue.issueNumber}</span>
       </AdminPageHeader>

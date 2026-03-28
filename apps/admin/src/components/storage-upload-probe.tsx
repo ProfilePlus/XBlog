@@ -36,7 +36,7 @@ export function StorageUploadProbe() {
       <div className="admin-page-head">
         <div>
           <h2>上传探针</h2>
-          <p className="admin-subtle">执行一次完整的 presign / 预检 / PUT / 公开读取联调。</p>
+          <p className="admin-subtle">按一遍真实上传流程走完预签名、上传和公开读取，好确认这条链路此刻仍然通畅。</p>
         </div>
         <button
           type="button"
@@ -118,7 +118,7 @@ export function StorageUploadProbe() {
           </div>
         </div>
       ) : (
-        <p className="admin-subtle">这个探针不会写入正式文章数据，只会临时上传对象并在结束后清理。</p>
+        <p className="admin-subtle">它只会临时留下一次上传痕迹，结束后会清掉，不会碰正式文章。</p>
       )}
     </div>
   );

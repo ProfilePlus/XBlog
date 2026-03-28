@@ -18,7 +18,7 @@ export function StorageRefreshButton() {
         });
       }}
     >
-      {isPending ? "检查中..." : "重新检查"}
+      {isPending ? "正在重看..." : "再看一遍"}
     </button>
   );
 }

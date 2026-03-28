@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>XBlog Search Concept A</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+  <style>
+    .search-shell {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 22px;
+    }
+
+    .search-hero {
+      display: grid;
+      grid-template-columns: 1.02fr 0.98fr;
+      gap: 20px;
+      padding: 24px;
+    }
+
+    .search-hero-copy {
+      display: grid;
+      align-content: start;
+      gap: 14px;
+    }
+
+    .search-hero-copy h1 {
+      margin: 0;
+      max-width: 11ch;
+      font-size: 52px;
+      line-height: 1.02;
+    }
+
+    .search-panel {
+      display: grid;
+      gap: 16px;
+      padding: 20px;
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.012)),
+        rgba(255, 255, 255, 0.045);
+    }
+
+    .search-line {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 18px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(5, 10, 18, 0.72);
+      color: rgba(247, 249, 255, 0.92);
+    }
+
+    .search-line strong {
+      font-size: 15px;
+      letter-spacing: -0.01em;
+    }
+
+    .search-line span {
+      color: rgba(235, 240, 255, 0.46);
+      font-size: 13px;
+    }
+
+    .query-icon {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(255, 111, 216, 0.9), rgba(110, 231, 255, 0.9));
+      color: #08111f;
+      font-weight: 700;
+    }
+
+    .filter-row,
+    .meta-pills,
+    .citation-row,
+    .question-row,
+    .tag-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .filter-pill,
+    .question-pill {
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.04);
+      color: rgba(235, 240, 255, 0.68);
+      font-size: 12px;
+    }
+
+    .filter-pill.active,
+    .question-pill.active {
+      color: rgba(110, 231, 255, 0.98);
+      border-color: rgba(110, 231, 255, 0.24);
+      background: rgba(110, 231, 255, 0.08);
+    }
+
+    .answer-card {
+      display: grid;
+      gap: 16px;
+      padding: 24px;
+      background:
+        radial-gradient(circle at 82% 18%, rgba(255, 111, 216, 0.14), transparent 22%),
+        radial-gradient(circle at 12% 10%, rgba(110, 231, 255, 0.14), transparent 24%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01)),
+        rgba(8, 17, 31, 0.78);
+    }
+
+    .answer-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .answer-head h2,
+    .side-card h2,
+    .result-card h2,
+    .result-card h3 {
+      margin: 0;
+    }
+
+    .answer-summary {
+      margin: 0;
+      max-width: 74ch;
+      color: rgba(247, 249, 255, 0.88);
+      font-size: 17px;
+      line-height: 1.85;
+    }
+
+    .citation-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: rgba(235, 240, 255, 0.72);
+      font-size: 12px;
+    }
+
+    .results-layout {
+      display: grid;
+      grid-template-columns: 1.06fr 0.64fr;
+      gap: 20px;
+    }
+
+    .results-column,
+    .side-column {
+      display: grid;
+      gap: 18px;
+      align-content: start;
+    }
+
+    .result-card,
+    .side-card {
+      display: grid;
+      gap: 14px;
+      padding: 20px;
+    }
+
+    .result-meta,
+    .signal-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      color: rgba(235, 240, 255, 0.48);
+      font-size: 12px;
+      letter-spacing: 0.03em;
+    }
+
+    .result-card p,
+    .side-card p,
+    .side-card li {
+      margin: 0;
+      color: rgba(235, 240, 255, 0.7);
+      line-height: 1.8;
+    }
+
+    .snippet-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .snippet-item {
+      padding: 14px 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.035);
+      color: rgba(235, 240, 255, 0.74);
+      line-height: 1.8;
+    }
+
+    .snippet-mark {
+      padding: 2px 6px;
+      border-radius: 6px;
+      background: rgba(126, 255, 194, 0.18);
+      color: rgba(126, 255, 194, 0.98);
+    }
+
+    .side-list {
+      display: grid;
+      gap: 12px;
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .source-stack {
+      display: grid;
+      gap: 12px;
+    }
+
+    .source-card {
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.038);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .source-card strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    @media (max-width: 1100px) {
+      .search-hero,
+      .results-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .search-hero-copy h1 {
+        font-size: 42px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="gallery">
+    <section class="board board-d">
+      <div class="aurora aurora-d1"></div>
+      <div class="aurora aurora-d2"></div>
+      <div class="aurora aurora-d3"></div>
+
+      <header class="topbar">
+        <div class="brand">XBlog</div>
+        <nav class="nav">
+          <span>分类</span>
+          <span>精选</span>
+          <span>收录日志</span>
+          <span>工作台</span>
+          <span>搜索</span>
+        </nav>
+        <div class="avatar avatar-small"></div>
+      </header>
+
+      <section class="search-shell">
+        <section class="search-hero card glass">
+          <div class="search-hero-copy">
+            <p class="eyebrow">Search Concept A / AI Summary First</p>
+            <h1>先给判断，再给证据，像一篇被整理过的搜索结果。</h1>
+            <p class="lede">
+              这套原型把 AI 总结放在最显眼的位置，但仍然把命中片段和引用紧贴在下方，
+              适合 XBlog 现在偏“策展阅读”的公开站气质。
+            </p>
+            <div class="meta-pills">
+              <span class="stat-pill">适合首发阶段</span>
+              <span class="stat-pill">结果列表清晰</span>
+              <span class="stat-pill">RAG 感知强但不聊天化</span>
+            </div>
+          </div>
+
+          <div class="search-panel">
+            <div class="search-line">
+              <span class="query-icon">Q</span>
+              <div>
+                <strong>pgvector 语义搜索</strong>
+                <span>搜索已发布文章、摘要、正文块与代码段</span>
+              </div>
+            </div>
+            <div class="filter-row">
+              <span class="filter-pill active">全部结果</span>
+              <span class="filter-pill">原创写作</span>
+              <span class="filter-pill">收录整理</span>
+              <span class="filter-pill">近一年</span>
+            </div>
+            <div class="question-row">
+              <span class="question-pill active">搜索结果</span>
+              <span class="question-pill">AI 总结</span>
+              <span class="question-pill">引用来源</span>
+            </div>
+          </div>
+        </section>
+
+        <article class="answer-card card glass">
+          <div class="answer-head">
+            <div>
+              <p class="eyebrow">MiniMax-M2.7 Summary</p>
+              <h2>AI 总结卡片</h2>
+            </div>
+            <span class="stat-pill">基于 8 个命中 chunk</span>
+          </div>
+          <p class="answer-summary">
+            当前命中内容主要集中在两类文章：一类讨论如何用 <span class="snippet-mark">pgvector</span> 为博客建立
+            语义召回，另一类强调 RAG 回答必须受限于可引用的正文片段。综合这些内容，可以推断 XBlog 更适合先上线
+            “结果列表 + 命中片段 + 简短 AI 总结”的轻量搜索，而不是直接做成开放式问答。如果继续追问索引同步或
+            chunk 切分细节，现有上下文已经足够继续回答；如果追问未发布内容，系统应明确拒答。
+          </p>
+          <div class="citation-row">
+            <span class="citation-chip">[1] 用 pgvector 给博客加上语义搜索</span>
+            <span class="citation-chip">[2] 为什么公开站搜索不该直接做成聊天机器人</span>
+            <span class="citation-chip">[3] 把收录内容切成可检索的知识块</span>
+          </div>
+        </article>
+
+        <section class="results-layout">
+          <div class="results-column">
+            <article class="result-card card glass">
+              <span class="chip">Top 1</span>
+              <h2>用 pgvector 给博客加上语义搜索</h2>
+              <div class="result-meta">
+                <span>系统设计</span>
+                <span>2026-02-12</span>
+                <span>语义召回 + 关键词加权</span>
+                <span>总分 0.93</span>
+              </div>
+              <p>
+                文章从数据库、chunk 索引、召回链路三个层次拆解了站内搜索，最接近这次方案的底座实现。
+              </p>
+              <div class="snippet-list">
+                <div class="snippet-item">
+                  “如果只做 SQL 模糊匹配，搜索可以上线，但它无法理解 <span class="snippet-mark">语义相近</span>
+                  的提问。引入 <span class="snippet-mark">pgvector</span> 后，标题、摘要与正文块就可以统一进入召回层。”
+                </div>
+                <div class="snippet-item">
+                  “RAG 输出应该附着在已命中的 chunk 上，而不是让模型自由补全数据库之外的说法。”
+                </div>
+              </div>
+            </article>
+
+            <article class="result-card card glass">
+              <span class="chip">Top 2</span>
+              <h3>为什么公开站搜索不该直接做成聊天机器人</h3>
+              <div class="result-meta">
+                <span>AI / Agent</span>
+                <span>2026-01-29</span>
+                <span>关键词强命中</span>
+                <span>总分 0.88</span>
+              </div>
+              <p>
+                这篇更像产品原则说明，帮助解释为什么第一版搜索应强调“依据”和“文章入口”，而不是长对话。
+              </p>
+              <div class="snippet-list">
+                <div class="snippet-item">
+                  “真正让用户放心的不是回答更长，而是每一段结论都能回到具体文章与具体片段。”
+                </div>
+                <div class="snippet-item">
+                  “当依据不足时，最好的体验不是硬答，而是明确告诉读者：<span class="snippet-mark">未找到足够依据</span>。”
+                </div>
+              </div>
+            </article>
+
+            <article class="result-card card glass">
+              <span class="chip">Top 3</span>
+              <h3>把收录内容切成可检索的知识块</h3>
+              <div class="result-meta">
+                <span>收录整理</span>
+                <span>2025-12-18</span>
+                <span>片段相似度高</span>
+                <span>总分 0.84</span>
+              </div>
+              <p>
+                如果你更关心 chunk 切分边界，这篇文章会是最直接的补充阅读入口。
+              </p>
+              <div class="snippet-list">
+                <div class="snippet-item">
+                  “标题、列表、引用和代码块都值得单独成 chunk，因为用户经常只记得其中一种表达形式。”
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <aside class="side-column">
+            <article class="side-card card dark">
+              <div class="section-head">
+                <h2>为什么这样排序</h2>
+                <span class="soft-link">检索信号</span>
+              </div>
+              <ol class="side-list">
+                <li>先用 embedding 做语义召回，筛出高相关 chunk。</li>
+                <li>再叠加标题、关键词和发布时间，给排序一个更稳定的公开站结果面。</li>
+                <li>同一文章命中多个 chunk 时合并展示，避免列表被单篇文章刷屏。</li>
+              </ol>
+            </article>
+
+            <article class="side-card card glass">
+              <div class="section-head">
+                <h2>引用来源</h2>
+                <span class="soft-link">仅基于已命中内容</span>
+              </div>
+              <div class="source-stack">
+                <div class="source-card">
+                  <strong>[1] 用 pgvector 给博客加上语义搜索</strong>
+                  <p>命中标题、引言和 3 个正文 chunk。</p>
+                </div>
+                <div class="source-card">
+                  <strong>[2] 为什么公开站搜索不该直接做成聊天机器人</strong>
+                  <p>命中 2 个观点段落，提供“依据不足时拒答”的边界原则。</p>
+                </div>
+                <div class="source-card">
+                  <strong>[3] 把收录内容切成可检索的知识块</strong>
+                  <p>命中 2 个 chunk，补充切分规则和结构化索引方式。</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="side-card card glass">
+              <div class="section-head">
+                <h2>继续搜索</h2>
+                <span class="soft-link">相关问题</span>
+              </div>
+              <div class="tag-cloud">
+                <span class="question-pill">索引如何同步更新</span>
+                <span class="question-pill">代码块要不要单独嵌入</span>
+                <span class="question-pill">RAG 如何限制幻觉</span>
+                <span class="question-pill">如果 embedding 超时怎么办</span>
+              </div>
+            </article>
+          </aside>
+        </section>
+      </section>
+    </section>
+  </main>
+</body>
+</html>

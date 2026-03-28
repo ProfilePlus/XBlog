@@ -99,13 +99,13 @@ export function CategoryEditor({ category, coverAssets }: CategoryEditorProps) {
       pushFeedback({
         tone: "success",
         title: "分类封面已上传",
-        description: "素材已进入封面素材库，并被设为当前分类封面。",
+        description: "这张图已经收进素材库，也已经挂到当前分类名下。",
       });
     } catch (error) {
       pushFeedback({
         tone: "error",
         title: "分类封面上传失败",
-        description: error instanceof Error ? error.message : "请稍后重试。",
+        description: error instanceof Error ? error.message : "这张图还没能带回来，稍后再试一次。",
       });
     } finally {
       setAssetPending(false);
@@ -117,7 +117,7 @@ export function CategoryEditor({ category, coverAssets }: CategoryEditorProps) {
       pushFeedback({
         tone: "error",
         title: "缺少远程图片地址",
-        description: "请先输入一个可访问的图片 URL。",
+        description: "先贴上一张能访问到的图片地址，再把它带回来。",
       });
       return;
     }
@@ -151,13 +151,13 @@ export function CategoryEditor({ category, coverAssets }: CategoryEditorProps) {
       pushFeedback({
         tone: "success",
         title: "远程素材已导入",
-        description: "素材已进入封面素材库，并被设为当前分类封面。",
+        description: "那张远程图片已经被收进素材库，也已经挂到当前分类名下。",
       });
     } catch (error) {
       pushFeedback({
         tone: "error",
         title: "远程素材导入失败",
-        description: error instanceof Error ? error.message : "请稍后重试。",
+        description: error instanceof Error ? error.message : "那张图暂时还没能从远处取回，稍后再试一次。",
       });
     } finally {
       setAssetPending(false);
@@ -184,7 +184,7 @@ export function CategoryEditor({ category, coverAssets }: CategoryEditorProps) {
         pushFeedback({
           tone: "error",
           title: "保存分类失败",
-          description: failure?.message ?? "请稍后重试。",
+          description: failure?.message ?? "这个分类还没能写稳，稍后再试一次。",
         });
         return;
       }
@@ -203,13 +203,13 @@ export function CategoryEditor({ category, coverAssets }: CategoryEditorProps) {
       pushFeedback({
         tone: "success",
         title: "分类已保存",
-        description: "基础信息和策展信息已经写入内容库。",
+        description: "这个分类的名字、摘要和策展信息都已经写回内容库。",
       });
     } catch {
       pushFeedback({
         tone: "error",
         title: "保存分类失败",
-        description: "网络请求没有成功完成，请重试。",
+        description: "这次保存在路上断开了，再试一次就好。",
       });
     } finally {
       setPending(false);
@@ -234,7 +234,7 @@ export function CategoryEditor({ category, coverAssets }: CategoryEditorProps) {
         pushFeedback({
           tone: "error",
           title: "删除分类失败",
-          description: failure?.message ?? "请先处理分类下的关联内容。",
+          description: failure?.message ?? "这个分类下面还牵着文章，先把关联理顺再收走它。",
         });
         return;
       }
@@ -242,7 +242,7 @@ export function CategoryEditor({ category, coverAssets }: CategoryEditorProps) {
       pushFeedback({
         tone: "success",
         title: "分类已删除",
-        description: "已从分类库移除这个分类。",
+        description: "这个分类已经从分类库里退场。",
       });
       router.push("/categories");
       router.refresh();
@@ -250,7 +250,7 @@ export function CategoryEditor({ category, coverAssets }: CategoryEditorProps) {
       pushFeedback({
         tone: "error",
         title: "删除分类失败",
-        description: "网络请求没有成功完成，请重试。",
+        description: "删除动作在路上断开了，再试一次就好。",
       });
     } finally {
       setDeletePending(false);
@@ -262,7 +262,7 @@ export function CategoryEditor({ category, coverAssets }: CategoryEditorProps) {
       <AdminConfirmDialog
         cancelLabel="保留分类"
         confirmLabel="删除分类"
-        description="删除后会立刻从分类库移除。如果分类下还有文章，系统会阻止这次删除。"
+        description="删掉之后，这个分类会立刻从分类库退场；如果它下面还挂着文章，系统会先把你拦下来。"
         onCancel={() => setConfirmOpen(false)}
         onConfirm={() => {
           setConfirmOpen(false);
@@ -270,7 +270,7 @@ export function CategoryEditor({ category, coverAssets }: CategoryEditorProps) {
         }}
         open={confirmOpen}
         pending={deletePending}
-        title="确认删除这个分类？"
+        title="要把这个分类从分类库里收走吗？"
         tone="danger"
       />
       <section className="admin-card admin-editor-toolbar admin-editor-hero">
@@ -281,7 +281,7 @@ export function CategoryEditor({ category, coverAssets }: CategoryEditorProps) {
           </div>
           <h1>{form.name || "未命名分类"}</h1>
           <p className="admin-subtle">
-            分类编辑页现在自己维护保存状态和预览，不再依赖整页刷新，所以保存后不会再额外打一轮当前页面请求。
+            在这里替一个分类定名字、写摘要、挑封面，也替它安放在首页上的语气。
           </p>
         </div>
         <div className="admin-inline-actions admin-editor-toolbar-actions">
@@ -501,9 +501,9 @@ export function CategoryEditor({ category, coverAssets }: CategoryEditorProps) {
 
               <ul className="admin-note-list">
                 <li>文章数量会根据当前分类挂载的文章自动计算，不需要手动维护。</li>
-                <li>Hero 标题、摘要和 Focus Areas 会一起决定首页分类卡片的语气。</li>
-                <li>分类封面优先使用手动选择或手动上传的素材；未指定时会按 slug 和色调自动分配未占用素材。</li>
-                <li>当素材用完且没有手动指定时，首页会回退到纯渐变占位。</li>
+                <li>Hero 标题、短摘要和 Focus Areas 会先出现在首页分类卡片，再落到分类详情页里。</li>
+                <li>手动选中的素材会一直跟着这个分类；不指定时，系统才会替它去认领一张图。</li>
+                <li>如果暂时没有可用素材，这个分类会先用渐变占位，不让首页留下空白。</li>
               </ul>
             </div>
           </section>

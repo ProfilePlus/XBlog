@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>XBlog Search Concepts</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+  <style>
+    .overview-shell {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 22px;
+    }
+
+    .overview-hero,
+    .concept-card {
+      display: grid;
+      gap: 14px;
+      padding: 24px;
+    }
+
+    .overview-hero h1,
+    .concept-card h2 {
+      margin: 0;
+    }
+
+    .overview-hero h1 {
+      max-width: 12ch;
+      font-size: 52px;
+      line-height: 1.04;
+    }
+
+    .concept-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .concept-card p,
+    .concept-card li,
+    .overview-hero p {
+      margin: 0;
+      color: rgba(235, 240, 255, 0.7);
+      line-height: 1.82;
+    }
+
+    .concept-card ul {
+      display: grid;
+      gap: 8px;
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .concept-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: fit-content;
+      padding: 11px 16px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--pink), var(--cyan));
+      color: #08111f;
+      font-weight: 700;
+    }
+
+    @media (max-width: 1100px) {
+      .concept-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .overview-hero h1 {
+        font-size: 42px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="gallery">
+    <section class="board board-d">
+      <div class="aurora aurora-d1"></div>
+      <div class="aurora aurora-d2"></div>
+      <div class="aurora aurora-d3"></div>
+
+      <header class="topbar">
+        <div class="brand">XBlog</div>
+        <nav class="nav">
+          <span>分类</span>
+          <span>精选</span>
+          <span>收录日志</span>
+          <span>工作台</span>
+          <span>搜索原型</span>
+        </nav>
+        <div class="avatar avatar-small"></div>
+      </header>
+
+      <section class="overview-shell">
+        <article class="overview-hero card glass">
+          <p class="eyebrow">Search Prototype Set</p>
+          <h1>三套搜索原型已经放好，可以直接逐个打开比较。</h1>
+          <p class="lede">
+            它们都围绕“公开文章搜索 + AI 总结 + 引用来源”展开，但重点分别偏向策展感、可信度和阅读感。
+          </p>
+        </article>
+
+        <section class="concept-grid">
+          <article class="concept-card card glass">
+            <span class="chip">Concept A</span>
+            <h2>AI Summary First</h2>
+            <p>最像公开站首页的延伸，把 AI 总结放在视觉中心，再承接结果列表和命中片段。</p>
+            <ul>
+              <li>优点：亲和、直观、最容易让用户理解“搜索 + 总结”。</li>
+              <li>代价：排序逻辑没有 B 那么明显。</li>
+            </ul>
+            <a class="concept-link" href="./search-concept-a.html">打开 A</a>
+          </article>
+
+          <article class="concept-card card glass">
+            <span class="chip">Concept B</span>
+            <h2>Evidence First</h2>
+            <p>更像可信检索控制台，强调得分、信号、引用和回答边界，适合二期 RAG 演进。</p>
+            <ul>
+              <li>优点：最利于解释系统为何这样答、为何这样排。</li>
+              <li>代价：气质会比站内其他页面更工具化。</li>
+            </ul>
+            <a class="concept-link" href="./search-concept-b.html">打开 B</a>
+          </article>
+
+          <article class="concept-card card glass">
+            <span class="chip">Concept C</span>
+            <h2>Reading Lens</h2>
+            <p>把搜索做成“找文章并进入阅读”的页面，更贴近 XBlog 现在的内容产品感。</p>
+            <ul>
+              <li>优点：最自然地鼓励点击文章继续深读。</li>
+              <li>代价：证据结构和排序依据不如 B 显性。</li>
+            </ul>
+            <a class="concept-link" href="./search-concept-c.html">打开 C</a>
+          </article>
+        </section>
+      </section>
+    </section>
+  </main>
+</body>
+</html>

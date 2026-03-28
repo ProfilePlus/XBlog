@@ -58,7 +58,7 @@ export function CategoryManager({ categories }: { categories: AdminCategory[] })
     pushFeedback({
       tone: "success",
       title: "分类草稿已创建",
-      description: "正在进入独立编辑页继续完善。",
+      description: "草稿已经落下，接着去独立编辑页把它慢慢写完整。",
     });
     setCreating(false);
     router.push(`/categories/${created.id}`);
@@ -72,10 +72,10 @@ export function CategoryManager({ categories }: { categories: AdminCategory[] })
             <p className="admin-kicker">Category Library</p>
             <h2>分类库</h2>
           </div>
-          <span className="admin-chip">点击卡片进入编辑</span>
+          <span className="admin-chip">点开卡片继续细写</span>
         </div>
         <p className="admin-subtle">
-          列表页只负责浏览结构和进入编辑。点击任意分类卡片，就能进入独立编辑页维护摘要、Hero 标题、策展说明和分类封面。
+          这里先把分类的轮廓排开。点开任意一张卡，才会走进独立编辑页，把摘要、Hero 标题、策展说明和封面写细。
         </p>
       </section>
 
@@ -92,13 +92,13 @@ export function CategoryManager({ categories }: { categories: AdminCategory[] })
           <p className="admin-kicker">New Draft</p>
           <h2>{creating ? "正在创建分类..." : "创建分类草稿"}</h2>
           <p className="admin-subtle">
-            先起草一张分类卡，再进入独立编辑页补完摘要、Hero 标题和策展方向。
+            先替一个新分区立个名字，再走进去慢慢补完它的摘要、封面与策展方向。
           </p>
         </div>
         <div className="admin-create-rail-side">
           <div className="admin-inline-actions">
-            <span className="admin-chip">自动生成 slug</span>
-            <span className="admin-chip">立即跳转编辑</span>
+            <span className="admin-chip">自动落下 slug</span>
+            <span className="admin-chip">创建后直接入页</span>
           </div>
           <span className="admin-status-pill is-info">{creating ? "working" : "new"}</span>
         </div>
@@ -138,7 +138,7 @@ export function CategoryManager({ categories }: { categories: AdminCategory[] })
 
             <div className="admin-category-footer">
               <span className="admin-subtle">{category.heroTitle}</span>
-              <span className="admin-list-arrow">进入编辑</span>
+              <span className="admin-list-arrow">继续细写</span>
             </div>
           </Link>
         ))}

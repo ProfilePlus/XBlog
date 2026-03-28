@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>XBlog Home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+  <style>
+    .search-entry-button {
+      border: 1px solid rgba(126, 255, 194, 0.2);
+      background:
+        linear-gradient(180deg, rgba(126, 255, 194, 0.08), rgba(126, 255, 194, 0.03)),
+        rgba(255, 255, 255, 0.04);
+      color: rgba(239, 251, 245, 0.96);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.05),
+        0 14px 28px rgba(0, 0, 0, 0.12);
+    }
+
+    .search-entry-button:hover {
+      border-color: rgba(126, 255, 194, 0.28);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.06),
+        0 18px 34px rgba(0, 0, 0, 0.16);
+    }
+
+    .search-entry-button::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(126, 255, 194, 0.96);
+      box-shadow: 0 0 0 5px rgba(126, 255, 194, 0.12);
+      margin-right: 2px;
+    }
+
+    .hero-panel .lede {
+      max-width: 54ch;
+    }
+
+    .hero-note-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .hero-note-strip span {
+      display: inline-flex;
+      align-items: center;
+      padding: 9px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.04);
+      color: rgba(235, 240, 255, 0.66);
+      font-size: 12px;
+      letter-spacing: 0.03em;
+    }
+
+    .hero-visual .hero-meta p {
+      margin: 10px 0 0;
+      color: rgba(235, 240, 255, 0.68);
+      line-height: 1.72;
+    }
+
+    .micro-card strong,
+    .mini-essay strong,
+    .log-item strong,
+    .atelier-item strong,
+    .category-card h3 {
+      letter-spacing: -0.02em;
+    }
+  </style>
+</head>
+<body>
+  <main class="gallery">
+    <section class="board board-d">
+      <div class="aurora aurora-d1"></div>
+      <div class="aurora aurora-d2"></div>
+      <div class="aurora aurora-d3"></div>
+
+      <header class="topbar">
+        <div class="brand">XBlog</div>
+        <nav class="nav">
+          <span>分类</span>
+          <span>精选</span>
+          <span>收录日志</span>
+          <span>工作台</span>
+          <span>关于</span>
+        </nav>
+        <div class="avatar avatar-small"></div>
+      </header>
+
+      <section class="showcase-hero">
+        <article class="hero-panel card glass">
+          <p class="eyebrow">XBlog / Aurora Edition</p>
+          <h1>让技术、阅读与沉淀，在同一片极光里发光。</h1>
+          <p class="lede">
+            这里写原创，也收录外部技术文章，把读到的东西慢慢译成自己的知识版图。现在你也可以直接搜索已发布内容，
+            从文章、摘要到正文片段更快找到需要的线索。
+          </p>
+          <div class="actions">
+            <a class="action-button" href="#">进入精选</a>
+            <a class="action-button ghost search-entry-button" href="#">搜索文章</a>
+          </div>
+          <div class="hero-note-strip">
+            <span>4 个主分类</span>
+            <span>12 篇精选文章</span>
+            <span>支持语义检索与 AI 总结</span>
+          </div>
+        </article>
+
+        <div class="feature-stack">
+          <div class="hero-visual-grid">
+            <article class="card glass hero-visual">
+              <div class="cover cover-main"></div>
+              <div class="hero-meta">
+                <span class="chip">封面精选</span>
+                <h2>如何把外部好文章收录成自己的知识资产</h2>
+                <p>从收录、整理到发布，建立一个能长期增长的个人技术阅读系统。</p>
+                <div class="author-row">
+                  <div class="avatar"></div>
+                  <span>Lin / Reading System</span>
+                </div>
+              </div>
+            </article>
+            <div class="side-stack">
+              <article class="micro-card card glass">
+                <div class="cover cover-small cover-pink"></div>
+                <strong>本周新写</strong>
+                <p>交互设计、Agent 工作流与部署实践，继续补齐博客的长期结构。</p>
+              </article>
+              <article class="micro-card card glass">
+                <div class="cover cover-small cover-green"></div>
+                <strong>最近收录</strong>
+                <p>最近收录 7 篇高质量技术文章，等待二次整理与分类沉淀。</p>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="curated-shell">
+        <article class="category-stage card dark">
+          <div class="section-head">
+            <h2>分类书架</h2>
+            <span class="soft-link">按主题阅读</span>
+          </div>
+          <div class="category-grid">
+            <div class="category-card">
+              <div class="cover cover-small cover-blue"></div>
+              <h3>前端交互</h3>
+              <p>布局、动效、信息层级与组件体验，强调“梦幻感里的清晰”。</p>
+              <div class="meta-line">18 篇文章</div>
+            </div>
+            <div class="category-card">
+              <div class="cover cover-small cover-pink"></div>
+              <h3>AI / Agent</h3>
+              <p>OpenClaw、Codex、自动化协作与知识沉淀方法，持续更新中。</p>
+              <div class="meta-line">12 篇文章</div>
+            </div>
+            <div class="category-card">
+              <div class="cover cover-small cover-green"></div>
+              <h3>系统设计</h3>
+              <p>架构、部署、可维护性与后续扩展路线，偏长期视角的工程整理。</p>
+              <div class="meta-line">9 篇文章</div>
+            </div>
+            <div class="category-card">
+              <div class="cover cover-small"></div>
+              <h3>工具流</h3>
+              <p>把日常工具、流程和工作习惯变成稳定可复用的方法论。</p>
+              <div class="meta-line">15 篇文章</div>
+            </div>
+          </div>
+        </article>
+
+        <aside class="atelier card glass">
+          <div class="section-head">
+            <h2>创作工作台</h2>
+            <span class="soft-link">统一管理写作与收录</span>
+          </div>
+          <p>
+            把写作、草稿、收录整理、分类维护固定在同一个稳定位置，
+            避免像旧博客那样入口分散、逻辑跳跃。
+          </p>
+          <div class="atelier-list">
+            <div class="atelier-item">
+              <div class="atelier-icon">写</div>
+              <div>
+                <strong>写新文章</strong>
+                <p>进入专属编辑区，统一处理封面、分类、摘要与发布。</p>
+              </div>
+            </div>
+            <div class="atelier-item">
+              <div class="atelier-icon">收</div>
+              <div>
+                <strong>整理收录内容</strong>
+                <p>把 OpenClaw 带回来的文章转成可沉淀、可检索的知识卡片。</p>
+              </div>
+            </div>
+            <div class="atelier-item">
+              <div class="atelier-icon">管</div>
+              <div>
+                <strong>维护分类体系</strong>
+                <p>分类、标签、封面图和代表文章都在同一工作流内管理。</p>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="editorial-band">
+        <article class="feature-essay card glass">
+          <div class="section-head">
+            <h2>最新文章</h2>
+            <span class="soft-link">像阅读一本数字杂志</span>
+          </div>
+          <div class="mini-essay">
+            <div class="mini-cover cover-pink"></div>
+            <div>
+              <strong>为什么我想重做这个博客</strong>
+              <p>从复杂、分散、朴素，走向惊艳、集中、长期可读。</p>
+            </div>
+          </div>
+          <div class="mini-essay">
+            <div class="mini-cover cover-blue"></div>
+            <div>
+              <strong>梦幻 UI 也应该有稳定秩序</strong>
+              <p>真正高级的视觉并不是堆效果，而是把情绪和结构一起设计好。</p>
+            </div>
+          </div>
+          <div class="mini-essay">
+            <div class="mini-cover cover-green"></div>
+            <div>
+              <strong>收录功能为什么是 XBlog 的核心</strong>
+              <p>它让“看过”变成“拥有过、理解过、重新组织过”。</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="reading-stage card dark">
+          <div class="section-head">
+            <h2>收录日志</h2>
+            <span class="soft-link">把读过的内容留下来</span>
+          </div>
+          <div class="log-item">
+            <div class="mini-cover cover-blue"></div>
+            <div>
+              <strong>UI 系统里的秩序与节奏</strong>
+              <p>已收录，待补“在博客里如何落地”的个人摘要。</p>
+            </div>
+          </div>
+          <div class="log-item">
+            <div class="mini-cover cover-pink"></div>
+            <div>
+              <strong>AI 编排系统的真实边界</strong>
+              <p>已收录，准备归入 Agent 分类并补部署视角评论。</p>
+            </div>
+          </div>
+          <div class="log-item">
+            <div class="mini-cover cover-green"></div>
+            <div>
+              <strong>技术写作的封面叙事感</strong>
+              <p>已收录，计划改写为“如何设计高辨识博客首页”。</p>
+            </div>
+          </div>
+        </article>
+
+        <aside class="profile-tower">
+          <div class="profile-panel card glass">
+            <div class="author-row">
+              <div class="avatar avatar-large"></div>
+              <div>
+                <strong>Lin</strong>
+                <p>把技术文章、工具流和外部好内容编织成自己的知识星图。</p>
+              </div>
+            </div>
+          </div>
+          <div class="quote-panel card glass">
+            <blockquote>“不是收集更多文章，而是把每一次阅读变成自己的理解。”</blockquote>
+            <p>XBlog 的核心不是囤积，而是把好内容沉淀成自己的知识语言。</p>
+          </div>
+        </aside>
+      </section>
+    </section>
+  </main>
+</body>
+</html>

@@ -8,7 +8,7 @@ export default function LoginPage() {
           <p className="admin-kicker">Editorial Core</p>
           <h1>进入 XBlog 内容工作台</h1>
           <p className="admin-subtle admin-login-description">
-            用和公开站一致的深海底板、玻璃面板和极光层次来管理文章、刊期、对象存储与机器令牌。
+            从这里回到内容后台。文章、刊期、对象存储与机器令牌，会在和公开站相同的夜色里排开。
           </p>
 
           <div className="admin-hero-meta">
@@ -21,17 +21,17 @@ export default function LoginPage() {
             <div className="admin-card admin-mini-stat">
               <span className="admin-mini-stat-label">Flow</span>
               <strong>Publish</strong>
-              <p className="admin-subtle">创建、编辑、发布与隐藏在一处完成。</p>
+              <p className="admin-subtle">起稿、修订、发布与收回，都沿着同一条线往前走。</p>
             </div>
             <div className="admin-card admin-mini-stat">
               <span className="admin-mini-stat-label">Storage</span>
               <strong>Probe</strong>
-              <p className="admin-subtle">上传探针和诊断页可直接在浏览器里联调。</p>
+              <p className="admin-subtle">上传探针与诊断结果都留在浏览器里，不必再折回终端确认。</p>
             </div>
             <div className="admin-card admin-mini-stat">
               <span className="admin-mini-stat-label">Issue</span>
               <strong>Curate</strong>
-              <p className="admin-subtle">首页主精选与侧卡策展在刊期面板里统一控制。</p>
+              <p className="admin-subtle">首页这一期的主精选与侧卡，会在刊期面板里一起定下语气。</p>
             </div>
           </div>
         </section>

@@ -34,7 +34,7 @@ export function AdminShell({
               <p className="admin-kicker">Operator</p>
               <strong>{userName}</strong>
               <p className="admin-subtle">
-                单人编辑部工作台，把写作、策展、刊期和发布节奏放到同一块桌面。
+                这里像一张长桌，文章、刊期、收录与发布顺序都在桌面上排开。
               </p>
             </div>
 
@@ -71,7 +71,7 @@ export function AdminShell({
                   <span className="admin-chip admin-shell-signal">Public / Console / API</span>
                 </div>
                 <p className="admin-masthead-title">
-                  像首页一样工作，但更偏向录入、策展、发布和运行状态的日常控制。
+                  这里不只写字，也照看首页、后台与 API 的节奏，让发布这件事始终有序。
                 </p>
               </div>
               <div className="admin-inline-actions admin-masthead-actions">

@@ -562,8 +562,10 @@ describe("api", () => {
     });
 
     expect(assignedAssets.statusCode).toBe(200);
-    expect(assignedAssets.json().total).toBe(1);
-    expect(assignedAssets.json().items[0].id).toBe(assignedAsset?.id);
+    expect(assignedAssets.json().total).toBeGreaterThanOrEqual(1);
+    expect(
+      assignedAssets.json().items.some((entry: { id: string }) => entry.id === assignedAsset?.id),
+    ).toBe(true);
 
     const unassignedAssets = await app.inject({
       method: "GET",
@@ -574,8 +576,46 @@ describe("api", () => {
     });
 
     expect(unassignedAssets.statusCode).toBe(200);
-    expect(unassignedAssets.json().total).toBe(19);
+    expect(unassignedAssets.json().total).toBe(20 - assignedAssets.json().total);
     expect(unassignedAssets.json().items.every((entry: { isAssigned: boolean }) => !entry.isAssigned)).toBe(true);
+  });
+
+  it("marks assets referenced by category cover urls as assigned", async () => {
+    const app = await createTestApp();
+    const login = await app.inject({
+      method: "POST",
+      url: "/v1/auth/login",
+      payload: {
+        email: "admin@xblog.local",
+        password: "admin12345",
+      },
+    });
+
+    const sessionCookie = login.cookies[0];
+    await app.inject({
+      method: "POST",
+      url: "/v1/admin/category-cover-assets/import-library",
+      cookies: {
+        [sessionCookie.name]: sessionCookie.value,
+      },
+    });
+
+    const assignedAssets = await app.inject({
+      method: "GET",
+      url: "/v1/admin/category-cover-assets?page=1&pageSize=20&assignment=assigned",
+      cookies: {
+        [sessionCookie.name]: sessionCookie.value,
+      },
+    });
+
+    expect(assignedAssets.statusCode).toBe(200);
+
+    const frontierAsset = assignedAssets
+      .json()
+      .items.find((entry: { assignedCategorySlug: string | null }) => entry.assignedCategorySlug === "frontend-interaction");
+
+    expect(frontierAsset).toBeDefined();
+    expect(frontierAsset.assignedCategorySlug).toBe("frontend-interaction");
   });
 
   it("returns clear validation errors for invalid article payloads", async () => {

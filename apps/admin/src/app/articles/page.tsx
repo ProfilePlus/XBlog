@@ -75,7 +75,7 @@ export default async function ArticlesPage({
       <AdminPageHeader
         eyebrow="Story Library"
         title="文章"
-        description="这里单独维护全部内容实体，统一浏览原创、收录、发布与隐藏状态。"
+        description="这里收着全部文章。翻页去看时，原创与收录、发布与隐藏都会自己显出边界。"
         actions={
           <Link className="admin-primary-button" href="/articles/new">
             新建文章

@@ -14,7 +14,7 @@ export default async function CategoryCoverAssetsPage() {
       <AdminPageHeader
         eyebrow="Cover Library"
         title="分类封面素材库"
-        description="把平时收集到的极光图集中收进同一页：分页浏览、按色调和占用状态筛选、批量导入删除，再回到分类编辑页分配封面。"
+        description="这里收着分类封面的来处与去处。按色调筛，按占用看，再决定哪张图该被谁认领。"
       >
         <span className="admin-chip">共 {assets.total} 张素材</span>
         <span className="admin-chip">每页 {assets.pageSize} 张</span>

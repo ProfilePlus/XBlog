@@ -14,32 +14,32 @@ const logoVariantOptions: {
   {
     value: "prototype",
     label: "UI 原型版",
-    description: "现在这版 XBlog 字标，最克制，也最接近最初原型。",
+    description: "最克制的一版字标，适合让首页和内页都保持安静。",
   },
   {
     value: "prototype-minimal-glow",
     label: "极简光晕版",
-    description: "保留最初 UI 的极简感，把你喜欢的那道光晕做成更干净的 header 字标。",
+    description: "保留极简字形，只在页头添一层很轻的光。",
   },
   {
     value: "aurora-pulse",
     label: "方案 1 / Aurora Pulse",
-    description: "保留第一版极光脉冲感，偏品牌字标。",
+    description: "让字标更亮一些，适合把品牌感往前推半步。",
   },
   {
     value: "aurora-editorial",
     label: "方案 A / Editorial",
-    description: "更像内容品牌，和首页大标题语气更接近。",
+    description: "字重更稳，适合首页主标题和内容品牌的语气。",
   },
   {
     value: "aurora-script-lockup",
     label: "方案 B / Script",
-    description: "更梦幻、更飘逸，字形带一点书写感。",
+    description: "字形更柔一些，适合更轻、更缓的品牌语气。",
   },
   {
     value: "aurora-pill-brand",
     label: "方案 C / Pill",
-    description: "更像站点组件本身，和顶部胶囊导航更统一。",
+    description: "更贴近胶囊导航和按钮的语言，像站点自己长出来的一部分。",
   },
 ];
 
@@ -85,7 +85,7 @@ export function HomeIssueForm({
         pushFeedback({
           tone: "error",
           title: "刊期保存失败",
-          description: failure?.message ?? "请检查策展位和刊期字段后重试。",
+          description: failure?.message ?? "这一期还没能落稳，看看刊号和策展位是不是还有空缺。",
         });
         return;
       }
@@ -93,13 +93,13 @@ export function HomeIssueForm({
       pushFeedback({
         tone: "success",
         title: "刊期已保存",
-        description: "首页 hero 和刊期信息已经更新。",
+        description: "首页这一期的 Hero 和刊期信息都已经换上新的版本。",
       });
     } catch {
       pushFeedback({
         tone: "error",
         title: "刊期保存失败",
-        description: "网络请求没有成功完成，请重试。",
+        description: "这次保存在路上断开了，再试一次就好。",
       });
     } finally {
       setPending(false);
@@ -133,7 +133,7 @@ export function HomeIssueForm({
           <div className="admin-logo-variant-group">
             <div className="admin-field-head">
               <strong>站点 Logo 方案</strong>
-              <span>先保留 6 套方案轮流试用，保存后首页和二级页头部都会同步切换。</span>
+              <span>选定之后，首页和二级页的页头都会一起换上这套字标，保存后立刻生效。</span>
             </div>
             <div className="admin-logo-variant-grid">
               {logoVariantOptions.map((option) => (

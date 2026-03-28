@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>XBlog Search Entry A</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+  <style>
+    .entry-shell {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 22px;
+    }
+
+    .entry-note,
+    .hero-panel,
+    .hero-visual {
+      position: relative;
+    }
+
+    .entry-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(110, 231, 255, 0.22);
+      background:
+        linear-gradient(180deg, rgba(110, 231, 255, 0.1), rgba(110, 231, 255, 0.04)),
+        rgba(255, 255, 255, 0.04);
+      color: rgba(235, 248, 255, 0.94);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+    }
+
+    .entry-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(110, 231, 255, 0.92);
+      box-shadow: 0 0 0 5px rgba(110, 231, 255, 0.12);
+    }
+
+    .callout {
+      position: absolute;
+      right: 0;
+      top: calc(100% + 12px);
+      width: 240px;
+      padding: 12px 14px;
+      border-radius: 18px;
+      border: 1px solid rgba(110, 231, 255, 0.18);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.018)),
+        rgba(8, 17, 31, 0.9);
+      color: rgba(235, 240, 255, 0.74);
+      font-size: 12px;
+      line-height: 1.7;
+      box-shadow: 0 18px 36px rgba(0, 0, 0, 0.18);
+    }
+
+    .callout::before {
+      content: "";
+      position: absolute;
+      top: -8px;
+      right: 34px;
+      width: 14px;
+      height: 14px;
+      transform: rotate(45deg);
+      border-left: 1px solid rgba(110, 231, 255, 0.18);
+      border-top: 1px solid rgba(110, 231, 255, 0.18);
+      background: rgba(8, 17, 31, 0.94);
+    }
+
+    .mini-hero {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1.02fr 0.98fr;
+      gap: 20px;
+    }
+
+    .mini-hero .hero-panel {
+      padding: 24px;
+    }
+
+    .mini-hero .hero-panel h1 {
+      margin: 10px 0 14px;
+      max-width: 11ch;
+      font-size: 52px;
+      line-height: 1.02;
+    }
+
+    .mini-hero .hero-visual {
+      padding: 20px;
+    }
+
+    .mini-hero .cover-main {
+      min-height: 320px;
+    }
+
+    .summary-card {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .summary-item {
+      display: grid;
+      gap: 8px;
+      padding: 18px;
+    }
+
+    .summary-item strong {
+      font-size: 16px;
+    }
+
+    .summary-item p {
+      margin: 0;
+      color: rgba(235, 240, 255, 0.68);
+      line-height: 1.75;
+    }
+
+    @media (max-width: 1100px) {
+      .mini-hero,
+      .summary-card {
+        grid-template-columns: 1fr;
+      }
+
+      .mini-hero .hero-panel h1 {
+        font-size: 42px;
+      }
+
+      .callout {
+        position: static;
+        width: auto;
+        margin-top: 12px;
+      }
+
+      .callout::before {
+        content: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="gallery">
+    <section class="board board-d">
+      <div class="aurora aurora-d1"></div>
+      <div class="aurora aurora-d2"></div>
+      <div class="aurora aurora-d3"></div>
+
+      <div class="entry-shell">
+        <header class="topbar">
+          <div class="brand">XBlog</div>
+          <nav class="nav">
+            <span>分类</span>
+            <span>精选</span>
+            <span>收录日志</span>
+            <span>工作台</span>
+            <span>关于</span>
+          </nav>
+          <div class="topbar-actions entry-note">
+            <a class="entry-badge" href="./search-concept-a.html">
+              <span class="entry-dot"></span>
+              搜索文章
+            </a>
+            <div class="avatar-orbit">
+              <div class="avatar avatar-small"></div>
+            </div>
+            <div class="callout">
+              方案 A：只在头部右侧增加一个轻量入口。主导航不变，Hero 不变，点击后跳到独立 `/search` 页面。
+            </div>
+          </div>
+        </header>
+
+        <section class="mini-hero">
+          <article class="hero-panel card glass">
+            <p class="eyebrow">Entry Concept A / Header Pill</p>
+            <h1>首页只加一个搜索入口，不改首页本身的叙事结构。</h1>
+            <p class="lede">
+              搜索作为轻量能力挂在头部右侧，既能被看到，又不会把首页的策展气质拉向“工具台”。
+            </p>
+            <div class="actions">
+              <a class="action-button" href="#">进入精选</a>
+              <a class="action-button ghost" href="#">查看分类</a>
+            </div>
+          </article>
+
+          <article class="hero-visual card glass">
+            <div class="cover cover-main"></div>
+            <div class="hero-meta">
+              <span class="chip">最小改动</span>
+              <h2>搜索入口在，但首页依然是首页。</h2>
+              <p class="lede">用户需要搜索时知道去哪，没搜索需求时不会被打断。</p>
+            </div>
+          </article>
+        </section>
+
+        <section class="summary-card">
+          <article class="summary-item card glass">
+            <strong>对布局影响</strong>
+            <p>最低。主要只动头部右侧 actions，不改变中间导航和 Hero 结构。</p>
+          </article>
+          <article class="summary-item card glass">
+            <strong>适合现在吗</strong>
+            <p>最适合。尤其适合你想先把搜索上起来，但不想首页一下子变得很重。</p>
+          </article>
+          <article class="summary-item card glass">
+            <strong>推荐程度</strong>
+            <p>如果你最在意“克制”和“低风险接入”，这套是首选。</p>
+          </article>
+        </section>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

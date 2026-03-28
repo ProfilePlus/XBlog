@@ -50,7 +50,7 @@ export function TokenManager({ initialTokens }: { initialTokens: AdminToken[] })
         pushFeedback({
           tone: "error",
           title: "创建令牌失败",
-          description: failure?.message ?? "请稍后再试。",
+          description: failure?.message ?? "这枚令牌还没能签发出来，稍后再试一次。",
         });
         return;
       }
@@ -61,14 +61,14 @@ export function TokenManager({ initialTokens }: { initialTokens: AdminToken[] })
       pushFeedback({
         tone: "success",
         title: "机器令牌已创建",
-        description: "明文令牌只会显示这一次，请立即保存。",
+        description: "明文只会在这里亮一次，最好现在就把它收好。",
         ttlMs: 5600,
       });
     } catch {
       pushFeedback({
         tone: "error",
         title: "创建令牌失败",
-        description: "网络请求没有成功完成，请重试。",
+        description: "这次签发在路上断开了，再试一次就好。",
       });
     } finally {
       setPending(false);
@@ -88,7 +88,7 @@ export function TokenManager({ initialTokens }: { initialTokens: AdminToken[] })
         pushFeedback({
           tone: "error",
           title: "撤销令牌失败",
-          description: failure?.message ?? "请稍后再试。",
+          description: failure?.message ?? "这枚令牌暂时还没能停下来，稍后再试一次。",
         });
         return;
       }
@@ -97,13 +97,13 @@ export function TokenManager({ initialTokens }: { initialTokens: AdminToken[] })
       pushFeedback({
         tone: "success",
         title: "令牌已撤销",
-        description: "这个机器令牌现在不能再继续调用写接口。",
+        description: "它已经停笔，之后不会再继续调用写接口。",
       });
     } catch {
       pushFeedback({
         tone: "error",
         title: "撤销令牌失败",
-        description: "网络请求没有成功完成，请重试。",
+        description: "撤销动作在路上断开了，再试一次就好。",
       });
     } finally {
       setRevokeId(null);
@@ -123,7 +123,7 @@ export function TokenManager({ initialTokens }: { initialTokens: AdminToken[] })
         pushFeedback({
           tone: "error",
           title: "删除令牌失败",
-          description: failure?.message ?? "请稍后再试。",
+          description: failure?.message ?? "这枚令牌还没能从列表里撤下，稍后再试一次。",
         });
         return;
       }
@@ -133,13 +133,13 @@ export function TokenManager({ initialTokens }: { initialTokens: AdminToken[] })
       pushFeedback({
         tone: "success",
         title: "令牌已删除",
-        description: "这个机器令牌已从控制台移除，也不能再继续调用写接口。",
+        description: "它已经从控制台退场，也不会再继续调用写接口。",
       });
     } catch {
       pushFeedback({
         tone: "error",
         title: "删除令牌失败",
-        description: "网络请求没有成功完成，请重试。",
+        description: "删除动作在路上断开了，再试一次就好。",
       });
     } finally {
       setDeleteId(null);
@@ -153,8 +153,8 @@ export function TokenManager({ initialTokens }: { initialTokens: AdminToken[] })
         confirmLabel="删除令牌"
         description={
           confirmToken?.isActive
-            ? "删除后这个机器令牌会立刻失效，并永久从令牌列表中移除。"
-            : "删除后这个已撤销令牌会永久从令牌列表中移除。"
+            ? "删掉之后，这枚仍在生效的令牌会立刻停下，并从列表里彻底退场。"
+            : "删掉之后，这枚已撤销的令牌会从列表里彻底退场。"
         }
         onCancel={() => setConfirmToken(null)}
         onConfirm={() => {
@@ -165,38 +165,71 @@ export function TokenManager({ initialTokens }: { initialTokens: AdminToken[] })
         }}
         open={Boolean(confirmToken)}
         pending={Boolean(confirmToken && deleteId === confirmToken.id)}
-        title={confirmToken?.isActive ? "确认删除这个启用中的令牌吗？" : "确认删除这个已撤销令牌吗？"}
+        title={confirmToken?.isActive ? "要让这枚启用中的令牌退场吗？" : "要把这枚已撤销的令牌彻底收走吗？"}
         tone="danger"
       />
       <section className="admin-token-hero">
-        <article className="admin-card admin-token-create-card">
-          <div className="admin-section-head">
-            <div>
-              <p className="admin-kicker">New Machine Token</p>
-              <h2>创建新令牌</h2>
-              <p className="admin-subtle">保留现在的接入流程，但把创建动作收进更像控制台入口的首屏区域。</p>
-            </div>
-            <button className="admin-primary-button" onClick={createToken} type="button">
-              {pending ? "创建中..." : "创建令牌"}
-            </button>
-          </div>
-          <div className="admin-form">
-            <label>
-              新令牌名称
-              <input value={label} onChange={(event) => setLabel(event.target.value)} />
-            </label>
-            <div className="admin-token-scope-row">
-              <span className="admin-status-pill is-info">ingest:publish</span>
-              <p className="admin-subtle">默认会授予当前 OpenClaw 导入链路需要的写入范围。</p>
-            </div>
-            {plainText ? (
-              <div className="admin-banner is-success">
-                请立即保存这串明文令牌：
-                <code className="admin-inline-code">{plainText}</code>
+        <div className="admin-token-create-stack">
+          <article className="admin-card admin-token-create-card">
+            <div className="admin-section-head">
+              <div>
+                <p className="admin-kicker">New Machine Token</p>
+                <h2>创建新令牌</h2>
+                <p className="admin-subtle">在这里签发一枚新的写入令牌，好让 OpenClaw 或别的导入程序继续落笔。</p>
               </div>
-            ) : null}
-          </div>
-        </article>
+              <button className="admin-primary-button" onClick={createToken} type="button">
+                {pending ? "创建中..." : "创建令牌"}
+              </button>
+            </div>
+            <div className="admin-form">
+              <label>
+                新令牌名称
+                <input value={label} onChange={(event) => setLabel(event.target.value)} />
+              </label>
+              <div className="admin-token-scope-row">
+                <span className="admin-status-pill is-info">ingest:publish</span>
+                <p className="admin-subtle">它允许调用导入接口，把外部整理好的内容安放进 XBlog。</p>
+              </div>
+              {plainText ? (
+                <div className="admin-banner is-success">
+                  请立即保存这串明文令牌：
+                  <code className="admin-inline-code">{plainText}</code>
+                </div>
+              ) : null}
+            </div>
+          </article>
+
+          <article className="admin-card admin-token-context-card">
+            <div className="admin-section-head">
+              <div>
+                <p className="admin-kicker">Access Flow</p>
+                <h2>接入摘要</h2>
+              </div>
+              <span className="admin-chip">OpenClaw</span>
+            </div>
+            <div className="admin-token-context-grid">
+              <div className="admin-kv-row">
+                <span className="admin-subtle">默认 scope</span>
+                <strong>ingest:publish</strong>
+              </div>
+              <div className="admin-kv-row">
+                <span className="admin-subtle">启用中</span>
+                <strong>{activeCount} 枚</strong>
+              </div>
+              <div className="admin-kv-row">
+                <span className="admin-subtle">最近活跃</span>
+                <strong>{recentlyUsedCount} 个接入点</strong>
+              </div>
+              <div className="admin-kv-row">
+                <span className="admin-subtle">当前名称</span>
+                <strong>{label || "未命名"}</strong>
+              </div>
+            </div>
+            <p className="admin-subtle">
+              明文令牌只会短暂出现一次，最好立刻写入 OpenClaw 环境变量，再让导入链路跑一轮。
+            </p>
+          </article>
+        </div>
 
         <article className="admin-card admin-token-policy-card">
           <div className="admin-section-head">
@@ -238,7 +271,7 @@ export function TokenManager({ initialTokens }: { initialTokens: AdminToken[] })
           <div>
             <p className="admin-kicker">Issued Tokens</p>
             <h2>现有令牌</h2>
-            <p className="admin-subtle">列表动作没有变化，只把状态、使用时间和轮换信息收得更清楚。</p>
+            <p className="admin-subtle">每一枚令牌的前缀、最近一次使用和它是否还在生效，都留在这里给你回看。</p>
           </div>
           <div className="admin-inline-actions">
             <span className="admin-chip">总计 {tokens.length}</span>

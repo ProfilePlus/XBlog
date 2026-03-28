@@ -14,7 +14,7 @@ export default async function CategoriesPage() {
       <AdminPageHeader
         eyebrow="Taxonomy"
         title="分类管理"
-        description="先浏览分类卡片，再进入独立编辑页维护摘要、Hero 标题和长说明，让信息层级比大表单更清晰。"
+        description="先看每个分类的名字、摘要与封面，再走进去替它写清长说明与代表文章。"
       >
         <span className="admin-chip">共 {categories.length} 个主分类</span>
       </AdminPageHeader>

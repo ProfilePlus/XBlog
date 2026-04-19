@@ -137,7 +137,7 @@ export default async function HomePage() {
         display: "flex",
         gap: "80px",
         alignItems: "flex-start",
-        paddingTop: "40px",
+        paddingTop: "120px",
       }}>
         <div className="section-header-sticky" style={{
           width: "280px",
@@ -147,39 +147,41 @@ export default async function HomePage() {
         }}>
           <h2 style={{
             fontFamily: "Playfair Display, serif",
-            fontSize: "32px",
+            fontSize: "48px",
             color: "#CCCCCC",
             margin: 0,
+            lineHeight: "1.2",
           }}>
             精选文章
           </h2>
           <p style={{
             fontFamily: "Inter, sans-serif",
-            fontSize: "14px",
+            fontSize: "16px",
             color: "#666666",
             margin: 0,
+            lineHeight: "1.6",
           }}>
             精选随笔与演讲
           </p>
         </div>
 
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "24px" }}>
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "40px" }}>
           {data.featuredArticles.slice(0, 6).map((article) => (
             <Link
               key={article.href}
               href={article.href}
               className="article-card"
             >
-              <div style={{ width: "400px", flexShrink: 0 }}>
+              <div style={{ width: "480px", flexShrink: 0 }}>
                 {article.coverUrl ? (
                   <Image
                     src={article.coverUrl}
                     alt={article.title}
-                    width={400}
-                    height={200}
+                    width={480}
+                    height={320}
                     style={{
                       width: "100%",
-                      height: "200px",
+                      height: "320px",
                       objectFit: "cover",
                       borderRadius: "8px",
                     }}
@@ -187,7 +189,7 @@ export default async function HomePage() {
                 ) : (
                   <div style={{
                     width: "100%",
-                    height: "200px",
+                    height: "320px",
                     background: "#1A1A1A",
                     borderRadius: "8px",
                   }} />
@@ -198,31 +200,33 @@ export default async function HomePage() {
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
-                gap: "12px",
+                gap: "16px",
               }}>
                 <p style={{
                   fontFamily: "Inter, sans-serif",
-                  fontSize: "12px",
+                  fontSize: "11px",
                   color: "#666666",
-                  letterSpacing: "1px",
+                  letterSpacing: "1.5px",
                   margin: 0,
+                  textTransform: "uppercase",
                 }}>
                   {article.category}
                 </p>
                 <h3 style={{
                   fontFamily: "Newsreader, serif",
-                  fontSize: "24px",
+                  fontSize: "28px",
                   color: "#CCCCCC",
                   lineHeight: "1.3",
                   margin: 0,
+                  fontWeight: "400",
                 }}>
                   {article.title}
                 </h3>
                 <p style={{
                   fontFamily: "Inter, sans-serif",
-                  fontSize: "14px",
+                  fontSize: "15px",
                   color: "#888888",
-                  lineHeight: "1.6",
+                  lineHeight: "1.7",
                   margin: 0,
                 }}>
                   {article.description}
@@ -239,7 +243,7 @@ export default async function HomePage() {
         display: "flex",
         gap: "80px",
         alignItems: "flex-start",
-        paddingTop: "60px",
+        paddingTop: "120px",
       }}>
         <div className="section-header-sticky" style={{
           width: "280px",
@@ -249,9 +253,10 @@ export default async function HomePage() {
         }}>
           <h2 style={{
             fontFamily: "Playfair Display, serif",
-            fontSize: "32px",
+            fontSize: "48px",
             color: "#CCCCCC",
             margin: 0,
+            lineHeight: "1.2",
           }}>
             最近在做
           </h2>
@@ -322,7 +327,7 @@ export default async function HomePage() {
         display: "flex",
         gap: "80px",
         alignItems: "flex-start",
-        paddingTop: "60px",
+        paddingTop: "120px",
       }}>
         <div className="section-header-sticky" style={{
           width: "280px",
@@ -332,9 +337,10 @@ export default async function HomePage() {
         }}>
           <h2 style={{
             fontFamily: "Playfair Display, serif",
-            fontSize: "32px",
+            fontSize: "48px",
             color: "#CCCCCC",
             margin: 0,
+            lineHeight: "1.2",
           }}>
             工具箱
           </h2>
@@ -380,7 +386,7 @@ export default async function HomePage() {
         display: "flex",
         gap: "80px",
         alignItems: "flex-start",
-        paddingTop: "60px",
+        paddingTop: "120px",
       }}>
         <div className="section-header-sticky" style={{
           width: "280px",
@@ -390,17 +396,19 @@ export default async function HomePage() {
         }}>
           <h2 style={{
             fontFamily: "Playfair Display, serif",
-            fontSize: "32px",
+            fontSize: "48px",
             color: "#CCCCCC",
             margin: 0,
+            lineHeight: "1.2",
           }}>
             归档
           </h2>
           <p style={{
             fontFamily: "Inter, sans-serif",
-            fontSize: "14px",
+            fontSize: "16px",
             color: "#666666",
             margin: 0,
+            lineHeight: "1.6",
           }}>
             2009 — 至今
           </p>
@@ -442,24 +450,31 @@ export default async function HomePage() {
       <section id="about" style={{
         width: "960px",
         display: "flex",
-        flexDirection: "column",
-        gap: "32px",
-        paddingTop: "80px",
+        gap: "80px",
+        alignItems: "flex-start",
+        paddingTop: "160px",
       }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div style={{
+          width: "280px",
+          display: "flex",
+          flexDirection: "column",
+          gap: "16px",
+        }}>
           <h2 style={{
             fontFamily: "Playfair Display, serif",
-            fontSize: "32px",
+            fontSize: "48px",
             color: "#CCCCCC",
             margin: 0,
+            lineHeight: "1.2",
           }}>
             关于
           </h2>
           <p style={{
             fontFamily: "Inter, sans-serif",
-            fontSize: "14px",
+            fontSize: "16px",
             color: "#666666",
             margin: 0,
+            lineHeight: "1.6",
           }}>
             简历与联系
           </p>

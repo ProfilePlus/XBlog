@@ -15,11 +15,14 @@ body {
   gap: 60px;
   align-items: center;
   text-decoration: none;
-  transition: opacity 0.2s ease;
+  padding: 20px;
+  margin: -20px;
+  border-radius: 12px;
+  transition: background-color 0.2s ease;
 }
 
 .article-card:hover {
-  opacity: 0.6;
+  background-color: rgba(255, 255, 255, 0.03);
 }
 
 .section-header-sticky {

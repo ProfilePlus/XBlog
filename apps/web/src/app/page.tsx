@@ -147,7 +147,7 @@ export default async function HomePage() {
         }}>
           <h2 style={{
             fontFamily: "Georgia, serif",
-            fontSize: "56px",
+            fontSize: "52px",
             fontWeight: "400",
             color: "#FFFFFF",
             margin: 0,
@@ -157,7 +157,7 @@ export default async function HomePage() {
           </h2>
           <p style={{
             fontFamily: "system-ui, sans-serif",
-            fontSize: "14px",
+            fontSize: "15px",
             color: "#999999",
             margin: 0,
             lineHeight: "1.4",
@@ -184,6 +184,7 @@ export default async function HomePage() {
                     height: "240px",
                     objectFit: "cover",
                     flexShrink: 0,
+                    borderRadius: "6px",
                   }}
                 />
               ) : (
@@ -192,18 +193,19 @@ export default async function HomePage() {
                   height: "240px",
                   background: "#1A1A1A",
                   flexShrink: 0,
+                  borderRadius: "6px",
                 }} />
               )}
               <div style={{
                 display: "flex",
                 flexDirection: "column",
-                gap: "6px",
+                gap: "8px",
                 justifyContent: "center",
                 maxWidth: "280px",
               }}>
                 <h3 style={{
                   fontFamily: "Georgia, serif",
-                  fontSize: "22px",
+                  fontSize: "23px",
                   fontWeight: "400",
                   color: "#FFFFFF",
                   lineHeight: "1.3",
@@ -213,7 +215,7 @@ export default async function HomePage() {
                 </h3>
                 <p style={{
                   fontFamily: "system-ui, sans-serif",
-                  fontSize: "14px",
+                  fontSize: "15px",
                   color: "#999999",
                   lineHeight: "1.5",
                   margin: 0,
@@ -222,10 +224,10 @@ export default async function HomePage() {
                 </p>
                 <p style={{
                   fontFamily: "system-ui, sans-serif",
-                  fontSize: "12px",
+                  fontSize: "13px",
                   color: "#666666",
                   margin: 0,
-                  marginTop: "4px",
+                  marginTop: "2px",
                 }}>
                   2025
                 </p>

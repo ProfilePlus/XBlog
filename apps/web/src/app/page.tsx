@@ -66,7 +66,6 @@ export default async function HomePage() {
         width: "900px",
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
         gap: "24px",
         padding: "60px 0 40px",
       }}>
@@ -74,8 +73,6 @@ export default async function HomePage() {
           fontFamily: "Playfair Display, serif",
           fontSize: "48px",
           color: "#CCCCCC",
-          textAlign: "center",
-          width: "640px",
           margin: 0,
         }}>
           Alex Plum
@@ -84,8 +81,6 @@ export default async function HomePage() {
           fontFamily: "Inter, sans-serif",
           fontSize: "18px",
           color: "#666666",
-          textAlign: "center",
-          width: "640px",
           margin: 0,
         }}>
           程序员 · 合肥
@@ -95,11 +90,10 @@ export default async function HomePage() {
           fontSize: "18px",
           color: "#888888",
           lineHeight: "1.7",
-          textAlign: "center",
-          width: "680px",
           margin: 0,
+          maxWidth: "720px",
         }}>
-          我在代码的迷宫里游荡多年，Java、Spring、K8s 是我熟悉的路径。AI 的到来像一面镜子，映照出能力的边界，也映照出未来的不确定。我既着迷于它赋予的力量，又困惑于它带来的焦虑——这种矛盾本身，或许就是这个时代的真实写照。这个博客是我与 AI 协作的第一次尝试，记录技术、思考与成长，也是对一个问题的持续追问：在算法与人之间，我们如何找到自己的位置？
+          Hi，我是 Alex Plum。写了多年 Java，搞过 Spring、K8s、微服务那一套。去年开始用 AI 写代码，效率翻倍，但也常常焦虑——它到底是工具还是替代品？这个博客是我用 Claude Code 做的第一个完整项目，记录技术、工具和思考。不知道未来会怎样，但至少现在，我还在写代码。
         </p>
         <div style={{ display: "flex", gap: "24px" }}>
           <a href="mailto:943483255@qq.com" style={{

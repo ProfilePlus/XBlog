@@ -12,18 +12,14 @@ body {
 
 .article-card {
   display: flex;
-  gap: 24px;
-  padding: 20px;
-  background: #0A0A0A;
-  border: 1px solid #1A1A1A;
-  border-radius: 12px;
+  gap: 40px;
+  align-items: center;
   text-decoration: none;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: opacity 0.3s ease;
 }
 
 .article-card:hover {
-  border-color: rgba(255, 255, 255, 0.3);
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+  opacity: 0.7;
 }
 
 .section-header-sticky {

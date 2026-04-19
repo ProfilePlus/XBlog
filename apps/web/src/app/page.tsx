@@ -143,93 +143,89 @@ export default async function HomePage() {
           width: "280px",
           display: "flex",
           flexDirection: "column",
-          gap: "16px",
+          gap: "12px",
         }}>
           <h2 style={{
-            fontFamily: "Playfair Display, serif",
-            fontSize: "48px",
-            color: "#CCCCCC",
+            fontFamily: "Georgia, serif",
+            fontSize: "72px",
+            fontWeight: "400",
+            color: "#FFFFFF",
             margin: 0,
-            lineHeight: "1.2",
+            lineHeight: "1",
           }}>
-            精选文章
+            Writing
           </h2>
           <p style={{
-            fontFamily: "Inter, sans-serif",
-            fontSize: "16px",
-            color: "#666666",
+            fontFamily: "system-ui, sans-serif",
+            fontSize: "15px",
+            color: "#999999",
             margin: 0,
-            lineHeight: "1.6",
+            lineHeight: "1.5",
           }}>
-            精选随笔与演讲
+            Selected essays<br />and lectures
           </p>
         </div>
 
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "40px" }}>
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "60px" }}>
           {data.featuredArticles.slice(0, 6).map((article) => (
             <Link
               key={article.href}
               href={article.href}
               className="article-card"
             >
-              <div style={{ width: "480px", flexShrink: 0 }}>
-                {article.coverUrl ? (
-                  <Image
-                    src={article.coverUrl}
-                    alt={article.title}
-                    width={480}
-                    height={320}
-                    style={{
-                      width: "100%",
-                      height: "320px",
-                      objectFit: "cover",
-                      borderRadius: "8px",
-                    }}
-                  />
-                ) : (
-                  <div style={{
-                    width: "100%",
-                    height: "320px",
-                    background: "#1A1A1A",
-                    borderRadius: "8px",
-                  }} />
-                )}
-              </div>
+              {article.coverUrl ? (
+                <Image
+                  src={article.coverUrl}
+                  alt={article.title}
+                  width={400}
+                  height={300}
+                  style={{
+                    width: "400px",
+                    height: "300px",
+                    objectFit: "cover",
+                    flexShrink: 0,
+                  }}
+                />
+              ) : (
+                <div style={{
+                  width: "400px",
+                  height: "300px",
+                  background: "#1A1A1A",
+                  flexShrink: 0,
+                }} />
+              )}
               <div style={{
-                flex: 1,
                 display: "flex",
                 flexDirection: "column",
+                gap: "8px",
                 justifyContent: "center",
-                gap: "16px",
               }}>
-                <p style={{
-                  fontFamily: "Inter, sans-serif",
-                  fontSize: "11px",
-                  color: "#666666",
-                  letterSpacing: "1.5px",
-                  margin: 0,
-                  textTransform: "uppercase",
-                }}>
-                  {article.category}
-                </p>
                 <h3 style={{
-                  fontFamily: "Newsreader, serif",
-                  fontSize: "28px",
-                  color: "#CCCCCC",
+                  fontFamily: "Georgia, serif",
+                  fontSize: "24px",
+                  fontWeight: "400",
+                  color: "#FFFFFF",
                   lineHeight: "1.3",
                   margin: 0,
-                  fontWeight: "400",
                 }}>
                   {article.title}
                 </h3>
                 <p style={{
-                  fontFamily: "Inter, sans-serif",
+                  fontFamily: "system-ui, sans-serif",
                   fontSize: "15px",
-                  color: "#888888",
-                  lineHeight: "1.7",
+                  color: "#999999",
+                  lineHeight: "1.5",
                   margin: 0,
                 }}>
                   {article.description}
+                </p>
+                <p style={{
+                  fontFamily: "system-ui, sans-serif",
+                  fontSize: "13px",
+                  color: "#666666",
+                  margin: 0,
+                }}>
+                  {article.category}
                 </p>
               </div>
             </Link>

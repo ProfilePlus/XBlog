@@ -147,8 +147,8 @@ export default async function HomePage() {
         }}>
           <h2 style={{
             fontFamily: "Georgia, serif",
-            fontSize: "52px",
-            fontWeight: "400",
+            fontSize: "48px",
+            fontWeight: "300",
             color: "#FFFFFF",
             margin: 0,
             lineHeight: "1.1",
@@ -157,7 +157,7 @@ export default async function HomePage() {
           </h2>
           <p style={{
             fontFamily: "system-ui, sans-serif",
-            fontSize: "15px",
+            fontSize: "14px",
             color: "#999999",
             margin: 0,
             lineHeight: "1.4",

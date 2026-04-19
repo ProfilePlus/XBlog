@@ -144,7 +144,7 @@ export async function getHomePageData(): Promise<HomePageData> {
       tone: article.tone,
       coverUrl: article.coverUrl,
       href: articleHref(article.slug),
-      category: article.category.name,
+      category: article.categoryName,
       authorLabel: `${article.authorDisplayName} / ${article.authorRoleLabel}`,
     })),
     topicShelves: payload.categoryShelves.map(toTopicShelf),

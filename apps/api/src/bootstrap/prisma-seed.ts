@@ -88,7 +88,7 @@ export async function seedPrismaFromBootstrap(prisma: PrismaClient, options: See
 
     const publishedAt = displayDateToDate(article.publishedAt) ?? new Date();
     const sourceUrl = article.kind === "收录整理" ? `https://curated.local/${article.slug}` : null;
-    const coverUrl = coverImages[index % coverImages.length];
+    const coverUrl = index < coverImages.length ? coverImages[index] : coverImages[index % coverImages.length];
 
     const created = await prisma.article.upsert({
       where: { slug: article.slug },

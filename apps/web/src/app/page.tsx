@@ -66,7 +66,7 @@ export default async function HomePage() {
         width: "900px",
         display: "flex",
         flexDirection: "column",
-        gap: "24px",
+        gap: "20px",
         padding: "60px 0 40px",
       }}>
         <h1 style={{
@@ -78,14 +78,6 @@ export default async function HomePage() {
           Alex Plum
         </h1>
         <p style={{
-          fontFamily: "Inter, sans-serif",
-          fontSize: "18px",
-          color: "#666666",
-          margin: 0,
-        }}>
-          程序员 · 合肥
-        </p>
-        <p style={{
           fontFamily: "Newsreader, serif",
           fontSize: "18px",
           color: "#888888",
@@ -93,9 +85,21 @@ export default async function HomePage() {
           margin: 0,
           maxWidth: "720px",
         }}>
-          Hi，我是 Alex Plum。写了多年 Java，搞过 Spring、K8s、微服务那一套。去年开始用 AI 写代码，效率翻倍，但也常常焦虑——它到底是工具还是替代品？这个博客是我用 Claude Code 做的第一个完整项目，记录技术、工具和思考。不知道未来会怎样，但至少现在，我还在写代码。
+          后端开发者。构建系统，也观察系统。<br />
+          在技术不断替人作答的时代，继续追问人的位置。
         </p>
-        <div style={{ display: "flex", gap: "24px" }}>
+        <p style={{
+          fontFamily: "Newsreader, serif",
+          fontSize: "13px",
+          color: "#555555",
+          lineHeight: "1.6",
+          margin: 0,
+          maxWidth: "720px",
+          marginTop: "4px",
+        }}>
+          当欲望失去了枷锁，就没有了向前的路，只能转左，或者向右，左边是地狱，右边也是地狱。
+        </p>
+        <div style={{ display: "flex", gap: "24px", marginTop: "8px" }}>
           <a href="mailto:943483255@qq.com" style={{
             fontFamily: "Inter, sans-serif",
             fontSize: "14px",
@@ -492,46 +496,66 @@ export default async function HomePage() {
           }}>
             关于
           </h2>
+        </div>
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "20px", maxWidth: "560px" }}>
           <p style={{
-            fontFamily: "Inter, sans-serif",
+            fontFamily: "Newsreader, serif",
+            fontSize: "18px",
+            color: "#CCCCCC",
+            lineHeight: "1.7",
+            margin: 0,
+          }}>
+            我是 Alex Plum，一名长期在后端世界里工作的开发者。
+          </p>
+          <p style={{
+            fontFamily: "Newsreader, serif",
+            fontSize: "18px",
+            color: "#888888",
+            lineHeight: "1.7",
+            margin: 0,
+          }}>
+            我熟悉 Java、Spring、MySQL、PostgreSQL、Docker 与 K8s，也持续使用 Python、自动化工具和本地模型重写自己的工作流。
+          </p>
+          <p style={{
+            fontFamily: "Newsreader, serif",
+            fontSize: "18px",
+            color: "#888888",
+            lineHeight: "1.7",
+            margin: 0,
+          }}>
+            我对技术始终抱有热情，但比起"能做什么"，我更在意"为什么要做"。AI 正在放大能力，也在放大欲望；它让实现变得轻易，让答案变得廉价，也让判断变得比以往更稀缺。技术可以替人完成越来越多的部分，但方向、限度和承担，最终仍然只能由人自己决定。
+          </p>
+          <p style={{
+            fontFamily: "Newsreader, serif",
+            fontSize: "18px",
+            color: "#888888",
+            lineHeight: "1.7",
+            margin: 0,
+          }}>
+            我写这个博客，不只是为了记录技术实践，也为了记录一种持续的追问：
+          </p>
+          <p style={{
+            fontFamily: "Newsreader, serif",
             fontSize: "16px",
             color: "#666666",
+            lineHeight: "1.8",
             margin: 0,
-            lineHeight: "1.6",
+            fontStyle: "italic",
           }}>
-            简历与联系
+            当工具越来越强，人如何不在其中失去自己？<br />
+            当效率成为时代共识，什么还能构成真正的价值？<br />
+            当欲望越来越容易被满足，边界是否反而成了更重要的能力？
           </p>
-        </div>
-        <div style={{ display: "flex", gap: "48px" }}>
-          <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "20px" }}>
-            <p style={{
-              fontFamily: "Newsreader, serif",
-              fontSize: "18px",
-              color: "#CCCCCC",
-              lineHeight: "1.6",
-              margin: 0,
-            }}>
-              我是 Alex Plum，程序员，坐标合肥。主力 Java 后端，日常与 K8s、微服务打交道。
-            </p>
-            <p style={{
-              fontFamily: "Newsreader, serif",
-              fontSize: "18px",
-              color: "#888888",
-              lineHeight: "1.6",
-              margin: 0,
-            }}>
-              这两年深度接入 AI 与大模型——从 RAG 到 Agent，从 Prompt 工程到 Fine-tuning。也迷上了 Vibe Coding：把意图描述清楚，让 AI 生成骨架，人再雕琢细节。效率翻倍，心智负担减半。
-            </p>
-            <p style={{
-              fontFamily: "Newsreader, serif",
-              fontSize: "18px",
-              color: "#888888",
-              lineHeight: "1.6",
-              margin: 0,
-            }}>
-              博客记录实战笔记：Java 踩坑、K8s 调优、大模型落地、Vibe Coding 心得。写原创，也译外部好文，慢慢织成自己的知识网。
-            </p>
-          </div>
+          <p style={{
+            fontFamily: "Newsreader, serif",
+            fontSize: "18px",
+            color: "#888888",
+            lineHeight: "1.7",
+            margin: 0,
+          }}>
+            这里会写代码，写系统，写自动化，写模型，<br />
+            也写那些无法被优化的问题。
+          </p>
         </div>
       </section>
 

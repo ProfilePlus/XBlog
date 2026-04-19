@@ -135,7 +135,17 @@ export async function getHomePageData(): Promise<HomePageData> {
     throw new Error("Home payload is unavailable.");
   }
 
-  const featuredArticles = [...payload.latestOriginals, ...payload.latestCurated].slice(0, 6);
+  const allArticles = [...payload.latestOriginals, ...payload.latestCurated];
+  const seenCovers = new Set<string>();
+  const featuredArticles: typeof allArticles = [];
+  for (const article of allArticles) {
+    const key = article.coverUrl ?? article.slug;
+    if (!seenCovers.has(key)) {
+      seenCovers.add(key);
+      featuredArticles.push(article);
+    }
+    if (featuredArticles.length >= 6) break;
+  }
 
   return {
     featuredArticles: featuredArticles.map((article) => ({

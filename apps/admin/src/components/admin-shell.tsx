@@ -15,10 +15,6 @@ export function AdminShell({
 }) {
   return (
     <div className="admin-app">
-      <div className="admin-aurora admin-aurora-one" />
-      <div className="admin-aurora admin-aurora-two" />
-      <div className="admin-aurora admin-aurora-three" />
-
       <div className="admin-shell">
         <aside className="admin-sidebar">
           <div className="admin-sidebar-panel">

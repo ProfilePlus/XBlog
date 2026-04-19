@@ -174,38 +174,8 @@ export const adminCategorySchema = categorySummarySchema.extend({
 
 export type AdminCategory = z.infer<typeof adminCategorySchema>;
 
-export const publicHomeHeroSlotSchema = z.object({
-  slot: z.union([z.literal("main"), z.literal("side-1"), z.literal("side-2")]),
-  article: articleSummarySchema,
-});
-
 export const publicHomeResponseSchema = z.object({
-  issue: z.object({
-    id: z.string(),
-    issueNumber: z.string(),
-    eyebrow: z.string(),
-    title: z.string(),
-    lede: z.string(),
-    note: z.string().nullable(),
-    primaryCtaLabel: z.string(),
-    primaryCtaHref: z.string(),
-    secondaryCtaLabel: z.string(),
-    secondaryCtaHref: z.string(),
-    stats: z.array(z.string()),
-    logoVariant: siteLogoVariantSchema,
-  }),
-  heroSlots: z.array(publicHomeHeroSlotSchema).length(3),
   categoryShelves: z.array(categorySummarySchema),
-  categoryCoverLibrary: z.object({
-    total: z.number().int().nonnegative(),
-    items: z.array(
-      z.object({
-        id: z.string(),
-        url: z.string().url(),
-        tone: categoryToneSchema.nullable(),
-      }),
-    ),
-  }),
   latestOriginals: z.array(articleSummarySchema),
   latestCurated: z.array(articleSummarySchema),
 });

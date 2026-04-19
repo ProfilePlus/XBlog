@@ -1,20 +1,29 @@
 import type { Metadata } from "next";
-import { Noto_Sans_SC, Oxanium, Space_Grotesk } from "next/font/google";
+import { Inter, Newsreader, Noto_Sans_SC, Playfair_Display } from "next/font/google";
 import "./globals.css";
 
-const spaceGrotesk = Space_Grotesk({
+const playfairDisplay = Playfair_Display({
   subsets: ["latin"],
-  variable: "--font-space-grotesk",
+  weight: ["400", "700"],
+  variable: "--font-playfair-display",
+});
+
+const newsreader = Newsreader({
+  subsets: ["latin"],
+  weight: ["400", "600"],
+  variable: "--font-newsreader",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-inter",
 });
 
 const notoSansSC = Noto_Sans_SC({
   subsets: ["latin"],
+  weight: ["400", "500", "700"],
   variable: "--font-noto-sans-sc",
-});
-
-const oxanium = Oxanium({
-  subsets: ["latin"],
-  variable: "--font-oxanium",
 });
 
 export const metadata: Metadata = {
@@ -29,7 +38,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-CN">
-      <body className={`${spaceGrotesk.variable} ${notoSansSC.variable} ${oxanium.variable}`}>{children}</body>
+      <body className={`${playfairDisplay.variable} ${newsreader.variable} ${inter.variable} ${notoSansSC.variable}`}>{children}</body>
     </html>
   );
 }

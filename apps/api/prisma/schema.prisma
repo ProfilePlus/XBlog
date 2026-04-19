@@ -31,20 +31,9 @@ enum CategoryTone {
   aurora
 }
 
-enum HomeIssueStatus {
-  CURRENT
-  ARCHIVED
-}
-
 enum AssetKind {
   GENERIC
   CATEGORY_COVER
-}
-
-enum HeroSlotType {
-  MAIN
-  SIDE_1
-  SIDE_2
 }
 
 model AdminUser {
@@ -143,38 +132,8 @@ model Article {
   category          Category      @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   coverAssetId      String?
   coverAsset        Asset?        @relation(fields: [coverAssetId], references: [id], onDelete: SetNull)
-  heroSlots         HomeIssueHeroSlot[]
 
   @@index([ingestSource, externalId])
   @@index([reviewStatus])
 }
 
-model HomeIssue {
-  id                String              @id @default(cuid())
-  issueNumber       String              @unique
-  eyebrow           String
-  title             String
-  lede              String
-  note              String?
-  primaryCtaLabel   String
-  primaryCtaHref    String
-  secondaryCtaLabel String
-  secondaryCtaHref  String
-  stats             Json
-  logoVariant       String              @default("prototype")
-  status            HomeIssueStatus     @default(CURRENT)
-  createdAt         DateTime            @default(now())
-  updatedAt         DateTime            @updatedAt
-  heroSlots         HomeIssueHeroSlot[]
-}
-
-model HomeIssueHeroSlot {
-  id          String       @id @default(cuid())
-  homeIssueId String
-  articleId   String
-  slot        HeroSlotType
-  homeIssue   HomeIssue    @relation(fields: [homeIssueId], references: [id], onDelete: Cascade)
-  article     Article      @relation(fields: [articleId], references: [id], onDelete: Cascade)
-
-  @@unique([homeIssueId, slot])
-}

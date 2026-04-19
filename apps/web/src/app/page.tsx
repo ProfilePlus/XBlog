@@ -1,49 +1,82 @@
-import { CategoryLibrary } from "@/components/home/category-library";
-import { CreatorAtelier } from "@/components/home/creator-atelier";
-import { EditorialBand } from "@/components/home/editorial-band";
-import { HeroShowcase } from "@/components/home/hero-showcase";
+import Image from "next/image";
+import Link from "next/link";
 import { SiteHeader } from "@/components/site-header";
 import { getHomePageData } from "@/lib/public-api";
 
-export const dynamic = "force-dynamic";
+const FEATURED_ARTICLES = [
+  {
+    title: "Vibe Coding：超越机器的编程哲学",
+    image: "/images/beyond-the-machine.png",
+    category: "AI 与编程",
+  },
+  {
+    title: "K8s Pod 调度的艺术",
+    image: "/images/easy-hard.jpg",
+    category: "云原生",
+  },
+  {
+    title: "RAG 实现：从理论到实践",
+    image: "/images/the-webs-grain.jpg",
+    category: "大模型",
+  },
+  {
+    title: "Java 虚拟线程深度解析",
+    image: "/images/what-screens-want.jpg",
+    category: "Java",
+  },
+  {
+    title: "AI Agent 架构设计",
+    image: "/images/only-openings.jpg",
+    category: "AI",
+  },
+  {
+    title: "微服务边界的思考",
+    image: "/images/borderlands.jpg",
+    category: "架构",
+  },
+];
 
-export default async function Home() {
-  const home = await getHomePageData();
-  const usesPrototypeMinimalGlow = home.issue.logoVariant === "prototype-minimal-glow";
+export default async function HomePage() {
+  const data = await getHomePageData();
 
   return (
-    <main className="gallery">
-      <section className={`board board-d home-shell${usesPrototypeMinimalGlow ? " board--prototype-minimal-glow" : ""}`}>
-        {usesPrototypeMinimalGlow ? <div className="aurora aurora-a1" /> : <div className="aurora aurora-d1" />}
-        {usesPrototypeMinimalGlow ? <div className="aurora aurora-a2" /> : <div className="aurora aurora-d2" />}
-        {!usesPrototypeMinimalGlow ? <div className="aurora aurora-d3" /> : null}
-        <SiteHeader />
-        <HeroShowcase issue={home.issue} featuredStories={home.featuredStories} stats={home.siteStats} />
-        <section className="curated-shell">
-          <CategoryLibrary topics={home.topicShelves} />
-          <CreatorAtelier
-            tools={home.creatorTools}
-            topicCount={home.topicShelves.length}
-            categoryCoverLibrary={home.categoryCoverLibrary}
-          />
-        </section>
-        <EditorialBand
-          essays={home.latestEssays}
-          logs={home.readingLogs}
-          about={{
-            intro: "这里写原创，也收录外部技术文章，把读到的东西慢慢译成自己的知识版图。",
-            currentTheme: home.issue.eyebrow.replace(/^XBlog\s*\/\s*/, "") || "Aurora Edition",
-            updateStatus: home.readingLogs[0]
-              ? `最近更新：${home.readingLogs[0].title}`
-              : "最近在补新的摘要、分类说明和首页这一期的策展。",
-            metrics: [
-              `${home.topicShelves.length} 个分类分区`,
-              `${home.categoryCoverLibrary.total} 张封面素材`,
-              `${home.readingLogs.length} 条近期收录`,
-            ],
-          }}
-        />
+    <div className="page-container">
+      <SiteHeader />
+
+      <section style={{ padding: "60px 0 40px" }}>
+        <h1 style={{ fontSize: "3rem", marginBottom: "16px" }}>Alex Plum</h1>
+        <p style={{ fontSize: "1.25rem", color: "var(--text-dark-muted)", marginBottom: "8px" }}>
+          合肥程序员 / Java / K8s / AI / 大模型 / Vibe Coding
+        </p>
       </section>
-    </main>
+
+      <div style={{ height: "1px", background: "var(--border-dark)", margin: "0 0 60px" }} />
+
+      <section style={{ marginBottom: "60px" }}>
+        <h2 style={{ marginBottom: "32px" }}>Writing</h2>
+        <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+          {FEATURED_ARTICLES.map((article) => (
+            <div key={article.title} style={{ display: "flex", gap: "24px", alignItems: "center" }}>
+              <Image
+                src={article.image}
+                alt={article.title}
+                width={336}
+                height={224}
+                style={{ borderRadius: "var(--radius-image)", flexShrink: 0 }}
+              />
+              <div>
+                <h3 style={{ marginBottom: "8px" }}>{article.title}</h3>
+                <p style={{ color: "var(--text-dark-muted)" }}>{article.category}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <footer className="site-footer">
+        <p>皖ICP备2026007447号</p>
+        <p>皖公网安备34010402704764号</p>
+      </footer>
+    </div>
   );
 }

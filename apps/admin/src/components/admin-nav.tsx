@@ -8,13 +8,7 @@ const navItems = [
     href: "/",
     label: "概览",
     eyebrow: "Overview",
-    description: "先看文章、刊期、存储与令牌，让站点此刻的状态一眼明白。",
-  },
-  {
-    href: "/editorial-desk",
-    label: "编辑台",
-    eyebrow: "Desk",
-    description: "把今天最该过稿的一篇放在桌中央，其余候选依次排开。",
+    description: "先看文章、存储与令牌，让站点此刻的状态一眼明白。",
   },
   {
     href: "/articles",
@@ -27,18 +21,6 @@ const navItems = [
     label: "分类",
     eyebrow: "Taxonomy",
     description: "给每个主题补上标题、摘要、长说明与代表文章，让分区更有性格。",
-  },
-  {
-    href: "/category-cover-assets",
-    label: "封面素材",
-    eyebrow: "Cover Library",
-    description: "在这里翻看封面图的去处与空位，按色调筛选，再决定谁该上场。",
-  },
-  {
-    href: "/home-issue",
-    label: "刊期",
-    eyebrow: "Issue",
-    description: "决定首页这一期要说什么、推什么，也决定三张 Hero 卡片如何落位。",
   },
   {
     href: "/tokens",

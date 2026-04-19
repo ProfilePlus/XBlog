@@ -3,12 +3,6 @@ import type {
   AdminCategory,
   AdminToken,
   Asset,
-  CategoryCoverAssetListFilters,
-  CategoryCoverAssetInput,
-  CategoryCoverAssetImportResult,
-  CategoryCoverAssetListResponse,
-  CategoryCoverAssetSummary,
-  HomeIssue,
   IngestArticleRequest,
   IngestArticleResponse,
   PublicArticleDetail,
@@ -58,22 +52,12 @@ export interface Store {
   getPublicSiteBranding(): Promise<PublicSiteBrandingResponse>;
   getPublicCategoryDetail(slug: string): Promise<PublicCategoryDetail | null>;
   getPublicArticleDetail(slug: string): Promise<PublicArticleDetail | null>;
-  listCategoryCoverAssets(
-    page: number,
-    pageSize: number,
-    filters?: CategoryCoverAssetListFilters,
-  ): Promise<CategoryCoverAssetListResponse>;
-  createCategoryCoverAsset(payload: CategoryCoverAssetInput): Promise<CategoryCoverAssetSummary>;
-  deleteCategoryCoverAsset(id: string): Promise<CategoryCoverAssetSummary | null>;
-  importBuiltInCategoryCoverAssets(): Promise<CategoryCoverAssetImportResult>;
   upsertCategory(payload: UpsertCategoryPayload): Promise<AdminCategory>;
   upsertArticle(payload: UpsertArticleRequest & { id?: string }): Promise<AdminArticle>;
   deleteCategory(id: string): Promise<AdminCategory | null>;
   deleteArticle(id: string): Promise<AdminArticle | null>;
   publishArticle(id: string): Promise<AdminArticle | null>;
   hideArticle(id: string): Promise<AdminArticle | null>;
-  getHomeIssue(): Promise<HomeIssue>;
-  updateHomeIssue(payload: HomeIssue): Promise<HomeIssue>;
   saveAsset(asset: Asset): Promise<Asset>;
   uploadAsset(buffer: Buffer, fileName: string, mimeType?: string): Promise<Asset>;
   importRemoteAsset(sourceUrl: string): Promise<Asset>;

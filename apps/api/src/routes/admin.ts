@@ -3,12 +3,7 @@ import {
   adminObjectStorageStatusSchema,
   adminArticleListResponseSchema,
   adminObjectStorageUploadProbeSchema,
-  categoryCoverAssetAssignmentFilterValues,
-  categoryCoverAssetImportResultSchema,
-  categoryCoverAssetInputSchema,
-  categoryToneValues,
   createTokenRequestSchema,
-  updateHomeIssueRequestSchema,
   upsertArticleRequestSchema,
   upsertCategoryRequestSchema,
 } from "@xblog/contracts";
@@ -92,7 +87,7 @@ export async function registerAdminRoutes(app: FastifyInstance) {
       return article;
     } catch (error) {
       if (error instanceof Error && error.message === "Article is used in home issue") {
-        return reply.code(409).send({ message: "该文章仍在首页刊期中使用，先调整首页策展后再删除。" });
+        return reply.code(409).send({ message: "该文章仍在使用中，先调整后再删除。" });
       }
 
       throw error;
@@ -189,69 +184,6 @@ export async function registerAdminRoutes(app: FastifyInstance) {
 
       throw error;
     }
-  });
-
-  app.get("/v1/admin/category-cover-assets", { preHandler: requireAdmin }, async (request) => {
-    const query = request.query as {
-      page?: string;
-      pageSize?: string;
-      tone?: string;
-      assignment?: string;
-    };
-    const page = Math.max(1, Number(query.page ?? "1") || 1);
-    const pageSize = Math.min(120, Math.max(1, Number(query.pageSize ?? "12") || 12));
-    const tone = categoryToneValues.includes(query.tone as (typeof categoryToneValues)[number])
-      ? (query.tone as (typeof categoryToneValues)[number])
-      : undefined;
-    const assignment = categoryCoverAssetAssignmentFilterValues.includes(
-      query.assignment as (typeof categoryCoverAssetAssignmentFilterValues)[number],
-    )
-      ? (query.assignment as (typeof categoryCoverAssetAssignmentFilterValues)[number])
-      : "all";
-
-    return app.store.listCategoryCoverAssets(page, pageSize, { tone, assignment });
-  });
-
-  app.post("/v1/admin/category-cover-assets", { preHandler: requireAdmin }, async (request, reply) => {
-    const parsed = categoryCoverAssetInputSchema.safeParse(request.body);
-    if (!parsed.success) {
-      return reply.code(400).send({
-        message: parsed.error.issues.map((issue) => issue.message).join("；"),
-      });
-    }
-
-    try {
-      return await app.store.createCategoryCoverAsset(parsed.data);
-    } catch (error) {
-      if (error instanceof Error && error.message === "Asset not found") {
-        return reply.code(404).send({ message: "素材不存在。" });
-      }
-
-      throw error;
-    }
-  });
-
-  app.post("/v1/admin/category-cover-assets/import-library", { preHandler: requireAdmin }, async () => {
-    return categoryCoverAssetImportResultSchema.parse(await app.store.importBuiltInCategoryCoverAssets());
-  });
-
-  app.delete("/v1/admin/category-cover-assets/:id", { preHandler: requireAdmin }, async (request, reply) => {
-    const asset = await app.store.deleteCategoryCoverAsset((request.params as { id: string }).id);
-    if (!asset) {
-      return reply.code(404).send({ message: "素材不存在。" });
-    }
-    return asset;
-  });
-
-  app.get("/v1/admin/home-issue/current", { preHandler: requireAdmin }, async () => app.store.getHomeIssue());
-
-  app.patch("/v1/admin/home-issue/current", { preHandler: requireAdmin }, async (request) => {
-    const current = await app.store.getHomeIssue();
-    const payload = updateHomeIssueRequestSchema.parse(request.body);
-    return app.store.updateHomeIssue({
-      ...payload,
-      id: current.id,
-    });
   });
 
   app.get("/v1/admin/tokens", { preHandler: requireAdmin }, async () => app.store.listTokens());

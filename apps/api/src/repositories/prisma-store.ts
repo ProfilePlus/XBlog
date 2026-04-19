@@ -6,21 +6,14 @@ import type {
   AdminToken,
   ArticleBlock,
   Asset,
-  CategoryCoverAssetListFilters,
-  CategoryCoverAssetInput,
-  CategoryCoverAssetImportResult,
-  HomeIssue,
   IngestArticleRequest,
   IngestArticleResponse,
   PublicArticleDetail,
   PublicHomeResponse,
   PublicSiteBrandingResponse,
-  SiteLogoVariant,
   UpsertArticleRequest,
 } from "@xblog/contracts";
-import { siteLogoVariantValues } from "@xblog/contracts";
 import { seedPrismaFromBootstrap } from "@/bootstrap/prisma-seed";
-import { getBuiltInCategoryCoverLibrary } from "@/lib/category-cover-library";
 import { formatDisplayDate } from "@/lib/dates";
 import { getObjectStorage, type ObjectStorage } from "@/lib/object-storage";
 import { createSlug, ensureUniqueSlug } from "@/lib/slug";
@@ -42,24 +35,6 @@ type CategoryRecord = Prisma.CategoryGetPayload<{
         articles: true;
       };
     };
-  };
-}>;
-
-type CategoryCoverUsageRecord = Prisma.CategoryGetPayload<{
-  include: {
-    coverAsset: true;
-  };
-}>;
-
-type CategoryCoverAssetRecord = Prisma.AssetGetPayload<{
-  include: {
-    categories: true;
-  };
-}>;
-
-type HomeIssueRecord = Prisma.HomeIssueGetPayload<{
-  include: {
-    heroSlots: true;
   };
 }>;
 
@@ -625,27 +600,6 @@ export class PrismaStore implements Store {
   }
 
   async getPublicHome(): Promise<PublicHomeResponse> {
-    const issue = await this.prisma.homeIssue.findFirst({
-      where: { status: "CURRENT" },
-      include: { heroSlots: true },
-      orderBy: { updatedAt: "desc" },
-    });
-
-    if (!issue) {
-      throw new Error("No current home issue found.");
-    }
-
-    const heroArticles = await this.prisma.article.findMany({
-      where: {
-        id: { in: issue.heroSlots.map((slot) => slot.articleId) },
-      },
-      include: {
-        category: true,
-        coverAsset: true,
-      },
-    });
-    const heroMap = new Map(heroArticles.map((article) => [article.id, article]));
-
     const originals = await this.prisma.article.findMany({
       where: { status: "PUBLISHED", kind: "ORIGINAL" },
       include: {
@@ -653,7 +607,7 @@ export class PrismaStore implements Store {
         coverAsset: true,
       },
       orderBy: { publishedAt: "desc" },
-      take: 3,
+      take: 6,
     });
 
     const curated = await this.prisma.article.findMany({
@@ -663,80 +617,22 @@ export class PrismaStore implements Store {
         coverAsset: true,
       },
       orderBy: { publishedAt: "desc" },
-      take: 3,
+      take: 6,
     });
-    const [categories, categoryCoverLibrary] = await Promise.all([
-      this.listCategories(),
-      this.listCategoryCoverAssetRecords(),
-    ]);
+
+    const categories = await this.listCategories();
 
     return {
-      issue: {
-        id: issue.id,
-        issueNumber: issue.issueNumber,
-        eyebrow: issue.eyebrow,
-        title: issue.title,
-        lede: issue.lede,
-        note: issue.note,
-        primaryCtaLabel: issue.primaryCtaLabel,
-        primaryCtaHref: issue.primaryCtaHref,
-        secondaryCtaLabel: issue.secondaryCtaLabel,
-        secondaryCtaHref: issue.secondaryCtaHref,
-        stats: (issue.stats as string[]) ?? [],
-        logoVariant: this.normalizeLogoVariant(issue.logoVariant),
-      },
-      heroSlots: issue.heroSlots
-        .map((slot) => {
-          const article = heroMap.get(slot.articleId);
-          if (!article) {
-            return null;
-          }
-
-          return {
-            slot:
-              slot.slot === "MAIN"
-                ? ("main" as const)
-                : slot.slot === "SIDE_1"
-                  ? ("side-1" as const)
-                  : ("side-2" as const),
-            article: this.toArticleSummary(article),
-          };
-        })
-        .filter((entry): entry is NonNullable<typeof entry> => Boolean(entry)),
       categoryShelves: categories,
-      categoryCoverLibrary: {
-        total: categoryCoverLibrary.length,
-        items: categoryCoverLibrary.slice(0, 20).map((asset) => ({
-          id: asset.id,
-          url: asset.url,
-          tone: asset.tone,
-        })),
-      },
       latestOriginals: originals.map((article) => this.toArticleSummary(article)),
       latestCurated: curated.map((article) => this.toArticleSummary(article)),
     };
   }
 
   async getPublicSiteBranding(): Promise<PublicSiteBrandingResponse> {
-    const issue = await this.prisma.homeIssue.findFirst({
-      where: { status: "CURRENT" },
-      orderBy: { updatedAt: "desc" },
-      select: { logoVariant: true },
-    });
-
-    if (!issue) {
-      throw new Error("No current home issue found.");
-    }
-
     return {
-      logoVariant: this.normalizeLogoVariant(issue.logoVariant),
+      logoVariant: "prototype",
     };
-  }
-
-  private normalizeLogoVariant(value: string | null | undefined): SiteLogoVariant {
-    return siteLogoVariantValues.includes(value as SiteLogoVariant)
-      ? (value as SiteLogoVariant)
-      : "prototype";
   }
 
   async getPublicCategoryDetail(slug: string) {
@@ -801,163 +697,6 @@ export class PrismaStore implements Store {
       highlights: (article.highlights as string[]) ?? [],
       blocks: (article.contentBlocks as ArticleBlock[]) ?? [],
       related: related.map((entry) => this.toArticleSummary(entry)),
-    };
-  }
-
-  async listCategoryCoverAssets(
-    page: number,
-    pageSize: number,
-    filters: CategoryCoverAssetListFilters = { assignment: "all" },
-  ) {
-    const where: Prisma.AssetWhereInput = {
-      kind: "CATEGORY_COVER",
-      ...(filters.tone ? { tone: filters.tone } : {}),
-    };
-    const [assets, categories] = await Promise.all([
-      this.prisma.asset.findMany({
-        where,
-        include: { categories: true },
-        orderBy: { createdAt: "desc" },
-      }),
-      this.prisma.category.findMany({
-        include: { coverAsset: true },
-      }),
-    ]);
-
-    const assignments = this.buildCategoryCoverAssetAssignments(categories, [...assets].reverse());
-    let items = assets.map((asset) => this.toCategoryCoverAssetSummary(asset, assignments));
-
-    if (filters.assignment === "assigned") {
-      items = items.filter((asset) => asset.isAssigned);
-    }
-
-    if (filters.assignment === "unassigned") {
-      items = items.filter((asset) => !asset.isAssigned);
-    }
-
-    const total = items.length;
-    items = items.slice((page - 1) * pageSize, page * pageSize);
-
-    return {
-      total,
-      page,
-      pageSize,
-      items,
-    };
-  }
-
-  async createCategoryCoverAsset(payload: CategoryCoverAssetInput) {
-    const asset = await this.prisma.asset.findUnique({
-      where: { id: payload.assetId },
-      include: { categories: true },
-    });
-    if (!asset) {
-      throw new Error("Asset not found");
-    }
-
-    const updated = await this.prisma.asset.update({
-      where: { id: payload.assetId },
-      data: {
-        kind: "CATEGORY_COVER",
-        tone: payload.tone,
-        label: payload.label ?? asset.label,
-      },
-      include: { categories: true },
-    });
-
-    return this.toCategoryCoverAssetSummary(updated);
-  }
-
-  async deleteCategoryCoverAsset(id: string) {
-    const asset = await this.prisma.asset.findUnique({
-      where: { id },
-      include: { categories: true },
-    });
-    if (!asset || asset.kind !== "CATEGORY_COVER") {
-      return null;
-    }
-
-    await this.prisma.category.updateMany({
-      where: { coverAssetId: id },
-      data: { coverAssetId: null },
-    });
-    await this.prisma.asset.delete({
-      where: { id },
-    });
-    await this.storage.deleteObject({
-      id: asset.id,
-      storageKey: asset.storageKey,
-      url: asset.url,
-      mimeType: asset.mimeType,
-      kind: asset.kind,
-      tone: asset.tone,
-      label: asset.label,
-      width: asset.width,
-      height: asset.height,
-      sourceUrl: asset.sourceUrl,
-      createdAt: asset.createdAt.toISOString(),
-    });
-
-    return this.toCategoryCoverAssetSummary(asset);
-  }
-
-  async importBuiltInCategoryCoverAssets(): Promise<CategoryCoverAssetImportResult> {
-    const library = getBuiltInCategoryCoverLibrary();
-    const existingAssets = await this.prisma.asset.findMany({
-      where: {
-        kind: "CATEGORY_COVER",
-        sourceUrl: {
-          in: library.map((entry) => entry.sourceUrl),
-        },
-      },
-      include: { categories: true },
-    });
-    const existingBySourceUrl = new Map(
-      existingAssets.map((asset) => [asset.sourceUrl, asset] as const),
-    );
-    const items = [];
-    let imported = 0;
-    let skipped = 0;
-
-    for (const entry of library) {
-      const existing = existingBySourceUrl.get(entry.sourceUrl);
-      if (existing) {
-        skipped += 1;
-        items.push(this.toCategoryCoverAssetSummary(existing));
-        continue;
-      }
-
-      const buffer = await fs.readFile(entry.absolutePath);
-      const stored = await this.storage.storeBuffer(buffer, entry.fileName, entry.mimeType);
-      const asset: Asset = {
-        ...stored,
-        kind: "CATEGORY_COVER",
-        tone: entry.tone,
-        label: entry.label,
-        sourceUrl: entry.sourceUrl,
-      };
-      const saved = await this.saveAsset(asset);
-
-      imported += 1;
-      items.push({
-        id: saved.id,
-        url: saved.url,
-        tone: saved.tone,
-        label: saved.label,
-        width: saved.width,
-        height: saved.height,
-        createdAt: saved.createdAt,
-        isAssigned: false,
-        assignedCategoryId: null,
-        assignedCategoryName: null,
-        assignedCategorySlug: null,
-      });
-    }
-
-    return {
-      imported,
-      skipped,
-      items,
     };
   }
 
@@ -1178,15 +917,6 @@ export class PrismaStore implements Store {
       return null;
     }
 
-    const heroUsage = await this.prisma.homeIssueHeroSlot.findFirst({
-      where: { articleId: id },
-      select: { id: true },
-    });
-
-    if (heroUsage) {
-      throw new Error("Article is used in home issue");
-    }
-
     const deleted = await this.prisma.article.delete({
       where: { id },
       include: {
@@ -1236,70 +966,6 @@ export class PrismaStore implements Store {
     });
 
     return this.toAdminArticle(article);
-  }
-
-  async getHomeIssue() {
-    const issue = await this.prisma.homeIssue.findFirst({
-      where: { status: "CURRENT" },
-      include: { heroSlots: true },
-      orderBy: { updatedAt: "desc" },
-    });
-
-    if (!issue) {
-      throw new Error("No current home issue found.");
-    }
-
-    return this.toHomeIssue(issue);
-  }
-
-  async updateHomeIssue(payload: HomeIssue) {
-    await this.prisma.homeIssue.update({
-      where: { id: payload.id },
-      data: {
-        issueNumber: payload.issueNumber,
-        eyebrow: payload.eyebrow,
-        title: payload.title,
-        lede: payload.lede,
-        note: payload.note,
-        primaryCtaLabel: payload.primaryCtaLabel,
-        primaryCtaHref: payload.primaryCtaHref,
-        secondaryCtaLabel: payload.secondaryCtaLabel,
-        secondaryCtaHref: payload.secondaryCtaHref,
-        stats: payload.stats,
-        logoVariant: payload.logoVariant,
-      },
-    });
-
-    await this.prisma.homeIssueHeroSlot.deleteMany({
-      where: { homeIssueId: payload.id },
-    });
-
-    const heroSlots = [
-      { slot: "MAIN" as const, articleId: payload.heroArticleIds.main },
-      { slot: "SIDE_1" as const, articleId: payload.heroArticleIds.side1 },
-      { slot: "SIDE_2" as const, articleId: payload.heroArticleIds.side2 },
-    ].filter((entry) => Boolean(entry.articleId));
-
-    for (const heroSlot of heroSlots) {
-      await this.prisma.homeIssueHeroSlot.create({
-        data: {
-          homeIssueId: payload.id,
-          articleId: heroSlot.articleId,
-          slot: heroSlot.slot,
-        },
-      });
-    }
-
-    const updated = await this.prisma.homeIssue.findUnique({
-      where: { id: payload.id },
-      include: { heroSlots: true },
-    });
-
-    if (!updated) {
-      throw new Error("Home issue not found after update.");
-    }
-
-    return this.toHomeIssue(updated);
   }
 
   async uploadAsset(buffer: Buffer, fileName: string, mimeType?: string) {

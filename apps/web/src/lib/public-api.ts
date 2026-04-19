@@ -136,40 +136,22 @@ export async function getHomePageData(): Promise<HomePageData> {
     throw new Error("Home payload is unavailable.");
   }
 
-  const categoryCoverLibrary = payload.categoryCoverLibrary ?? {
-    total: 0,
-    items: [],
-  };
-
-  const slotMap = new Map(payload.heroSlots.map((entry) => [entry.slot, entry.article]));
-  const main = toneClassValue(slotMap.get("main"), payload.heroSlots[0]?.article);
-  const sideOne = toneClassValue(slotMap.get("side-1"), payload.heroSlots[1]?.article ?? main);
-  const sideTwo = toneClassValue(slotMap.get("side-2"), payload.heroSlots[2]?.article ?? sideOne);
+  const featuredArticles = [...payload.latestOriginals, ...payload.latestCurated].slice(0, 6);
 
   return {
-    issue: {
-      issueNumber: payload.issue.issueNumber,
-      eyebrow: payload.issue.eyebrow,
-      title: payload.issue.title,
-      lede: payload.issue.lede,
-      logoVariant: payload.issue.logoVariant,
-      primaryCtaLabel: payload.issue.primaryCtaLabel,
-      primaryCtaHref: payload.issue.primaryCtaHref,
-      secondaryCtaLabel: payload.issue.secondaryCtaLabel,
-      secondaryCtaHref: payload.issue.secondaryCtaHref,
-    },
-    featuredStories: [
-      toFeatureStory(main, "封面精选"),
-      toFeatureStory(sideOne, "近期写作"),
-      toFeatureStory(sideTwo, "阅读日志"),
-    ],
-    siteStats: payload.issue.stats,
+    featuredArticles: featuredArticles.map((article) => ({
+      title: article.title,
+      description: article.excerpt,
+      tone: article.tone,
+      coverUrl: article.coverUrl,
+      href: articleHref(article.slug),
+      category: article.category.name,
+      authorLabel: `${article.authorDisplayName} / ${article.authorRoleLabel}`,
+    })),
     topicShelves: payload.categoryShelves.map(toTopicShelf),
-    creatorTools,
-    categoryCoverLibrary,
     latestEssays: payload.latestOriginals.map(toCompactEntry),
     readingLogs: payload.latestCurated.map(toCompactEntry),
-  };
+  } as HomePageData;
 }
 
 export async function getSiteBrandingData(): Promise<PublicSiteBrandingResponse> {

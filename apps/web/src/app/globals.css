@@ -1,214 +1,35 @@
-:root {
-  --bg-dark: #000000;
-  --surface-dark: #0A0A0A;
-  --surface-dark-elevated: #1A1A1A;
-  --border-dark: #333333;
-  --text-dark: #FFFFFF;
-  --text-dark-muted: #888888;
-
-  --bg-light: #E6E2E0;
-  --surface-light: #D3D3D1;
-  --border-light: #CCC;
-  --text-light: #151515;
-  --text-light-muted: #666666;
-
-  --gray-100: #CCC;
-  --gray-200: #888;
-  --gray-300: #666;
-  --gray-400: #555;
-
-  --radius-page: 24px;
-  --radius-card: 12px;
-  --radius-button: 8px;
-  --radius-nav: 6px;
-  --radius-image: 8px;
-
-  --font-heading: var(--font-playfair-display);
-  --font-body: var(--font-newsreader);
-  --font-ui: var(--font-inter);
-  --font-chinese: var(--font-noto-sans-sc);
-}
-
 * {
   box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  margin: 0;
-  font-family: var(--font-body), var(--font-chinese), serif;
-  background: var(--bg-dark);
-  color: var(--text-dark);
-  line-height: 1.6;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-button,
-input,
-textarea,
-select {
-  font: inherit;
-}
-
-button {
-  cursor: pointer;
-  border: none;
-  background: none;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-heading), var(--font-chinese), serif;
-  font-weight: 700;
-  margin: 0;
-}
-
-h1 {
-  font-size: 3rem;
-  line-height: 1.2;
-}
-
-h2 {
-  font-size: 2rem;
-  font-weight: 400;
-  line-height: 1.3;
-}
-
-h3 {
-  font-size: 1.5rem;
-  font-weight: 400;
-  line-height: 1.4;
-}
-
-p {
-  margin: 0;
-}
-
-.page-container {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 80px 0;
-  border-radius: var(--radius-page);
-}
-
-.card {
-  border-radius: var(--radius-card);
-  background: var(--surface-dark);
-  border: 1px solid var(--border-dark);
-}
-
-.button {
-  padding: 12px 24px;
-  border-radius: var(--radius-button);
-  font-family: var(--font-ui), var(--font-chinese), sans-serif;
-  font-weight: 500;
-  background: var(--text-dark);
-  color: var(--bg-dark);
-  transition: outline 160ms ease;
-}
-
-.button:hover {
-  outline: 8px solid var(--text-dark);
-}
-
-.button-ghost {
-  background: transparent;
-  color: var(--text-dark);
-  border: 1px solid var(--border-dark);
-}
-
-.button-ghost:hover {
-  outline: 8px solid var(--border-dark);
-}
-
-input[type="text"],
-input[type="email"],
-input[type="search"],
-textarea {
-  padding: 12px 16px;
-  border-radius: var(--radius-button);
-  background: var(--surface-dark-elevated);
-  border: 1px solid var(--border-dark);
-  color: var(--text-dark);
-  font-family: var(--font-ui), var(--font-chinese), sans-serif;
-}
-
-input::placeholder,
-textarea::placeholder {
-  color: var(--text-dark-muted);
-}
-
-.site-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px 0;
-  max-width: 960px;
-  margin: 0 auto;
-}
-
-.site-header nav {
+.article-card {
   display: flex;
   gap: 24px;
-  font-family: var(--font-ui), var(--font-chinese), sans-serif;
+  padding: 20px;
+  background: #0A0A0A;
+  border: 1px solid #1A1A1A;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.site-header nav a {
-  padding: 8px 12px;
-  border-radius: var(--radius-nav);
-  transition: background 160ms ease;
+.article-card:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
 }
 
-.site-header nav a:hover {
-  background: var(--surface-dark-elevated);
+.section-header-sticky {
+  position: sticky;
+  top: 0;
+  background: #000000;
+  z-index: 10;
+  padding: 24px 0;
 }
-
-.site-footer {
-  text-align: center;
-  padding: 60px 0;
-  font-family: var(--font-ui), var(--font-chinese), sans-serif;
-  font-size: 0.875rem;
-  color: var(--text-dark-muted);
-}
-
-.site-footer p {
-  margin: 8px 0;
-}
-
-.article-image-default {
-  width: 672px;
-  max-width: 100%;
-  height: auto;
-  border-radius: var(--radius-image);
-  display: block;
-  margin: 0 auto;
-}
-
-.article-image-half {
-  width: 336px;
-  max-width: 100%;
-  height: auto;
-  border-radius: var(--radius-image);
-}
-
-.article-image-full {
-  width: 960px;
-  max-width: 100%;
-  height: auto;
-  border-radius: 0;
-}
-
-figcaption {
-  text-align: center;
-  margin-top: 12px;
-  font-size: 0.875rem;
-  color: var(--text-dark-muted);
-  font-family: var(--font-ui), var(--font-chinese), sans-serif;
-}
-

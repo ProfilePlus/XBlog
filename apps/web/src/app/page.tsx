@@ -139,7 +139,7 @@ export default async function HomePage() {
         gap: "48px",
         paddingTop: "40px",
       }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div className="section-header-sticky" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <h2 style={{
             fontFamily: "Playfair Display, serif",
             fontSize: "32px",
@@ -163,15 +163,7 @@ export default async function HomePage() {
             <Link
               key={article.href}
               href={article.href}
-              style={{
-                display: "flex",
-                gap: "24px",
-                padding: "20px",
-                background: "#0A0A0A",
-                border: "1px solid #1A1A1A",
-                borderRadius: "12px",
-                textDecoration: "none",
-              }}
+              className="article-card"
             >
               <div style={{ width: "400px", flexShrink: 0 }}>
                 {article.coverUrl ? (

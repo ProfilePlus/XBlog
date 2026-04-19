@@ -177,11 +177,11 @@ export default async function HomePage() {
                 <Image
                   src={article.coverUrl}
                   alt={article.title}
-                  width={280}
-                  height={210}
+                  width={300}
+                  height={200}
                   style={{
-                    width: "280px",
-                    height: "210px",
+                    width: "300px",
+                    height: "200px",
                     objectFit: "cover",
                     flexShrink: 0,
                     borderRadius: "5px",
@@ -189,8 +189,8 @@ export default async function HomePage() {
                 />
               ) : (
                 <div style={{
-                  width: "280px",
-                  height: "210px",
+                  width: "300px",
+                  height: "200px",
                   background: "#1A1A1A",
                   flexShrink: 0,
                   borderRadius: "5px",

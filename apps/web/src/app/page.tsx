@@ -133,21 +133,21 @@ export default async function HomePage() {
 
       {/* Writing Section */}
       <section style={{
-        width: "960px",
+        width: "900px",
         display: "flex",
-        gap: "100px",
+        gap: "90px",
         alignItems: "flex-start",
-        paddingTop: "120px",
+        paddingTop: "100px",
       }}>
         <div className="section-header-sticky" style={{
-          width: "200px",
+          width: "180px",
           display: "flex",
           flexDirection: "column",
-          gap: "8px",
+          gap: "6px",
         }}>
           <h2 style={{
             fontFamily: "Georgia, serif",
-            fontSize: "48px",
+            fontSize: "42px",
             fontWeight: "300",
             color: "#FFFFFF",
             margin: 0,
@@ -157,7 +157,7 @@ export default async function HomePage() {
           </h2>
           <p style={{
             fontFamily: "system-ui, sans-serif",
-            fontSize: "14px",
+            fontSize: "13px",
             color: "#999999",
             margin: 0,
             lineHeight: "1.4",
@@ -166,7 +166,7 @@ export default async function HomePage() {
           </p>
         </div>
 
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "80px" }}>
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "70px" }}>
           {data.featuredArticles.slice(0, 6).map((article) => (
             <Link
               key={article.href}
@@ -177,35 +177,35 @@ export default async function HomePage() {
                 <Image
                   src={article.coverUrl}
                   alt={article.title}
-                  width={320}
-                  height={240}
+                  width={280}
+                  height={210}
                   style={{
-                    width: "320px",
-                    height: "240px",
+                    width: "280px",
+                    height: "210px",
                     objectFit: "cover",
                     flexShrink: 0,
-                    borderRadius: "6px",
+                    borderRadius: "5px",
                   }}
                 />
               ) : (
                 <div style={{
-                  width: "320px",
-                  height: "240px",
+                  width: "280px",
+                  height: "210px",
                   background: "#1A1A1A",
                   flexShrink: 0,
-                  borderRadius: "6px",
+                  borderRadius: "5px",
                 }} />
               )}
               <div style={{
                 display: "flex",
                 flexDirection: "column",
-                gap: "8px",
+                gap: "7px",
                 justifyContent: "center",
-                maxWidth: "280px",
+                maxWidth: "260px",
               }}>
                 <h3 style={{
                   fontFamily: "Georgia, serif",
-                  fontSize: "23px",
+                  fontSize: "20px",
                   fontWeight: "400",
                   color: "#FFFFFF",
                   lineHeight: "1.3",
@@ -215,7 +215,7 @@ export default async function HomePage() {
                 </h3>
                 <p style={{
                   fontFamily: "system-ui, sans-serif",
-                  fontSize: "15px",
+                  fontSize: "14px",
                   color: "#999999",
                   lineHeight: "1.5",
                   margin: 0,
@@ -224,7 +224,7 @@ export default async function HomePage() {
                 </p>
                 <p style={{
                   fontFamily: "system-ui, sans-serif",
-                  fontSize: "13px",
+                  fontSize: "12px",
                   color: "#666666",
                   margin: 0,
                   marginTop: "2px",
@@ -239,21 +239,21 @@ export default async function HomePage() {
 
       {/* Working On */}
       <section style={{
-        width: "960px",
+        width: "900px",
         display: "flex",
-        gap: "80px",
+        gap: "90px",
         alignItems: "flex-start",
-        paddingTop: "120px",
+        paddingTop: "100px",
       }}>
         <div className="section-header-sticky" style={{
-          width: "280px",
+          width: "180px",
           display: "flex",
           flexDirection: "column",
-          gap: "16px",
+          gap: "6px",
         }}>
           <h2 style={{
             fontFamily: "Playfair Display, serif",
-            fontSize: "48px",
+            fontSize: "42px",
             color: "#CCCCCC",
             margin: 0,
             lineHeight: "1.2",

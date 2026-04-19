@@ -12,12 +12,12 @@ body {
 
 .article-card {
   display: flex;
-  gap: 60px;
+  gap: 50px;
   align-items: center;
   text-decoration: none;
-  padding: 20px;
-  margin: -20px;
-  border-radius: 12px;
+  padding: 16px;
+  margin: -16px;
+  border-radius: 10px;
   transition: background-color 0.2s ease;
 }
 

@@ -3,8 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { ArticleBlock } from "@xblog/contracts";
-import { AuroraFrame } from "@/components/aurora-frame";
-import { CoverSurface } from "@/components/cover-surface";
 import { SiteHeader } from "@/components/site-header";
 import { getArticlePageData } from "@/lib/public-api";
 
@@ -34,18 +32,18 @@ export async function generateMetadata({
 
 function renderBlock(block: ArticleBlock) {
   if (block.type === "paragraph") {
-    return <p key={block.id}>{block.text}</p>;
+    return <p key={block.id} style={{ marginBottom: "20px", lineHeight: 1.8 }}>{block.text}</p>;
   }
 
   if (block.type === "image") {
     return (
-      <figure key={block.id} className="article-figure">
+      <figure key={block.id} style={{ margin: "32px 0", textAlign: "center" }}>
         <Image
           src={block.url}
           alt={block.alt}
-          width={1200}
-          height={720}
-          className="article-image"
+          width={672}
+          height={448}
+          className="article-image-default"
           unoptimized
         />
         {block.caption ? <figcaption>{block.caption}</figcaption> : null}
@@ -55,9 +53,9 @@ function renderBlock(block: ArticleBlock) {
 
   if (block.type === "quote") {
     return (
-      <blockquote key={block.id} className="article-quote">
+      <blockquote key={block.id} style={{ margin: "32px 0", padding: "20px", borderLeft: "4px solid var(--border-light)", fontStyle: "italic" }}>
         <p>{block.text}</p>
-        {block.citation ? <cite>{block.citation}</cite> : null}
+        {block.citation ? <cite style={{ display: "block", marginTop: "12px", fontSize: "0.875rem", color: "var(--text-light-muted)" }}>— {block.citation}</cite> : null}
       </blockquote>
     );
   }
@@ -65,9 +63,9 @@ function renderBlock(block: ArticleBlock) {
   if (block.type === "list") {
     const ListTag = block.style === "ordered" ? "ol" : "ul";
     return (
-      <ListTag key={block.id} className="article-list">
-        {block.items.map((item) => (
-          <li key={item}>{item}</li>
+      <ListTag key={block.id} style={{ marginBottom: "20px", paddingLeft: "24px" }}>
+        {block.items.map((item, idx) => (
+          <li key={idx} style={{ marginBottom: "8px" }}>{item}</li>
         ))}
       </ListTag>
     );
@@ -75,14 +73,14 @@ function renderBlock(block: ArticleBlock) {
 
   if (block.type === "code") {
     return (
-      <pre key={block.id} className="article-code">
-        <code>{block.code}</code>
+      <pre key={block.id} style={{ margin: "32px 0", padding: "20px", background: "var(--surface-light)", borderRadius: "var(--radius-button)", overflow: "auto" }}>
+        <code style={{ fontFamily: "monospace", fontSize: "0.875rem" }}>{block.code}</code>
       </pre>
     );
   }
 
   if (block.type === "divider") {
-    return <hr key={block.id} className="article-divider" />;
+    return <hr key={block.id} style={{ margin: "40px 0", border: "none", borderTop: "1px solid var(--border-light)" }} />;
   }
 
   return null;
@@ -97,77 +95,54 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   }
 
   return (
-    <AuroraFrame>
-      <SiteHeader variant="secondary" />
+    <div style={{ background: "var(--bg-light)", color: "var(--text-light)", minHeight: "100vh" }}>
+      <div className="page-container">
+        <SiteHeader variant="secondary" />
 
-      <div className="subpage-shell">
-        <article className="article-hero card glass">
-          <div className="article-hero-copy">
-            <div className="breadcrumb-row">
-              <Link href="/">首页</Link>
-              <span>/</span>
-              <Link href={`/categories/${article.category.slug}`}>{article.category.name}</Link>
-            </div>
-            <span className="chip">{article.kindLabel}</span>
-            <h1>{article.title}</h1>
-            <p className="lede">{article.lede}</p>
-            <div className="meta-strip">
-              <span>{article.publishedAt}</span>
-              <span>{article.readingTime}</span>
-              <span>{article.authorDisplayName}</span>
-            </div>
+        <article style={{ maxWidth: "720px", margin: "0 auto", padding: "60px 0" }}>
+          <div style={{ marginBottom: "12px", fontSize: "0.875rem", color: "var(--text-light-muted)" }}>
+            <Link href="/" style={{ color: "inherit" }}>首页</Link>
+            <span> / </span>
+            <Link href={`/categories/${article.category.slug}`} style={{ color: "inherit" }}>{article.category.name}</Link>
           </div>
 
-          <CoverSurface
-            alt={article.title}
-            className="article-cover cover"
-            coverUrl={article.coverUrl}
-            priority
-            sizes="(max-width: 1100px) 100vw, 50vw"
-            tone={article.tone}
-          />
-        </article>
+          <h1 style={{ marginBottom: "16px" }}>{article.title}</h1>
+          <p style={{ fontSize: "1.125rem", color: "var(--text-light-muted)", marginBottom: "24px" }}>
+            {article.lede}
+          </p>
 
-        <section className="article-shell">
-          <div className="article-main">
+          <div style={{ display: "flex", gap: "16px", fontSize: "0.875rem", color: "var(--text-light-muted)", marginBottom: "40px" }}>
+            <span>{article.publishedAt}</span>
+            <span>{article.readingTime}</span>
+            <span>{article.authorDisplayName}</span>
+          </div>
+
+          {article.coverUrl ? (
+            <Image
+              src={article.coverUrl}
+              alt={article.title}
+              width={720}
+              height={480}
+              style={{ width: "100%", height: "auto", borderRadius: "var(--radius-image)", marginBottom: "40px" }}
+              priority
+            />
+          ) : null}
+
+          <div style={{ fontFamily: "var(--font-body), var(--font-chinese), serif" }}>
             {article.sections.map((section) => (
-              <section key={section.id} className="body-section card dark">
-                <h2>{section.heading}</h2>
+              <section key={section.id} style={{ marginBottom: "48px" }}>
+                <h2 style={{ marginBottom: "24px" }}>{section.heading}</h2>
                 {section.blocks.map(renderBlock)}
               </section>
             ))}
           </div>
+        </article>
 
-          <aside className="article-sidebar">
-            <article className="support-card card glass">
-              <div className="section-head">
-                <h2>文章摘要</h2>
-                <span className="soft-link">{article.authorRoleLabel}</span>
-              </div>
-              <ul className="insight-list">
-                {article.highlights.map((highlight) => (
-                  <li key={highlight}>{highlight}</li>
-                ))}
-              </ul>
-            </article>
-
-            <article className="support-card card dark">
-              <div className="section-head">
-                <h2>继续阅读</h2>
-                <span className="soft-link">相关主题</span>
-              </div>
-              <div className="related-list">
-                {article.related.map((entry) => (
-                  <Link key={entry.slug} href={`/articles/${entry.slug}`} className="related-link">
-                    <strong>{entry.title}</strong>
-                    <p>{entry.excerpt}</p>
-                  </Link>
-                ))}
-              </div>
-            </article>
-          </aside>
-        </section>
+        <footer className="site-footer">
+          <p>皖ICP备2026007447号</p>
+          <p>皖公网安备34010402704764号</p>
+        </footer>
       </div>
-    </AuroraFrame>
+    </div>
   );
 }

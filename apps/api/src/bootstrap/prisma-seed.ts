@@ -34,8 +34,6 @@ type SeedOptions = {
 
 export async function seedPrismaFromBootstrap(prisma: PrismaClient, options: SeedOptions = {}) {
   if (options.reset) {
-    await prisma.homeIssueHeroSlot.deleteMany();
-    await prisma.homeIssue.deleteMany();
     await prisma.adminSession.deleteMany();
     await prisma.apiToken.deleteMany();
     await prisma.article.deleteMany();
@@ -73,7 +71,16 @@ export async function seedPrismaFromBootstrap(prisma: PrismaClient, options: See
   }
 
   const articles = [];
-  for (const article of libraryArticles) {
+  const coverImages = [
+    "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&h=400&fit=crop",
+    "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=400&fit=crop",
+    "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&h=400&fit=crop",
+    "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&h=400&fit=crop",
+    "https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=800&h=400&fit=crop",
+    "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=800&h=400&fit=crop",
+  ];
+
+  for (const [index, article] of libraryArticles.entries()) {
     const category = categories.find((entry) => entry.slug === article.categorySlug);
     if (!category) {
       continue;
@@ -81,6 +88,7 @@ export async function seedPrismaFromBootstrap(prisma: PrismaClient, options: See
 
     const publishedAt = displayDateToDate(article.publishedAt) ?? new Date();
     const sourceUrl = article.kind === "收录整理" ? `https://curated.local/${article.slug}` : null;
+    const coverUrl = coverImages[index % coverImages.length];
 
     const created = await prisma.article.upsert({
       where: { slug: article.slug },
@@ -97,6 +105,7 @@ export async function seedPrismaFromBootstrap(prisma: PrismaClient, options: See
         highlights: article.highlights,
         contentBlocks: sectionsToBlocks(article.sections),
         publishedAt,
+        coverUrl,
         sourceUrl,
         sourceTitle: sourceUrl ? article.title : null,
         sourceAuthor: sourceUrl ? article.authorName : null,
@@ -117,6 +126,7 @@ export async function seedPrismaFromBootstrap(prisma: PrismaClient, options: See
         highlights: article.highlights,
         contentBlocks: sectionsToBlocks(article.sections),
         publishedAt,
+        coverUrl,
         sourceUrl,
         sourceTitle: sourceUrl ? article.title : null,
         sourceAuthor: sourceUrl ? article.authorName : null,

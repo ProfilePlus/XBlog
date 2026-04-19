@@ -226,7 +226,7 @@ export class PrismaStore implements Store {
       highlights: (record.highlights as string[]) ?? [],
       blocks: (record.contentBlocks as ArticleBlock[]) ?? [],
       coverAssetId: record.coverAssetId,
-      coverUrl: record.coverAsset?.url ?? null,
+      coverUrl: record.coverAsset?.url ?? record.coverUrl ?? null,
       externalId: record.externalId,
       sourceUrl: record.sourceUrl,
       sourceTitle: record.sourceTitle,
@@ -256,7 +256,7 @@ export class PrismaStore implements Store {
       categoryName: record.category.name,
       authorDisplayName: record.authorDisplayName,
       authorRoleLabel: record.authorRoleLabel,
-      coverUrl: record.coverAsset?.url ?? null,
+      coverUrl: record.coverAsset?.url ?? record.coverUrl ?? null,
       sourceUrl: record.sourceUrl,
     };
   }

@@ -256,13 +256,9 @@ export default async function HomePage() {
             最近在做
           </h2>
         </div>
-        <div style={{ flex: 1, display: "flex", gap: "16px" }}>
+        <div style={{ flex: 1, display: "flex", gap: "24px" }}>
           <div style={{
             flex: 1,
-            padding: "20px",
-            background: "#0A0A0A",
-            border: "1px solid #1A1A1A",
-            borderRadius: "12px",
             display: "flex",
             flexDirection: "column",
             gap: "12px",
@@ -287,10 +283,6 @@ export default async function HomePage() {
           </div>
           <div style={{
             flex: 1,
-            padding: "20px",
-            background: "#0A0A0A",
-            border: "1px solid #1A1A1A",
-            borderRadius: "12px",
             display: "flex",
             flexDirection: "column",
             gap: "12px",
@@ -315,10 +307,6 @@ export default async function HomePage() {
           </div>
           <div style={{
             flex: 1,
-            padding: "20px",
-            background: "#0A0A0A",
-            border: "1px solid #1A1A1A",
-            borderRadius: "12px",
             display: "flex",
             flexDirection: "column",
             gap: "12px",

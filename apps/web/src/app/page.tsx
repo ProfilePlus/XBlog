@@ -153,7 +153,7 @@ export default async function HomePage() {
             margin: 0,
             lineHeight: "1",
           }}>
-            Writing
+            精选文章
           </h2>
           <p style={{
             fontFamily: "system-ui, sans-serif",
@@ -162,7 +162,7 @@ export default async function HomePage() {
             margin: 0,
             lineHeight: "1.5",
           }}>
-            Selected essays<br />and lectures
+            精选随笔<br />与演讲
           </p>
         </div>
 

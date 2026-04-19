@@ -63,7 +63,7 @@ export default async function HomePage() {
 
       {/* Intro */}
       <section style={{
-        width: "960px",
+        width: "900px",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -99,7 +99,7 @@ export default async function HomePage() {
           width: "640px",
           margin: 0,
         }}>
-          你好，我是 Alex Plum。合肥程序员，主写 Java，搞 K8s，玩 AI 和大模型。最近沉迷 Vibe Coding——让 AI 当结对搭档。这里记录技术思考与工具探索。
+          Java 后端工程师，在 Spring、K8s、微服务的世界里摸爬滚打多年。AI 浪潮来袭，我既焦虑又兴奋——它拓宽了能力边界，也模糊了未来轮廓。这个博客是我 Vibe Coding 的第一个产物，记录技术、思考与成长，也是对 AI 时代的一次探索与回应。
         </p>
         <div style={{ display: "flex", gap: "24px" }}>
           <a href="mailto:943483255@qq.com" style={{
@@ -278,7 +278,7 @@ export default async function HomePage() {
               color: "#CCCCCC",
               margin: 0,
             }}>
-              Claude Code 深度实践
+              XBlog 重构
             </p>
             <p style={{
               fontFamily: "Inter, sans-serif",
@@ -287,7 +287,7 @@ export default async function HomePage() {
               lineHeight: "1.6",
               margin: 0,
             }}>
-              探索 Claude Code、Codex、OpenClaw 等 AI 编程工具的实战应用。研究 MCP、Skills、Agent 架构，构建自动化工作流。
+              用 Next.js + Java 后端重写博客，极简设计，接入大模型搜索。这是我 Vibe Coding 的第一个完整产物，也是对 AI 协作模式的一次深度实验。
             </p>
           </div>
           <div style={{
@@ -306,7 +306,7 @@ export default async function HomePage() {
               color: "#CCCCCC",
               margin: 0,
             }}>
-              本地大模型部署
+              AI 工具链探索
             </p>
             <p style={{
               fontFamily: "Inter, sans-serif",
@@ -315,7 +315,7 @@ export default async function HomePage() {
               lineHeight: "1.6",
               margin: 0,
             }}>
-              基于 Ollama、vLLM 搭建本地推理服务。测试 Llama、Qwen 等开源模型，优化推理性能，探索 Computer Use 能力边界。
+              深度使用 Claude Code、Codex、OpenClaw，研究 MCP、Skills、Agent 架构。探索 AI 如何真正提升而非替代人的创造力。
             </p>
           </div>
           <div style={{
@@ -334,7 +334,7 @@ export default async function HomePage() {
               color: "#CCCCCC",
               margin: 0,
             }}>
-              UI 设计与审美
+              本地大模型实验
             </p>
             <p style={{
               fontFamily: "Inter, sans-serif",
@@ -343,7 +343,7 @@ export default async function HomePage() {
               lineHeight: "1.6",
               margin: 0,
             }}>
-              学习 frankchimero.com 等优秀设计，提升审美品味。研究字体、排版、留白、色彩，打磨产品细节。
+              基于 Ollama、vLLM 搭建本地推理服务，测试开源模型的能力边界。在焦虑与兴奋之间，寻找 AI 与人协作的最佳平衡点。
             </p>
           </div>
         </div>
@@ -375,24 +375,26 @@ export default async function HomePage() {
         </div>
         <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
           {[
-            ["Claude Code", "Anthropic CLI，AI 结对编程核心工具"],
-            ["Codex", "OpenAI 代码生成与分析"],
-            ["OpenClaw", "自动化浏览器操作与信息采集"],
-            ["Hermes Agent", "多 Agent 协作框架探索"],
-            ["MCP", "Model Context Protocol，上下文工程"],
-            ["Skills", "CLI 技能系统，自动化工作流"],
-            ["Ollama", "本地大模型推理服务"],
-            ["vLLM", "高性能推理加速框架"],
-            ["Computer Use", "桌面自动化与操作代理"],
-            ["UI 设计", "审美提升、排版、留白"],
-            ["macOS / Windows", "双系统开发环境优化"],
+            ["Java", "后端开发主力语言，Spring 生态深度使用者"],
+            ["Python", "AI 工具链、数据处理、自动化脚本"],
+            ["Claude Code", "AI 结对编程，Vibe Coding 核心工具"],
+            ["Codex", "OpenAI 代码生成，辅助开发与重构"],
+            ["OpenClaw", "自动化浏览器操作，信息采集利器"],
+            ["MCP / Skills", "上下文工程与 CLI 技能系统"],
+            ["Docker / K8s", "容器化部署，生产环境微服务编排"],
+            ["Spring Boot", "Java 微服务框架，企业级应用基石"],
+            ["MySQL / PostgreSQL", "关系型数据库，数据持久化方案"],
+            ["Ollama / vLLM", "本地大模型推理，开源 LLM 实验"],
+            ["Computer Use", "桌面自动化，AI Agent 操作代理"],
+            ["UI 设计", "审美提升，frankchimero.com 学习中"],
+            ["macOS / Windows", "双系统开发环境，跨平台工作流"],
           ].map(([tool, desc], index) => (
             <div key={tool} style={{
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
               padding: "16px 0",
-              borderBottom: index < 10 ? "1px solid #333333" : "none",
+              borderBottom: index < 12 ? "1px solid #333333" : "none",
             }}>
               <p style={{
                 fontFamily: "Newsreader, serif",

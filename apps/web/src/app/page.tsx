@@ -94,12 +94,12 @@ export default async function HomePage() {
           fontFamily: "Newsreader, serif",
           fontSize: "18px",
           color: "#888888",
-          lineHeight: "1.6",
+          lineHeight: "1.7",
           textAlign: "center",
-          width: "640px",
+          width: "680px",
           margin: 0,
         }}>
-          Java 后端工程师，在 Spring、K8s、微服务的世界里摸爬滚打多年。AI 浪潮来袭，我既焦虑又兴奋——它拓宽了能力边界，也模糊了未来轮廓。这个博客是我 Vibe Coding 的第一个产物，记录技术、思考与成长，也是对 AI 时代的一次探索与回应。
+          我在代码的迷宫里游荡多年，Java、Spring、K8s 是我熟悉的路径。AI 的到来像一面镜子，映照出能力的边界，也映照出未来的不确定。我既着迷于它赋予的力量，又困惑于它带来的焦虑——这种矛盾本身，或许就是这个时代的真实写照。这个博客是我与 AI 协作的第一次尝试，记录技术、思考与成长，也是对一个问题的持续追问：在算法与人之间，我们如何找到自己的位置？
         </p>
         <div style={{ display: "flex", gap: "24px" }}>
           <a href="mailto:943483255@qq.com" style={{
@@ -252,11 +252,12 @@ export default async function HomePage() {
           gap: "6px",
         }}>
           <h2 style={{
-            fontFamily: "Playfair Display, serif",
+            fontFamily: "Georgia, serif",
             fontSize: "36px",
-            color: "#CCCCCC",
+            fontWeight: "300",
+            color: "#FFFFFF",
             margin: 0,
-            lineHeight: "1.2",
+            lineHeight: "1.1",
           }}>
             最近在做
           </h2>
@@ -364,11 +365,12 @@ export default async function HomePage() {
           gap: "16px",
         }}>
           <h2 style={{
-            fontFamily: "Playfair Display, serif",
-            fontSize: "48px",
-            color: "#CCCCCC",
+            fontFamily: "Georgia, serif",
+            fontSize: "36px",
+            fontWeight: "300",
+            color: "#FFFFFF",
             margin: 0,
-            lineHeight: "1.2",
+            lineHeight: "1.1",
           }}>
             工具箱
           </h2>
@@ -432,11 +434,12 @@ export default async function HomePage() {
           gap: "16px",
         }}>
           <h2 style={{
-            fontFamily: "Playfair Display, serif",
-            fontSize: "48px",
-            color: "#CCCCCC",
+            fontFamily: "Georgia, serif",
+            fontSize: "36px",
+            fontWeight: "300",
+            color: "#FFFFFF",
             margin: 0,
-            lineHeight: "1.2",
+            lineHeight: "1.1",
           }}>
             归档
           </h2>
@@ -498,11 +501,12 @@ export default async function HomePage() {
           gap: "16px",
         }}>
           <h2 style={{
-            fontFamily: "Playfair Display, serif",
-            fontSize: "48px",
-            color: "#CCCCCC",
+            fontFamily: "Georgia, serif",
+            fontSize: "36px",
+            fontWeight: "300",
+            color: "#FFFFFF",
             margin: 0,
-            lineHeight: "1.2",
+            lineHeight: "1.1",
           }}>
             关于
           </h2>

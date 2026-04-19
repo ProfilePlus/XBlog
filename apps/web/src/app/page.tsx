@@ -147,7 +147,7 @@ export default async function HomePage() {
         }}>
           <h2 style={{
             fontFamily: "Georgia, serif",
-            fontSize: "42px",
+            fontSize: "36px",
             fontWeight: "300",
             color: "#FFFFFF",
             margin: 0,
@@ -253,7 +253,7 @@ export default async function HomePage() {
         }}>
           <h2 style={{
             fontFamily: "Playfair Display, serif",
-            fontSize: "42px",
+            fontSize: "36px",
             color: "#CCCCCC",
             margin: 0,
             lineHeight: "1.2",
@@ -287,7 +287,7 @@ export default async function HomePage() {
               lineHeight: "1.6",
               margin: 0,
             }}>
-              用 Next.js + Java 后端重写博客，极简设计，接入大模型搜索。
+              用 Next.js + Java 后端重写博客，极简设计，接入大模型搜索。目标是打造一个有审美、有结构、也有方法论的个人知识空间。
             </p>
           </div>
           <div style={{
@@ -315,7 +315,35 @@ export default async function HomePage() {
               lineHeight: "1.6",
               margin: 0,
             }}>
-              基于 LangChain + 自研工具，构建代码审查与文档生成 Agent。
+              基于 LangChain + 自研工具，构建代码审查与文档生成 Agent。探索 AI 在软件工程中的实际应用边界。
+            </p>
+          </div>
+          <div style={{
+            flex: 1,
+            padding: "20px",
+            background: "#0A0A0A",
+            border: "1px solid #1A1A1A",
+            borderRadius: "12px",
+            display: "flex",
+            flexDirection: "column",
+            gap: "12px",
+          }}>
+            <p style={{
+              fontFamily: "Newsreader, serif",
+              fontSize: "18px",
+              color: "#CCCCCC",
+              margin: 0,
+            }}>
+              K8s 生产实践
+            </p>
+            <p style={{
+              fontFamily: "Inter, sans-serif",
+              fontSize: "14px",
+              color: "#888888",
+              lineHeight: "1.6",
+              margin: 0,
+            }}>
+              在生产环境维护 50+ 微服务集群，记录调优、监控、故障排查的实战经验。
             </p>
           </div>
         </div>
@@ -347,17 +375,19 @@ export default async function HomePage() {
         </div>
         <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
           {[
-            ["IntelliJ IDEA", "Java IDE"],
-            ["Claude Code", "AI 结对"],
-            ["Kubernetes", "容器编排"],
-            ["PostgreSQL", "数据库"],
-          ].map(([tool, type], index) => (
+            ["IntelliJ IDEA", "Java IDE，主力开发工具"],
+            ["Claude Code", "AI 结对编程，效率翻倍"],
+            ["Kubernetes", "容器编排，生产环境核心"],
+            ["PostgreSQL", "关系型数据库，数据持久化"],
+            ["Docker", "容器化部署，环境一致性"],
+            ["Git", "版本控制，团队协作基础"],
+          ].map(([tool, desc], index) => (
             <div key={tool} style={{
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
               padding: "16px 0",
-              borderBottom: index < 3 ? "1px solid #333333" : "none",
+              borderBottom: index < 5 ? "1px solid #333333" : "none",
             }}>
               <p style={{
                 fontFamily: "Newsreader, serif",
@@ -373,7 +403,7 @@ export default async function HomePage() {
                 color: "#666666",
                 margin: 0,
               }}>
-                {type}
+                {desc}
               </p>
             </div>
           ))}

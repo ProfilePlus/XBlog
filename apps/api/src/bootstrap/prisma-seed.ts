@@ -141,63 +141,6 @@ export async function seedPrismaFromBootstrap(prisma: PrismaClient, options: See
     });
   }
 
-  const issue = await prisma.homeIssue.upsert({
-    where: { issueNumber: "Issue 01" },
-    update: {
-      eyebrow: "XBlog / Aurora Edition",
-      title: "让技术、阅读与沉淀，在同一片极光里发光。",
-      lede: "这里记录技术文章、收录阅读与个人方法论，也把好内容重新整理成自己的知识版图。",
-      note: null,
-      primaryCtaLabel: "进入精选",
-      primaryCtaHref: "/#latest",
-      secondaryCtaLabel: "查看分类",
-      secondaryCtaHref: "/categories",
-      stats: siteStats,
-      logoVariant: "prototype",
-      status: "CURRENT",
-    },
-    create: {
-      issueNumber: "Issue 01",
-      eyebrow: "XBlog / Aurora Edition",
-      title: "让技术、阅读与沉淀，在同一片极光里发光。",
-      lede: "这里记录技术文章、收录阅读与个人方法论，也把好内容重新整理成自己的知识版图。",
-      note: null,
-      primaryCtaLabel: "进入精选",
-      primaryCtaHref: "/#latest",
-      secondaryCtaLabel: "查看分类",
-      secondaryCtaHref: "/categories",
-      stats: siteStats,
-      logoVariant: "prototype",
-      status: "CURRENT",
-    },
-  });
-
-  await prisma.homeIssueHeroSlot.deleteMany({
-    where: { homeIssueId: issue.id },
-  });
-
-  const articleByHref = new Map(articles.map((entry) => [`/articles/${entry.slug}`, entry]));
-  const heroSeeds = [
-    { slot: "MAIN" as const, href: featuredStories[0].href },
-    { slot: "SIDE_1" as const, href: featuredStories[1].href },
-    { slot: "SIDE_2" as const, href: featuredStories[2].href },
-  ];
-
-  for (const heroSeed of heroSeeds) {
-    const article = articleByHref.get(heroSeed.href) ?? articles[0];
-    if (!article) {
-      continue;
-    }
-
-    await prisma.homeIssueHeroSlot.create({
-      data: {
-        homeIssueId: issue.id,
-        articleId: article.id,
-        slot: heroSeed.slot,
-      },
-    });
-  }
-
   await prisma.adminUser.upsert({
     where: { email: "admin@xblog.local" },
     update: {

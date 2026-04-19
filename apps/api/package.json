@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "tsx watch src/server.ts",
+    "dev": "tsx watch --tsconfig tsconfig.json src/server.ts",
     "build": "pnpm exec prisma generate || pnpm exec prisma generate --no-engine && tsc -p tsconfig.build.json && pnpm exec tsc-alias -p tsconfig.build.json",
     "start": "node dist/src/server.js",
     "lint": "tsc -p tsconfig.json --noEmit",

@@ -278,7 +278,7 @@ export default async function HomePage() {
               color: "#CCCCCC",
               margin: 0,
             }}>
-              XBlog 重构
+              Claude Code 深度实践
             </p>
             <p style={{
               fontFamily: "Inter, sans-serif",
@@ -287,7 +287,7 @@ export default async function HomePage() {
               lineHeight: "1.6",
               margin: 0,
             }}>
-              用 Next.js + Java 后端重写博客，极简设计，接入大模型搜索。目标是打造一个有审美、有结构、也有方法论的个人知识空间。
+              探索 Claude Code、Codex、OpenClaw 等 AI 编程工具的实战应用。研究 MCP、Skills、Agent 架构，构建自动化工作流。
             </p>
           </div>
           <div style={{
@@ -306,7 +306,7 @@ export default async function HomePage() {
               color: "#CCCCCC",
               margin: 0,
             }}>
-              AI Agent 实验
+              本地大模型部署
             </p>
             <p style={{
               fontFamily: "Inter, sans-serif",
@@ -315,7 +315,7 @@ export default async function HomePage() {
               lineHeight: "1.6",
               margin: 0,
             }}>
-              基于 LangChain + 自研工具，构建代码审查与文档生成 Agent。探索 AI 在软件工程中的实际应用边界。
+              基于 Ollama、vLLM 搭建本地推理服务。测试 Llama、Qwen 等开源模型，优化推理性能，探索 Computer Use 能力边界。
             </p>
           </div>
           <div style={{
@@ -334,7 +334,7 @@ export default async function HomePage() {
               color: "#CCCCCC",
               margin: 0,
             }}>
-              K8s 生产实践
+              UI 设计与审美
             </p>
             <p style={{
               fontFamily: "Inter, sans-serif",
@@ -343,7 +343,7 @@ export default async function HomePage() {
               lineHeight: "1.6",
               margin: 0,
             }}>
-              在生产环境维护 50+ 微服务集群，记录调优、监控、故障排查的实战经验。
+              学习 frankchimero.com 等优秀设计，提升审美品味。研究字体、排版、留白、色彩，打磨产品细节。
             </p>
           </div>
         </div>
@@ -375,19 +375,24 @@ export default async function HomePage() {
         </div>
         <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
           {[
-            ["IntelliJ IDEA", "Java IDE，主力开发工具"],
-            ["Claude Code", "AI 结对编程，效率翻倍"],
-            ["Kubernetes", "容器编排，生产环境核心"],
-            ["PostgreSQL", "关系型数据库，数据持久化"],
-            ["Docker", "容器化部署，环境一致性"],
-            ["Git", "版本控制，团队协作基础"],
+            ["Claude Code", "Anthropic CLI，AI 结对编程核心工具"],
+            ["Codex", "OpenAI 代码生成与分析"],
+            ["OpenClaw", "自动化浏览器操作与信息采集"],
+            ["Hermes Agent", "多 Agent 协作框架探索"],
+            ["MCP", "Model Context Protocol，上下文工程"],
+            ["Skills", "CLI 技能系统，自动化工作流"],
+            ["Ollama", "本地大模型推理服务"],
+            ["vLLM", "高性能推理加速框架"],
+            ["Computer Use", "桌面自动化与操作代理"],
+            ["UI 设计", "审美提升、排版、留白"],
+            ["macOS / Windows", "双系统开发环境优化"],
           ].map(([tool, desc], index) => (
             <div key={tool} style={{
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
               padding: "16px 0",
-              borderBottom: index < 5 ? "1px solid #333333" : "none",
+              borderBottom: index < 10 ? "1px solid #333333" : "none",
             }}>
               <p style={{
                 fontFamily: "Newsreader, serif",

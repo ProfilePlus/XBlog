@@ -135,38 +135,38 @@ export default async function HomePage() {
       <section style={{
         width: "960px",
         display: "flex",
-        gap: "80px",
+        gap: "100px",
         alignItems: "flex-start",
         paddingTop: "120px",
       }}>
         <div className="section-header-sticky" style={{
-          width: "280px",
+          width: "200px",
           display: "flex",
           flexDirection: "column",
-          gap: "12px",
+          gap: "8px",
         }}>
           <h2 style={{
             fontFamily: "Georgia, serif",
-            fontSize: "72px",
+            fontSize: "56px",
             fontWeight: "400",
             color: "#FFFFFF",
             margin: 0,
-            lineHeight: "1",
+            lineHeight: "1.1",
           }}>
             精选文章
           </h2>
           <p style={{
             fontFamily: "system-ui, sans-serif",
-            fontSize: "15px",
+            fontSize: "14px",
             color: "#999999",
             margin: 0,
-            lineHeight: "1.5",
+            lineHeight: "1.4",
           }}>
             精选随笔<br />与演讲
           </p>
         </div>
 
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "60px" }}>
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "80px" }}>
           {data.featuredArticles.slice(0, 6).map((article) => (
             <Link
               key={article.href}
@@ -177,19 +177,19 @@ export default async function HomePage() {
                 <Image
                   src={article.coverUrl}
                   alt={article.title}
-                  width={400}
-                  height={300}
+                  width={320}
+                  height={240}
                   style={{
-                    width: "400px",
-                    height: "300px",
+                    width: "320px",
+                    height: "240px",
                     objectFit: "cover",
                     flexShrink: 0,
                   }}
                 />
               ) : (
                 <div style={{
-                  width: "400px",
-                  height: "300px",
+                  width: "320px",
+                  height: "240px",
                   background: "#1A1A1A",
                   flexShrink: 0,
                 }} />
@@ -197,12 +197,13 @@ export default async function HomePage() {
               <div style={{
                 display: "flex",
                 flexDirection: "column",
-                gap: "8px",
+                gap: "6px",
                 justifyContent: "center",
+                maxWidth: "280px",
               }}>
                 <h3 style={{
                   fontFamily: "Georgia, serif",
-                  fontSize: "24px",
+                  fontSize: "22px",
                   fontWeight: "400",
                   color: "#FFFFFF",
                   lineHeight: "1.3",
@@ -212,7 +213,7 @@ export default async function HomePage() {
                 </h3>
                 <p style={{
                   fontFamily: "system-ui, sans-serif",
-                  fontSize: "15px",
+                  fontSize: "14px",
                   color: "#999999",
                   lineHeight: "1.5",
                   margin: 0,
@@ -221,11 +222,12 @@ export default async function HomePage() {
                 </p>
                 <p style={{
                   fontFamily: "system-ui, sans-serif",
-                  fontSize: "13px",
+                  fontSize: "12px",
                   color: "#666666",
                   margin: 0,
+                  marginTop: "4px",
                 }}>
-                  {article.category}
+                  2025
                 </p>
               </div>
             </Link>

@@ -12,14 +12,14 @@ body {
 
 .article-card {
   display: flex;
-  gap: 40px;
+  gap: 60px;
   align-items: center;
   text-decoration: none;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.2s ease;
 }
 
 .article-card:hover {
-  opacity: 0.7;
+  opacity: 0.6;
 }
 
 .section-header-sticky {

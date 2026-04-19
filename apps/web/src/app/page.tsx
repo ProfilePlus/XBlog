@@ -159,7 +159,7 @@ export default async function HomePage() {
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
-          {data.featuredArticles.slice(0, 5).map((article) => (
+          {data.featuredArticles.slice(0, 6).map((article) => (
             <Link
               key={article.href}
               href={article.href}

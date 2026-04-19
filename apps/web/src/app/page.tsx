@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import { SiteHeader } from "@/components/site-header";
 import { getHomePageData } from "@/lib/public-api";
 
@@ -37,7 +36,7 @@ const FEATURED_ARTICLES = [
 ];
 
 export default async function HomePage() {
-  const data = await getHomePageData();
+  await getHomePageData();
 
   return (
     <div className="page-container">

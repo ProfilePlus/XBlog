@@ -6,7 +6,7 @@ type SiteHeaderProps = {
 };
 
 export async function SiteHeader({ variant = "default" }: SiteHeaderProps) {
-  const isHome = variant === "default";
+  void variant;
 
   return (
     <header className="site-header">

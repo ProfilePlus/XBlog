@@ -8,7 +8,6 @@ import type {
   PublicSiteBrandingResponse,
 } from "@xblog/contracts";
 import { webConfig } from "@/lib/config";
-import { creatorTools } from "@/lib/static-content";
 import type {
   ArticlePageData,
   ArticleSectionGroup,

@@ -237,19 +237,26 @@ export default async function HomePage() {
       <section style={{
         width: "960px",
         display: "flex",
-        flexDirection: "column",
-        gap: "24px",
+        gap: "80px",
+        alignItems: "flex-start",
         paddingTop: "60px",
       }}>
-        <h2 style={{
-          fontFamily: "Playfair Display, serif",
-          fontSize: "32px",
-          color: "#CCCCCC",
-          margin: 0,
+        <div className="section-header-sticky" style={{
+          width: "280px",
+          display: "flex",
+          flexDirection: "column",
+          gap: "16px",
         }}>
-          最近在做
-        </h2>
-        <div style={{ display: "flex", gap: "16px" }}>
+          <h2 style={{
+            fontFamily: "Playfair Display, serif",
+            fontSize: "32px",
+            color: "#CCCCCC",
+            margin: 0,
+          }}>
+            最近在做
+          </h2>
+        </div>
+        <div style={{ flex: 1, display: "flex", gap: "16px" }}>
           <div style={{
             flex: 1,
             padding: "20px",
@@ -313,19 +320,26 @@ export default async function HomePage() {
       <section style={{
         width: "960px",
         display: "flex",
-        flexDirection: "column",
-        gap: "24px",
+        gap: "80px",
+        alignItems: "flex-start",
         paddingTop: "60px",
       }}>
-        <h2 style={{
-          fontFamily: "Playfair Display, serif",
-          fontSize: "32px",
-          color: "#CCCCCC",
-          margin: 0,
+        <div className="section-header-sticky" style={{
+          width: "280px",
+          display: "flex",
+          flexDirection: "column",
+          gap: "16px",
         }}>
-          工具箱
-        </h2>
-        <div style={{ display: "flex", flexDirection: "column" }}>
+          <h2 style={{
+            fontFamily: "Playfair Display, serif",
+            fontSize: "32px",
+            color: "#CCCCCC",
+            margin: 0,
+          }}>
+            工具箱
+          </h2>
+        </div>
+        <div style={{ flex: 1, display: "flex", flexDirection: "column" }}>
           {[
             ["IntelliJ IDEA", "Java IDE"],
             ["Claude Code", "AI 结对"],
@@ -364,11 +378,16 @@ export default async function HomePage() {
       <section style={{
         width: "960px",
         display: "flex",
-        flexDirection: "column",
-        gap: "32px",
+        gap: "80px",
+        alignItems: "flex-start",
         paddingTop: "60px",
       }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div className="section-header-sticky" style={{
+          width: "280px",
+          display: "flex",
+          flexDirection: "column",
+          gap: "16px",
+        }}>
           <h2 style={{
             fontFamily: "Playfair Display, serif",
             fontSize: "32px",
@@ -386,7 +405,7 @@ export default async function HomePage() {
             2009 — 至今
           </p>
         </div>
-        <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "16px" }}>
           {data.latestEssays.slice(0, 6).map((entry) => (
             <Link
               key={entry.href}

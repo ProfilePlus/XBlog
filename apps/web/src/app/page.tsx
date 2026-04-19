@@ -135,11 +135,16 @@ export default async function HomePage() {
       <section style={{
         width: "960px",
         display: "flex",
-        flexDirection: "column",
-        gap: "48px",
+        gap: "80px",
+        alignItems: "flex-start",
         paddingTop: "40px",
       }}>
-        <div className="section-header-sticky" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div className="section-header-sticky" style={{
+          width: "280px",
+          display: "flex",
+          flexDirection: "column",
+          gap: "16px",
+        }}>
           <h2 style={{
             fontFamily: "Playfair Display, serif",
             fontSize: "32px",
@@ -158,7 +163,7 @@ export default async function HomePage() {
           </p>
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "24px" }}>
           {data.featuredArticles.slice(0, 6).map((article) => (
             <Link
               key={article.href}

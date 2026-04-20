@@ -71,9 +71,10 @@ const imageBlockSchema = z.object({
   id: z.string(),
   type: z.literal("image"),
   assetId: z.string().min(1).optional(),
-  url: z.string().url(),
+  url: z.string(),
   alt: z.string().default(""),
   caption: z.string().default(""),
+  layout: z.enum(["normal", "full", "half"]).optional(),
 });
 
 const quoteBlockSchema = z.object({
@@ -144,7 +145,7 @@ export const articleSummarySchema = z.object({
   categoryName: z.string(),
   authorDisplayName: z.string(),
   authorRoleLabel: z.string(),
-  coverUrl: z.string().url().nullable(),
+  coverUrl: z.string().nullable(),
   sourceUrl: z.string().url().nullable(),
 });
 
@@ -261,7 +262,7 @@ export const adminArticleSchema = z.object({
   highlights: z.array(z.string()),
   blocks: z.array(articleBlockSchema),
   coverAssetId: z.string().nullable(),
-  coverUrl: z.string().url().nullable(),
+  coverUrl: z.string().nullable(),
   sourceUrl: z.string().url("来源 URL 格式不正确").nullable(),
   sourceTitle: z.string().nullable(),
   sourceAuthor: z.string().nullable(),

@@ -63,7 +63,7 @@ export default async function StoragePage() {
             <span className={`admin-status-pill ${status.liveCheck.ok ? "is-ok" : "is-error"}`}>
               {status.liveCheck.ok ? "可用" : "异常"}
             </span>
-            <span className="admin-subtle">{new Date(status.liveCheck.checkedAt).toLocaleString("zh-CN")}</span>
+            <span style={{ fontSize: "0.875rem", color: "#888" }}>{new Date(status.liveCheck.checkedAt).toLocaleString("zh-CN")}</span>
           </div>
           <div className="admin-kv-list">
             <div className="admin-kv-row">
@@ -79,7 +79,6 @@ export default async function StoragePage() {
               <strong>{status.liveCheck.durationMs} ms</strong>
             </div>
           </div>
-          <p className="admin-subtle">{status.liveCheck.message}</p>
         </div>
 
         <div className="admin-card">
@@ -88,7 +87,7 @@ export default async function StoragePage() {
             <span className={`admin-status-pill ${status.diagnostics.ready ? "is-ok" : "is-error"}`}>
               {status.diagnostics.ready ? "配置齐全" : "配置未完成"}
             </span>
-            <span className="admin-subtle">{status.diagnostics.uploadFlowLabel}</span>
+            <span style={{ fontSize: "0.875rem", color: "#888" }}>{status.diagnostics.uploadFlowLabel}</span>
           </div>
 
           <div className="admin-kv-list">
@@ -109,9 +108,7 @@ export default async function StoragePage() {
                 ))}
               </ul>
             </>
-          ) : (
-            <p className="admin-subtle">关键配置已经齐整，这条上传链路现在可以顺着往前走。</p>
-          )}
+          ) : null}
 
           {status.diagnostics.warnings.length > 0 ? (
             <>

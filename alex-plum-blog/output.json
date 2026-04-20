@@ -1,0 +1,262 @@
+{
+  "cards": [
+    {
+      "href": "https://frankchimero.com/blog/2025/beyond-the-machine/",
+      "img": "beyond-the-machine.png",
+      "subtitle": "Beyond the Machine",
+      "title": "2025"
+    },
+    {
+      "href": "https://frankchimero.com/blog/2018/everything-easy/",
+      "img": "easy-hard.jpg",
+      "subtitle": "Everything Easy is Hard Again",
+      "title": "2018"
+    },
+    {
+      "href": "https://frankchimero.com/blog/2015/the-webs-grain/",
+      "img": "the-webs-grain.jpg",
+      "subtitle": "The Web’s Grain",
+      "title": "2015"
+    },
+    {
+      "href": "https://frankchimero.com/blog/2013/what-screens-want/",
+      "img": "what-screens-want.jpg",
+      "subtitle": "What Screens Want",
+      "title": "2013"
+    },
+    {
+      "href": "https://frankchimero.com/blog/2014/only-openings/",
+      "img": "only-openings.jpg",
+      "subtitle": "Only Openings",
+      "title": "2014"
+    },
+    {
+      "href": "https://frankchimero.com/blog/2014/designing-in-the-borderlands/",
+      "img": "borderlands.jpg",
+      "subtitle": "Designing in the Borderlands",
+      "title": "2014"
+    }
+  ],
+  "blogs": [
+    {
+      "href": "https://frankchimero.com/blog/2025/beyond-the-machine-extras/",
+      "title": "Beyond the Machine Extras",
+      "time": "2025.10.24"
+    },
+    {
+      "href": "https://frankchimero.com/blog/2025/beyond-the-machine/",
+      "title": "Beyond the Machine",
+      "time": "2025.10.20"
+    },
+    {
+      "href": "https://frankchimero.com/blog/2025/selling-lemons/",
+      "title": "Selling Lemons",
+      "time": "2025.09.30"
+    },
+    {
+      "href": "https://frankchimero.com/blog/2025/Eelevation/",
+      "title": "Eel-evation",
+      "time": "2025.09.29"
+    },
+    {
+      "href": "https://frankchimero.com/blog/2025/time-is-on-my-side/",
+      "title": "Time is On My Side",
+      "time": "2025.08.19"
+    },
+    {
+      "href": "https://frankchimero.com/blog/2021/the-green-ray/",
+      "title": "The Green Ray",
+      "time": "2021.08.31"
+    },
+    {
+      "href": "https://frankchimero.com/blog/2020/hands-tv/",
+      "title": "Hands TV",
+      "time": "2020.08.03"
+    },
+    {
+      "href": "https://frankchimero.com/blog/2020/who-cares/",
+      "title": "Who cares?",
+      "time": "2020.02.04"
+    },
+    {
+      "href": "https://frankchimero.com/blog/2019/monkey-trap/",
+      "title": "Monkey Trap",
+      "time": "2019.09.19"
+    },
+    {
+      "href": "https://frankchimero.com/blog/2018/work-looks-back/",
+      "title": "When the Work Looks Back At You",
+      "time": "2018.06.06"
+    },
+    {
+      "href": "https://frankchimero.com/blog/2018/the-good-room/",
+      "title": "The Good Room",
+      "time": "2018.02.15"
+    },
+    {
+      "href": "https://frankchimero.com/blog/2018/everything-easy/",
+      "title": "Everything Easy is Hard Again",
+      "time": "2018.02.09"
+    },
+    {
+      "href": "https://frankchimero.com/blog/2017/back-to-the-cave/",
+      "title": "New Visual Essay: Back to the Cave",
+      "time": "2017.04.15"
+    },
+    {
+      "href": "https://frankchimero.com/blog/2017/super-hi-foreword/",
+      "title": "SuperHi Foreword",
+      "time": "2017.04.11"
+    },
+    {
+      "href": "https://frankchimero.com/blog/2017/plainness-and-sweetness/",
+      "title": "Plainness and Sweetness",
+      "time": "2017.03.27"
+    },
+    {
+      "href": "https://frankchimero.com/blog/2017/tarkovsky/",
+      "title": "Tarkovsky’s Flame",
+      "time": "2017.02.27"
+    },
+    {
+      "href": "https://frankchimero.com/blog/2016/new-yorker/",
+      "title": "Hi, I’d Like to Add Myself to the New Yorker",
+      "time": "2016.01.06"
+    },
+    {
+      "href": "https://frankchimero.com/blog/2015/other-halves/",
+      "title": "Other Halves",
+      "time": "2015.05.02"
+    },
+    {
+      "href": "https://frankchimero.com/blog/2015/the-webs-grain/",
+      "title": "The Web’s Grain",
+      "time": "2015.02.18"
+    },
+    {
+      "href": "https://frankchimero.com/blog/2014/rules-of-engagement/",
+      "title": "Rules of Engagement",
+      "time": "2014.08.28"
+    },
+    {
+      "href": "https://frankchimero.com/blog/2014/from-the-porch-to-the-street/",
+      "title": "From the Porch to the Street",
+      "time": "2014.08.26"
+    },
+    {
+      "href": "https://frankchimero.com/blog/2014/massimo-and-me/",
+      "title": "Massimo and Me",
+      "time": "2014.05.27"
+    },
+    {
+      "href": "https://frankchimero.com/blog/2014/only-openings/",
+      "title": "Only Openings",
+      "time": "2014.05.14"
+    },
+    {
+      "href": "https://frankchimero.com/blog/2014/designing-in-the-borderlands/",
+      "title": "Designing in the Borderlands",
+      "time": "2014.04.03"
+    },
+    {
+      "href": "https://frankchimero.com/blog/2013/what-screens-want/",
+      "title": "What Screens Want",
+      "time": "2013.11.14"
+    },
+    {
+      "href": "https://frankchimero.com/blog/2013/the-inferno-of-independence/",
+      "title": "The Inferno of Independence",
+      "time": "2013.09.24"
+    },
+    {
+      "href": "https://frankchimero.com/blog/2013/portraits/",
+      "title": "Portraits",
+      "time": "2013.07.17"
+    },
+    {
+      "href": "https://frankchimero.com/blog/2013/why-vs-how/",
+      "title": "Why vs. How",
+      "time": "2013.03.22"
+    },
+    {
+      "href": "https://frankchimero.com/blog/2013/the-cloud-is-heavy/",
+      "title": "The Cloud Is Heavy and Design Isn’t Invisible",
+      "time": "2013.03.13"
+    },
+    {
+      "href": "https://frankchimero.com/blog/2012/pencil-computer/",
+      "title": "The Humble Pencil, The Mighty Computer",
+      "time": "2012.07.26"
+    },
+    {
+      "href": "https://frankchimero.com/blog/2011/the-wall/",
+      "title": "The Wall",
+      "time": "2011.12.14"
+    },
+    {
+      "href": "https://frankchimero.com/blog/2011/the-particle/",
+      "title": "The Particle",
+      "time": "2011.10.16"
+    },
+    {
+      "href": "https://frankchimero.com/blog/2011/the-long-hard-stupid-way/",
+      "title": "The Long, Hard, Stupid Way",
+      "time": "2011.09.13"
+    },
+    {
+      "href": "https://frankchimero.com/blog/2011/sorting-a-mass/",
+      "title": "Sorting a Mass",
+      "time": "2011.06.27"
+    },
+    {
+      "href": "https://frankchimero.com/blog/2011/reading-readiness/",
+      "title": "Reading Readiness",
+      "time": "2011.05.13"
+    },
+    {
+      "href": "https://frankchimero.com/blog/2011/making-the-bed/",
+      "title": "Making the Bed You Sleep In",
+      "time": "2011.01.19"
+    },
+    {
+      "href": "https://frankchimero.com/blog/2010/advice/",
+      "title": "What Advice Would You Give To A Graphic Design Student?",
+      "time": "2010.08.20"
+    },
+    {
+      "href": "https://frankchimero.com/blog/2010/there-is-no-catching-up/",
+      "title": "There Is No Catching Up",
+      "time": "2010.06.01"
+    },
+    {
+      "href": "https://frankchimero.com/blog/2010/you-are-here/",
+      "title": "You Are Here",
+      "time": "2010.05.20"
+    },
+    {
+      "href": "https://frankchimero.com/blog/2010/big-ideas/",
+      "title": "Big Ideas",
+      "time": "2010.03.01"
+    },
+    {
+      "href": "https://frankchimero.com/blog/2010/anti-pre-pro/",
+      "title": "Anti-Pre-Pro",
+      "time": "2010.02.19"
+    },
+    {
+      "href": "https://frankchimero.com/blog/2010/whiteboard-accounting/",
+      "title": "Whiteboard Accounting",
+      "time": "2010.01.15"
+    },
+    {
+      "href": "https://frankchimero.com/blog/2010/on-iteration/",
+      "title": "On Iteration",
+      "time": "2010.01.10"
+    },
+    {
+      "href": "https://frankchimero.com/blog/2009/ten-principles/",
+      "title": "Ten Principles",
+      "time": "2009.02.09"
+    }
+  ]
+}

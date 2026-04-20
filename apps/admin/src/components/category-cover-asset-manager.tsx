@@ -344,9 +344,6 @@ export function CategoryCoverAssetManager({
           <div>
             <p className="admin-kicker">Cover Intake</p>
             <h2>把新图片收入封面素材库</h2>
-            <p className="admin-subtle">
-              导入后的图片会在这里排成一库。没有手动封面的分类，会先从同色调的空闲图片里认领。
-            </p>
           </div>
           <div className="admin-inline-actions">
             <span className="admin-chip">总计 {total} 张</span>
@@ -358,9 +355,6 @@ export function CategoryCoverAssetManager({
           <div className="admin-card admin-asset-control">
             <p className="admin-kicker">Metadata</p>
             <h3>入库标记</h3>
-            <p className="admin-subtle">
-              这里写下的名称与色调，会跟着接下来导入的图片一起入库，好让它们日后更容易被认出来。
-            </p>
             <label>
               素材名称
               <input
@@ -392,151 +386,8 @@ export function CategoryCoverAssetManager({
             <div className="admin-card admin-asset-control">
               <p className="admin-kicker">Local Upload</p>
               <h3>批量导入本地图片</h3>
-              <p className="admin-subtle">一次带回多张图片，让它们一起落进对象存储，也落进素材库。</p>
-              <label className="admin-upload-button admin-upload-button-wide">
-                {assetPending ? assetTaskLabel ?? "处理中..." : "选择图片批量导入"}
-                <input
-                  accept="image/*"
-                  disabled={assetPending}
-                  multiple
-                  onChange={(event) => {
-                    const files = event.target.files;
-                    if (files?.length) {
-                      void uploadAssets(files);
-                    }
-                    event.currentTarget.value = "";
-                  }}
-                  type="file"
-                />
-              </label>
-            </div>
-
-            <div className="admin-card admin-asset-control">
-              <p className="admin-kicker">Remote Import</p>
               <h3>导入远程图片</h3>
-              <p className="admin-subtle">贴上一张图片地址，后台会把它从远处取回，等着分类来选。</p>
-              <label>
-                图片 URL
-                <div className="admin-inline-field">
-                  <input
-                    disabled={assetPending}
-                    placeholder="https://example.com/aurora.jpg"
-                    value={importUrl}
-                    onChange={(event) => setImportUrl(event.target.value)}
-                  />
-                  <button
-                    className="admin-primary-button"
-                    disabled={assetPending}
-                    onClick={() => void importAsset()}
-                    type="button"
-                  >
-                    {assetPending ? assetTaskLabel ?? "处理中..." : "导入"}
-                  </button>
-                </div>
-              </label>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="admin-card admin-section-card admin-asset-control admin-cover-library-filters">
-        <div className="admin-section-head">
-          <div>
-            <p className="admin-kicker">Filter Library</p>
             <h2>按色调和占用状态筛选素材</h2>
-            <p className="admin-subtle">先把色调与占用状态筛一遍，再慢慢翻页，会更容易找到那张正合适的图。</p>
-          </div>
-          <div className="admin-inline-actions">
-            <span className="admin-chip">{pagePending ? "筛选中..." : `当前结果 ${total} 张`}</span>
-            <button
-              className="admin-ghost-button"
-              disabled={pagePending || (filters.tone === "all" && filters.assignment === "all")}
-              onClick={() => void loadPage(1, { tone: "all", assignment: "all" })}
-              type="button"
-            >
-              清空筛选
-            </button>
-          </div>
-        </div>
-
-        <div className="admin-cover-library-filter-grid">
-          <label>
-            色调
-            <select
-              disabled={pagePending}
-              value={filters.tone}
-              onChange={(event) => applyFilters({ tone: event.target.value as CategoryTone | "all" })}
-            >
-              {filterToneOptions.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
-          </label>
-
-          <label>
-            占用状态
-            <select
-              disabled={pagePending}
-              value={filters.assignment}
-              onChange={(event) =>
-                applyFilters({ assignment: event.target.value as CategoryCoverAssetAssignmentFilter })
-              }
-            >
-              {assignmentOptions.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
-          </label>
-
-          <div className="admin-cover-library-filter-summary">
-            <span className="admin-chip">色调：{filters.tone === "all" ? "全部" : filters.tone}</span>
-            <span className="admin-chip">
-              状态：
-              {filters.assignment === "all"
-                ? "全部"
-                : filters.assignment === "assigned"
-                  ? "已占用"
-                  : "未占用"}
-            </span>
-          </div>
-        </div>
-      </section>
-
-      {assets.length > 0 ? (
-        <section className="admin-cover-library-grid">
-          {assets.map((asset) => (
-            <article className="admin-card admin-cover-library-card" key={asset.id}>
-              <div className="admin-cover-library-media">
-                <Image
-                  alt={asset.label ?? "分类封面素材"}
-                  fill
-                  sizes="(max-width: 960px) 100vw, 28vw"
-                  src={asset.url}
-                  unoptimized
-                />
-              </div>
-
-              <div className="admin-cover-library-copy">
-                <div className="admin-inline-actions">
-                  <span className={`admin-status-pill ${asset.isAssigned ? "is-ok" : "is-info"}`}>
-                    {asset.isAssigned ? "已占用" : "未占用"}
-                  </span>
-                  <span className="admin-chip">{asset.tone ?? "未标记"}</span>
-                </div>
-
-                <h3>{asset.label ?? "未命名素材"}</h3>
-                <p className="admin-subtle">
-                  {formatDimensions(asset)} · 入库于 {new Date(asset.createdAt).toLocaleString("zh-CN")}
-                </p>
-                <p className="admin-subtle">
-                  {asset.isAssigned
-                    ? `当前用于 ${asset.assignedCategoryName ?? "某个分类"}`
-                    : "这张图暂时还没有去处，既可以手动分配，也会被自动匹配看见。"}
-                </p>
               </div>
 
               <div className="admin-cover-library-footer">
@@ -563,18 +414,12 @@ export function CategoryCoverAssetManager({
         <section className="admin-card admin-cover-library-empty">
           <p className="admin-kicker">Empty Library</p>
           <h2>素材库还没有图片</h2>
-          <p className="admin-subtle">
-            先带几张图回来。没有可用素材的时候，未指定封面的分类会先用渐变占位。
-          </p>
         </section>
       )}
 
       <div className="admin-card admin-pagination">
         <div>
           <p className="admin-kicker">Pagination</p>
-          <p className="admin-subtle">
-            第 {page} / {pageCount} 页，共 {total} 张素材
-          </p>
         </div>
         <div className="admin-inline-actions">
           <button

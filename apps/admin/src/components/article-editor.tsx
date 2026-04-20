@@ -534,9 +534,6 @@ export function ArticleEditor({
             <span className="admin-chip">{form.id ? `/${form.slug || "draft-story"}` : "草稿工作区"}</span>
           </div>
           <h1>{form.title.trim() || "未命名文章"}</h1>
-          <p className="admin-subtle">
-            左边是写作画布，右边是预览和发布检查。这样正文、封面和元信息会更像同一套编辑台，而不是分散的大表单。
-          </p>
         </div>
         <div className="admin-inline-actions admin-editor-toolbar-actions">
           <button className="admin-primary-button" disabled={pending || deletePending} onClick={() => saveArticle(form.id ? "PUT" : "POST")} type="button">
@@ -568,29 +565,21 @@ export function ArticleEditor({
         <article className="admin-card admin-editor-overview-card">
           <p className="admin-kicker">Editorial Pulse</p>
           <strong>{metadataReadyCount}/8</strong>
-          <p className="admin-subtle">标题、摘要、导语、作者与分类一旦齐整，文章的门面才算真正站稳。</p>
           <span className="admin-status-pill is-info">Metadata</span>
         </article>
         <article className="admin-card admin-editor-overview-card">
           <p className="admin-kicker">Story Body</p>
           <strong>{contentReadyCount}/{form.blocks.length || 1}</strong>
-          <p className="admin-subtle">这里数的是已经写实的段落与模块，方便判断一篇文章是否到了能发布的时候。</p>
           <span className="admin-status-pill is-info">Canvas</span>
         </article>
         <article className="admin-card admin-editor-overview-card">
           <p className="admin-kicker">Cover Readiness</p>
           <strong>{form.coverUrl ? "Ready" : "Missing"}</strong>
-          <p className="admin-subtle">封面会先替文章开口。没有封面也能保存，但最好别急着把它推上首页。</p>
           <span className={`admin-status-pill ${form.coverUrl ? "is-ok" : "is-warn"}`}>{form.coverUrl ? "封面已绑定" : "等待封面"}</span>
         </article>
         <article className="admin-card admin-editor-overview-card">
           <p className="admin-kicker">Highlights & Source</p>
           <strong>{highlightCount} / {form.kind === "CURATED" ? `${sourceReadyCount}/4` : "Optional"}</strong>
-          <p className="admin-subtle">
-            {form.kind === "CURATED"
-              ? "收录稿的来处要写清，链接、标题、作者与时间，都是回到原文的路。"
-              : "原创稿不必强求来源，但亮点写明了，首页与推荐位才更有分寸。"}
-          </p>
           <span className="admin-status-pill is-info">{form.kind === "CURATED" ? "Source-led" : "Original-led"}</span>
         </article>
       </section>
@@ -601,137 +590,7 @@ export function ArticleEditor({
               <div>
                 <p className="admin-kicker">Story Copy</p>
                 <h2>基础信息</h2>
-                <p className="admin-subtle">标题、摘要与导语会先于正文被看见，它们决定读者愿不愿意继续往下。</p>
-              </div>
-            </div>
-            <div className="admin-form">
-              <label>
-                标题
-                <input value={form.title} onChange={(event) => setForm({ ...form, title: event.target.value })} />
-              </label>
-              <div className="admin-form-grid">
-                <label>
-                  Slug
-                  <input value={form.slug} onChange={(event) => setForm({ ...form, slug: event.target.value })} />
-                </label>
-                <label>
-                  阅读时间
-                  <input value={form.readingTime} onChange={(event) => setForm({ ...form, readingTime: event.target.value })} />
-                </label>
-              </div>
-              <label>
-                摘要
-                <textarea value={form.excerpt} onChange={(event) => setForm({ ...form, excerpt: event.target.value })} />
-              </label>
-              <label>
-                导语
-                <textarea value={form.lede} onChange={(event) => setForm({ ...form, lede: event.target.value })} />
-              </label>
-            </div>
-          </section>
-
-          <section className="admin-card admin-section-card admin-body-stage">
-            <div className="admin-section-head">
-              <div>
-                <p className="admin-kicker">Body Builder</p>
                 <h2>正文编辑器</h2>
-                <p className="admin-subtle">在这里添删段落、标题与图片，让一篇文章真正长出自己的骨架。</p>
-              </div>
-              <div className="admin-block-toolbar">
-                {(["paragraph", "heading", "image", "quote", "list", "code", "divider"] as const).map((type) => (
-                  <button
-                    className="admin-ghost-button"
-                    key={type}
-                    onClick={() => setForm((current) => ({ ...current, blocks: [...current.blocks, emptyBlock(type)] }))}
-                    type="button"
-                  >
-                    添加{blockTypeLabel(type)}
-                  </button>
-                ))}
-              </div>
-            </div>
-            <div className="admin-block-list">
-              {form.blocks.map((block, index) => (
-                <div className="admin-block-card" key={block.id}>
-                  <div className="admin-section-head">
-                    <div className="admin-inline-actions">
-                      <span className="admin-status-pill is-info">Block {index + 1}</span>
-                      <strong>{blockTypeLabel(block.type)}</strong>
-                    </div>
-                    <button
-                      className="admin-ghost-button"
-                      onClick={() =>
-                        setForm((current) => ({
-                          ...current,
-                          blocks: current.blocks.filter((_, blockIndex) => blockIndex !== index),
-                        }))
-                      }
-                      type="button"
-                    >
-                      删除
-                    </button>
-                  </div>
-                  {block.type === "heading" ? (
-                    <div className="admin-grid cols-2">
-                      <select
-                        value={block.level}
-                        onChange={(event) =>
-                          updateBlock(index, { ...block, level: Number(event.target.value) as 2 | 3 })
-                        }
-                      >
-                        <option value={2}>H2</option>
-                        <option value={3}>H3</option>
-                      </select>
-                      <input value={block.text} onChange={(event) => updateBlock(index, { ...block, text: event.target.value })} />
-                    </div>
-                  ) : null}
-                  {block.type === "paragraph" ? (
-                    <textarea
-                      className="admin-block-textarea is-body"
-                      value={block.text}
-                      onChange={(event) => updateBlock(index, { ...block, text: event.target.value })}
-                    />
-                  ) : null}
-                  {block.type === "image" ? (
-                    <div className="admin-grid cols-2">
-                      <input placeholder="Image URL" value={block.url} onChange={(event) => updateBlock(index, { ...block, url: event.target.value })} />
-                      <input placeholder="Alt" value={block.alt} onChange={(event) => updateBlock(index, { ...block, alt: event.target.value })} />
-                    </div>
-                  ) : null}
-                  {block.type === "quote" ? (
-                    <div className="admin-grid cols-2">
-                      <textarea
-                        className="admin-block-textarea"
-                        value={block.text}
-                        onChange={(event) => updateBlock(index, { ...block, text: event.target.value })}
-                      />
-                      <input placeholder="Citation" value={block.citation} onChange={(event) => updateBlock(index, { ...block, citation: event.target.value })} />
-                    </div>
-                  ) : null}
-                  {block.type === "list" ? (
-                    <div className="admin-grid">
-                      <select value={block.style} onChange={(event) => updateBlock(index, { ...block, style: event.target.value as "bullet" | "ordered" })}>
-                        <option value="bullet">Bullet</option>
-                        <option value="ordered">Ordered</option>
-                      </select>
-                      <textarea
-                        className="admin-block-textarea"
-                        value={block.items.join("\n")}
-                        onChange={(event) => updateBlock(index, { ...block, items: event.target.value.split("\n") })}
-                      />
-                    </div>
-                  ) : null}
-                  {block.type === "code" ? (
-                    <div className="admin-grid cols-2">
-                      <input value={block.language} onChange={(event) => updateBlock(index, { ...block, language: event.target.value })} />
-                      <textarea
-                        className="admin-block-textarea"
-                        value={block.code}
-                        onChange={(event) => updateBlock(index, { ...block, code: event.target.value })}
-                      />
-                    </div>
-                  ) : null}
-                  {block.type === "divider" ? <p className="admin-subtle">分割线只负责换气，不需要再写别的。</p> : null}
                 </div>
               ))}
             </div>
@@ -770,9 +629,6 @@ export function ArticleEditor({
                   <span className="admin-chip">{kindLabel(form.kind)}</span>
                 </div>
                 <h3>{form.title.trim() || "未命名文章"}</h3>
-                <p className="admin-subtle">
-                  {form.excerpt.trim() || "摘要会先一步出现在首页与分类页，替正文轻轻开场。"}
-                </p>
                 <div className="admin-inline-actions">
                   <span className="admin-chip">
                     {categories.find((category) => category.id === form.categoryId)?.name ?? "未选分类"}
@@ -813,64 +669,8 @@ export function ArticleEditor({
                 </div>
               ) : (
                 <div className="admin-asset-empty">
-                  <p className="admin-subtle">封面还空着。你可以从本地上传，也可以从远处引一张图过来。</p>
-                </div>
-              )}
-
-              <div className="admin-asset-actions">
-                <div className="admin-card admin-asset-control">
-                  <p className="admin-kicker">Local Upload</p>
                   <h3>上传本地图片</h3>
-                  <p className="admin-subtle">把一张本地图片送进对象存储，也让它立刻成为这篇文章的封面。</p>
-                  <label className="admin-upload-button admin-upload-button-wide">
-                    {assetPending ? "上传中..." : "选择并上传图片"}
-                    <input
-                      accept="image/*"
-                      disabled={assetPending}
-                      onChange={(event) => {
-                        const file = event.target.files?.[0];
-                        if (file) {
-                          void uploadCover(file);
-                        }
-                        event.currentTarget.value = "";
-                      }}
-                      type="file"
-                    />
-                  </label>
-                </div>
-
-                <div className="admin-card admin-asset-control">
-                  <p className="admin-kicker">Remote Import</p>
                   <h3>导入远程封面</h3>
-                  <p className="admin-subtle">贴上一张图片地址，后台会替你把它带回站里，并挂到这篇文章上。</p>
-                  <label>
-                    远程封面 URL
-                    <div className="admin-inline-field">
-                      <input
-                        disabled={assetPending}
-                        placeholder="https://example.com/cover.jpg"
-                        value={coverImportUrl}
-                        onChange={(event) => setCoverImportUrl(event.target.value)}
-                      />
-                      <button
-                        className="admin-primary-button"
-                        disabled={assetPending}
-                        onClick={() => void importCoverFromUrl()}
-                        type="button"
-                      >
-                        {assetPending ? "处理中..." : "导入"}
-                      </button>
-                    </div>
-                  </label>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <section className="admin-card admin-section-card">
-            <div className="admin-section-head">
-              <div>
-                <p className="admin-kicker">Metadata</p>
                 <h2>发布与元信息</h2>
               </div>
             </div>
@@ -933,7 +733,6 @@ export function ArticleEditor({
               </label>
               <label>
                 来源 URL
-                {form.kind === "CURATED" ? <span className="admin-subtle">收录整理文章必填</span> : null}
                 <input value={form.sourceUrl ?? ""} onChange={(event) => setForm({ ...form, sourceUrl: event.target.value || null })} />
               </label>
               <label>

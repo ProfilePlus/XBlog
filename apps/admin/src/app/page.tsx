@@ -70,7 +70,7 @@ export default async function DashboardPage() {
         <article className="admin-card">
           <p className="admin-kicker">Latest Article</p>
           <strong>{latestArticle?.title ?? "暂无文章"}</strong>
-          <p className="admin-subtle" style={{ marginTop: "12px" }}>
+          <p style={{ marginTop: "12px", fontSize: "0.875rem", color: "#888" }}>
             最近更新：{formatDateTime(latestArticle?.updatedAt)}
           </p>
         </article>
@@ -78,7 +78,7 @@ export default async function DashboardPage() {
         <article className="admin-card">
           <p className="admin-kicker">Storage Probe</p>
           <strong>{storage.driver}</strong>
-          <p className="admin-subtle" style={{ marginTop: "12px" }}>
+          <p style={{ marginTop: "12px", fontSize: "0.875rem", color: "#888" }}>
             最近检查：{formatDateTime(storage.liveCheck.checkedAt)} / {storage.liveCheck.durationMs} ms
           </p>
         </article>

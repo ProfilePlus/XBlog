@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Newsreader, Noto_Sans_SC, Playfair_Display } from "next/font/google";
+import { Inter, Newsreader, Noto_Sans_SC, Playfair_Display, IBM_Plex_Sans } from "next/font/google";
 import "./globals.css";
 
 const playfairDisplay = Playfair_Display({
@@ -26,9 +26,15 @@ const notoSansSC = Noto_Sans_SC({
   variable: "--font-noto-sans-sc",
 });
 
+const ibmPlexSans = IBM_Plex_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-ibm-plex-sans",
+});
+
 export const metadata: Metadata = {
-  title: "XBlog",
-  description: "Aurora-toned personal knowledge blog homepage shell.",
+  title: "Alex Plum · 首页",
+  description: "Alex Plum - Java 后端开发 & Vibe Coding",
 };
 
 export default function RootLayout({
@@ -38,7 +44,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-CN">
-      <body className={`${playfairDisplay.variable} ${newsreader.variable} ${inter.variable} ${notoSansSC.variable}`}>{children}</body>
+      <body className={`index ${ibmPlexSans.variable} ${newsreader.variable} ${inter.variable} ${notoSansSC.variable} ${playfairDisplay.variable}`}>
+        {children}
+      </body>
     </html>
   );
 }

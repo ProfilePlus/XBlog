@@ -74,9 +74,6 @@ export function CategoryManager({ categories }: { categories: AdminCategory[] })
           </div>
           <span className="admin-chip">点开卡片继续细写</span>
         </div>
-        <p className="admin-subtle">
-          这里先把分类的轮廓排开。点开任意一张卡，才会走进独立编辑页，把摘要、Hero 标题、策展说明和封面写细。
-        </p>
       </section>
 
       <button
@@ -91,9 +88,6 @@ export function CategoryManager({ categories }: { categories: AdminCategory[] })
         <div className="admin-create-copy">
           <p className="admin-kicker">New Draft</p>
           <h2>{creating ? "正在创建分类..." : "创建分类草稿"}</h2>
-          <p className="admin-subtle">
-            先替一个新分区立个名字，再走进去慢慢补完它的摘要、封面与策展方向。
-          </p>
         </div>
         <div className="admin-create-rail-side">
           <div className="admin-inline-actions">
@@ -137,8 +131,6 @@ export function CategoryManager({ categories }: { categories: AdminCategory[] })
             ) : null}
 
             <div className="admin-category-footer">
-              <span className="admin-subtle">{category.heroTitle}</span>
-              <span className="admin-list-arrow">继续细写</span>
             </div>
           </Link>
         ))}

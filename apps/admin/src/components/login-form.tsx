@@ -43,25 +43,6 @@ export function LoginForm() {
           <h2>登录内容后台</h2>
         </div>
       </div>
-      <p className="admin-subtle">本地环境已经替你填好默认账号，你也可以换成自己的后台凭据，再从这里进入。</p>
-      <label>
-        邮箱
-        <input
-          autoComplete="email"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-        />
-      </label>
-      <label>
-        密码
-        <input
-          autoComplete="current-password"
-          type="password"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-        />
-      </label>
-      {error ? <p className="admin-error">{error}</p> : null}
       <button className="admin-primary-button admin-full-button" type="submit" disabled={pending}>
         {pending ? "正在入场..." : "进入后台"}
       </button>

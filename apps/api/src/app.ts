@@ -20,7 +20,19 @@ export async function createApp() {
 
   await app.register(cookie);
   await app.register(cors, {
-    origin: [env.adminOrigin, env.webOrigin],
+    origin: (origin, cb) => {
+      const allowed = [
+        env.adminOrigin,
+        "http://localhost:3001",
+        env.webOrigin,
+        "http://localhost:3000"
+      ];
+      if (!origin || allowed.includes(origin)) {
+        cb(null, true);
+      } else {
+        cb(new Error("Not allowed by CORS"), false);
+      }
+    },
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   });

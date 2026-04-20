@@ -19,116 +19,50 @@ export async function generateMetadata({
 
   if (!article) {
     return {
-      title: "文章未找到 | XBlog",
+      title: "文章未找到 | Alex Plum",
     };
   }
 
   return {
-    title: `${article.title} | XBlog`,
+    title: `${article.title} · Alex Plum`,
     description: article.excerpt,
   };
 }
 
 function renderBlock(block: ArticleBlock, index: number) {
   if (block.type === "paragraph") {
-    return (
-      <p
-        key={block.id}
-        style={{
-          fontFamily: "Newsreader, serif",
-          fontSize: "18px",
-          color: "#151515",
-          lineHeight: "1.6",
-          marginBottom: "28px",
-        }}
-      >
-        {block.text}
-      </p>
-    );
+    const style = (block as any).style;
+    if (style) {
+      return (
+        <p key={block.id} style={{ textAlign: style.textAlign, textWrap: "balance" as any }}>
+          <em>{block.text}</em>
+        </p>
+      );
+    }
+    return <p key={block.id}>{block.text}</p>;
   }
 
   if (block.type === "image") {
     const isFullWidth = block.layout === "full";
     const isHalfWidth = block.layout === "half";
-    const width = isFullWidth ? 960 : isHalfWidth ? 336 : 672;
-    const containerStyle = isHalfWidth
-      ? { display: "flex", justifyContent: "center", margin: "20px 0 0" }
-      : { margin: "20px 0 0" };
+    const figureClass = isHalfWidth ? "limit" : isFullWidth ? "full" : "";
 
     return (
-      <div key={block.id} style={containerStyle}>
-        <figure style={{ display: "flex", flexDirection: "column", gap: "8px", width: isHalfWidth ? "336px" : "100%" }}>
-          <div style={{ borderRadius: "8px", overflow: "hidden" }}>
-            <Image
-              src={block.url}
-              alt={block.alt}
-              width={width}
-              height={isFullWidth ? 400 : isHalfWidth ? 224 : 280}
-              style={{ width: "100%", height: "auto", display: "block" }}
-              unoptimized
-            />
-          </div>
-          {block.caption ? (
-            <figcaption
-              style={{
-                fontFamily: "Inter, sans-serif",
-                fontSize: "13px",
-                color: "#888888",
-                textAlign: "center",
-              }}
-            >
-              {block.caption}
-            </figcaption>
-          ) : null}
-        </figure>
-      </div>
+      <figure key={block.id} className={figureClass}>
+        <img src={block.url} alt={block.alt} />
+        {block.caption && <figcaption>{block.caption}</figcaption>}
+      </figure>
     );
   }
 
   if (block.type === "heading") {
-    return (
-      <div key={block.id} style={{ paddingTop: "20px" }}>
-        <h2
-          style={{
-            fontFamily: "Playfair Display, serif",
-            fontSize: "32px",
-            color: "#151515",
-            lineHeight: "1.2",
-          }}
-        >
-          {block.text}
-        </h2>
-      </div>
-    );
+    return <h2 key={block.id}>{block.text}</h2>;
   }
 
   if (block.type === "quote") {
     return (
-      <blockquote
-        key={block.id}
-        style={{
-          margin: "32px 0",
-          padding: "20px",
-          borderLeft: "4px solid #D3D3D1",
-          fontStyle: "italic",
-          fontFamily: "Newsreader, serif",
-          fontSize: "18px",
-          color: "#151515",
-        }}
-      >
+      <blockquote key={block.id}>
         <p>{block.text}</p>
-        {block.citation ? (
-          <cite
-            style={{
-              display: "block",
-              marginTop: "12px",
-              fontSize: "14px",
-              color: "#888888",
-            }}
-          >
-            — {block.citation}
-          </cite>
-        ) : null}
       </blockquote>
     );
   }
@@ -136,21 +70,9 @@ function renderBlock(block: ArticleBlock, index: number) {
   if (block.type === "list") {
     const ListTag = block.style === "ordered" ? "ol" : "ul";
     return (
-      <ListTag
-        key={block.id}
-        style={{
-          marginBottom: "28px",
-          paddingLeft: "24px",
-          fontFamily: "Newsreader, serif",
-          fontSize: "18px",
-          color: "#151515",
-          lineHeight: "1.6",
-        }}
-      >
+      <ListTag key={block.id}>
         {block.items.map((item, idx) => (
-          <li key={idx} style={{ marginBottom: "8px" }}>
-            {item}
-          </li>
+          <li key={idx}>{item}</li>
         ))}
       </ListTag>
     );
@@ -158,40 +80,14 @@ function renderBlock(block: ArticleBlock, index: number) {
 
   if (block.type === "code") {
     return (
-      <pre
-        key={block.id}
-        style={{
-          margin: "32px 0",
-          padding: "20px",
-          background: "#F5F5F5",
-          borderRadius: "8px",
-          overflow: "auto",
-        }}
-      >
-        <code
-          style={{
-            fontFamily: "monospace",
-            fontSize: "14px",
-            color: "#151515",
-          }}
-        >
-          {block.code}
-        </code>
+      <pre key={block.id}>
+        <code>{block.code}</code>
       </pre>
     );
   }
 
   if (block.type === "divider") {
-    return (
-      <hr
-        key={block.id}
-        style={{
-          margin: "40px 0",
-          border: "none",
-          borderTop: "1px solid #D3D3D1",
-        }}
-      />
-    );
+    return <hr key={block.id} />;
   }
 
   return null;
@@ -206,237 +102,62 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   }
 
   return (
-    <div
-      style={{
-        background: "#E6E2E0",
-        minHeight: "100vh",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        padding: "80px 0",
-      }}
-    >
-      {/* Header */}
-      <header
-        style={{
-          width: "960px",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          padding: "16px 0",
-        }}
-      >
-        <Link
-          href="/"
-          style={{
-            fontFamily: "Playfair Display, serif",
-            fontSize: "28px",
-            fontWeight: "600",
-            color: "#151515",
-            textDecoration: "none",
-          }}
-        >
-          XBlog
-        </Link>
-        <nav style={{ display: "flex", gap: "32px" }}>
-          {[
-            ["文章", "/"],
-            ["分类", "/categories"],
-            ["关于", "/#about"],
-            ["搜索", "/search"],
-          ].map(([label, href]) => (
-            <Link
-              key={href}
-              href={href}
-              style={{
-                fontFamily: "Inter, sans-serif",
-                fontSize: "14px",
-                fontWeight: "500",
-                color: "#888888",
-                textDecoration: "none",
-              }}
-            >
-              {label}
-            </Link>
-          ))}
-        </nav>
-      </header>
+    <div className="post" style={{
+      minHeight: "100vh",
+      backgroundColor: "#e6e2e0",
+      color: "#151515"
+    }}>
+      <main>
+        <article className="post">
+          <div className="article-wrap">
+            <div className="post-hero">
+              <Link href="/">
+                <Image
+                  src="/images/logo.png"
+                  alt="Alex Plum Logo (Occult Elements)"
+                  width={44}
+                  height={44}
+                />
+              </Link>
+            </div>
 
-      {/* Article Hero */}
-      <section
-        style={{
-          width: "672px",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "20px",
-          padding: "120px 0 80px",
-        }}
-      >
-        <p
-          style={{
-            fontFamily: "Inter, sans-serif",
-            fontSize: "13px",
-            fontWeight: "500",
-            color: "#888888",
-            letterSpacing: "2px",
-            textAlign: "center",
-          }}
-        >
-          {article.category.name}
-        </p>
-        <h1
-          style={{
-            fontFamily: "Playfair Display, serif",
-            fontSize: "56px",
-            color: "#151515",
-            lineHeight: "1.1",
-            textAlign: "center",
-          }}
-        >
-          {article.title}
-        </h1>
-        <p
-          style={{
-            fontFamily: "Inter, sans-serif",
-            fontSize: "13px",
-            color: "#888888",
-            textAlign: "center",
-          }}
-        >
-          {article.publishedAt}
-        </p>
-      </section>
+            <header>
+              <div>
+                <h1 style={{ fontSize: "2.5rem", marginBottom: "0.5rem" }}>
+                  {article.title}
+                </h1>
+                <h2>{article.excerpt}</h2>
+                <time dateTime={article.publishedAt}>{article.publishedAt}</time>
+              </div>
+            </header>
 
-      {/* Article Body */}
-      <article
-        style={{
-          width: "672px",
-          display: "flex",
-          flexDirection: "column",
-          paddingBottom: "80px",
-        }}
-      >
-        {article.sections.map((section) =>
-          section.blocks.map((block, index) => renderBlock(block, index))
-        )}
-      </article>
+            {article.sections.map((section) =>
+              section.blocks.map((block, index) => renderBlock(block, index))
+            )}
+          </div>
+        </article>
 
-      {/* Divider */}
-      <div style={{ width: "672px", height: "1px", background: "#D3D3D1" }} />
-
-      {/* Post Navigation */}
-      <nav
-        style={{
-          width: "672px",
-          display: "flex",
-          justifyContent: "space-between",
-          padding: "40px 0",
-        }}
-      >
-        {article.related[0] ? (
-          <Link
-            href={`/articles/${article.related[0].slug}`}
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: "14px",
-              color: "#888888",
-              textDecoration: "none",
-            }}
-          >
-            ← {article.related[0].title}
-          </Link>
-        ) : (
-          <span />
-        )}
-        {article.related[1] ? (
-          <Link
-            href={`/articles/${article.related[1].slug}`}
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: "14px",
-              color: "#888888",
-              textDecoration: "none",
-            }}
-          >
-            {article.related[1].title} →
-          </Link>
-        ) : (
-          <span />
-        )}
-      </nav>
-
-      {/* Footer */}
-      <footer
-        style={{
-          width: "960px",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "16px",
-          paddingTop: "60px",
-        }}
-      >
-        <div style={{ display: "flex", gap: "16px" }}>
-          <p
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: "13px",
-              color: "#888888",
-            }}
-          >
-            邮件
-          </p>
-          <p
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: "13px",
-              color: "#888888",
-            }}
-          >
-            通讯
-          </p>
-          <p
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: "13px",
-              color: "#888888",
-            }}
-          >
-            RSS
-          </p>
+        <div className="post-navigation">
+          <div>
+            {article.related[0] && (
+              <div className="nav-previous">
+                ← 参阅上一篇<br />
+                <Link href={`/articles/${article.related[0].slug}`}>
+                  {article.related[0].title}
+                </Link>
+              </div>
+            )}
+            {article.related[1] && (
+              <div className="nav-next">
+                下一篇 →<br />
+                <Link href={`/articles/${article.related[1].slug}`}>
+                  {article.related[1].title}
+                </Link>
+              </div>
+            )}
+          </div>
         </div>
-        <p
-          style={{
-            fontFamily: "Inter, sans-serif",
-            fontSize: "13px",
-            color: "#888888",
-          }}
-        >
-          © 2020–2026 Alex Plum
-        </p>
-        <div style={{ display: "flex", gap: "16px" }}>
-          <p
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: "12px",
-              color: "#999999",
-            }}
-          >
-            皖ICP备2026007447号
-          </p>
-          <p
-            style={{
-              fontFamily: "Inter, sans-serif",
-              fontSize: "12px",
-              color: "#999999",
-            }}
-          >
-            皖公网安备34010402704764号
-          </p>
-        </div>
-      </footer>
+      </main>
     </div>
   );
 }
-

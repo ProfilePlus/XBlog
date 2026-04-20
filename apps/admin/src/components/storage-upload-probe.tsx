@@ -36,7 +36,6 @@ export function StorageUploadProbe() {
       <div className="admin-page-head">
         <div>
           <h2>上传探针</h2>
-          <p className="admin-subtle">按一遍真实上传流程走完预签名、上传和公开读取，好确认这条链路此刻仍然通畅。</p>
         </div>
         <button
           type="button"
@@ -81,8 +80,8 @@ export function StorageUploadProbe() {
             <span className={`admin-status-pill ${result.ok ? "is-ok" : "is-error"}`}>
               {result.ok ? "探针通过" : "探针失败"}
             </span>
-            <span className="admin-subtle">{new Date(result.checkedAt).toLocaleString("zh-CN")}</span>
-            <span className="admin-subtle">{result.durationMs} ms</span>
+            <span style={{ fontSize: "0.875rem", color: "#888" }}>{new Date(result.checkedAt).toLocaleString("zh-CN")}</span>
+            <span style={{ fontSize: "0.875rem", color: "#888" }}>{result.durationMs} ms</span>
           </div>
 
           <p>{result.summary}</p>
@@ -110,16 +109,14 @@ export function StorageUploadProbe() {
                   <span className={`admin-status-pill ${step.ok ? "is-ok" : "is-error"}`}>
                     {step.ok ? "通过" : "失败"}
                   </span>
-                  {step.statusCode !== null ? <span className="admin-subtle">HTTP {step.statusCode}</span> : null}
+                  {step.statusCode !== null ? <span style={{ fontSize: "0.875rem", color: "#888" }}>HTTP {step.statusCode}</span> : null}
                 </div>
-                <p className="admin-subtle">{step.message}</p>
+                <p style={{ fontSize: "0.875rem", color: "#888", marginTop: "4px" }}>{step.message}</p>
               </div>
             ))}
           </div>
         </div>
-      ) : (
-        <p className="admin-subtle">它只会临时留下一次上传痕迹，结束后会清掉，不会碰正式文章。</p>
-      )}
+      ) : null}
     </div>
   );
 }

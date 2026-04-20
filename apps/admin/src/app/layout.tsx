@@ -1,18 +1,12 @@
 import type { Metadata } from "next";
-import { Inter, Noto_Sans_SC, Playfair_Display } from "next/font/google";
+import { IBM_Plex_Sans, Noto_Sans_SC } from "next/font/google";
 import { AdminFeedbackProvider } from "@/components/admin-feedback";
 import "./globals.css";
 
-const playfairDisplay = Playfair_Display({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  variable: "--font-playfair-display",
-});
-
-const inter = Inter({
+const ibmPlexSans = IBM_Plex_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
-  variable: "--font-inter",
+  variable: "--font-ibm-plex-sans",
 });
 
 const notoSansSC = Noto_Sans_SC({
@@ -29,7 +23,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="zh-CN">
-      <body className={`${playfairDisplay.variable} ${inter.variable} ${notoSansSC.variable}`}>
+      <body className={`${ibmPlexSans.variable} ${notoSansSC.variable}`}>
         <AdminFeedbackProvider>{children}</AdminFeedbackProvider>
       </body>
     </html>

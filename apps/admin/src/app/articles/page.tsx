@@ -122,12 +122,11 @@ export default async function ArticlesPage({
           <article className="admin-card admin-section-card">
             <p className="admin-kicker">Empty Library</p>
             <h2>当前页没有文章</h2>
-            <p className="admin-subtle">内容库还没有文章，或者当前页超出了有效范围。</p>
           </article>
         ) : null}
         <div className="admin-library-pagination">
           <div className="admin-inline-actions">
-            <span className="admin-subtle">
+            <span>
               当前显示 {visibleStart}
               {" - "}
               {visibleEnd} / {library.total}

@@ -149,186 +149,112 @@ export function TokenManager({ initialTokens }: { initialTokens: AdminToken[] })
   return (
     <div className="admin-token-stack">
       <AdminConfirmDialog
-        cancelLabel="保留令牌"
-        confirmLabel="删除令牌"
-        description={
-          confirmToken?.isActive
-            ? "删掉之后，这枚仍在生效的令牌会立刻停下，并从列表里彻底退场。"
-            : "删掉之后，这枚已撤销的令牌会从列表里彻底退场。"
-        }
+        cancelLabel="Keep"
+        confirmLabel="Delete"
+        description="Once deleted, this token will be permanently removed and cannot be recovered."
         onCancel={() => setConfirmToken(null)}
         onConfirm={() => {
-          if (!confirmToken) {
-            return;
-          }
+          if (!confirmToken) return;
           void deleteToken(confirmToken.id);
         }}
         open={Boolean(confirmToken)}
         pending={Boolean(confirmToken && deleteId === confirmToken.id)}
-        title={confirmToken?.isActive ? "要让这枚启用中的令牌退场吗？" : "要把这枚已撤销的令牌彻底收走吗？"}
+        title="Delete this token?"
         tone="danger"
       />
-      <section className="admin-token-hero">
-        <div className="admin-token-create-stack">
-          <article className="admin-card admin-token-create-card">
-            <div className="admin-section-head">
-              <div>
-                <p className="admin-kicker">New Machine Token</p>
-                <h2>创建新令牌</h2>
-                <p className="admin-subtle">在这里签发一枚新的写入令牌，好让 OpenClaw 或别的导入程序继续落笔。</p>
-              </div>
-              <button className="admin-primary-button" onClick={createToken} type="button">
-                {pending ? "创建中..." : "创建令牌"}
-              </button>
-            </div>
-            <div className="admin-form">
-              <label>
-                新令牌名称
-                <input value={label} onChange={(event) => setLabel(event.target.value)} />
-              </label>
-              <div className="admin-token-scope-row">
-                <span className="admin-status-pill is-info">ingest:publish</span>
-                <p className="admin-subtle">它允许调用导入接口，把外部整理好的内容安放进 XBlog。</p>
-              </div>
-              {plainText ? (
-                <div className="admin-banner is-success">
-                  请立即保存这串明文令牌：
-                  <code className="admin-inline-code">{plainText}</code>
-                </div>
-              ) : null}
-            </div>
-          </article>
 
-          <article className="admin-card admin-token-context-card">
-            <div className="admin-section-head">
-              <div>
-                <p className="admin-kicker">Access Flow</p>
-                <h2>接入摘要</h2>
-              </div>
-              <span className="admin-chip">OpenClaw</span>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 350px', gap: '1.5rem', marginBottom: '1.5rem' }}>
+        <div className="admin-card">
+          <p className="admin-kicker">Issue New Token</p>
+          <div style={{ display: 'flex', gap: '12px', marginTop: '1rem' }}>
+            <input 
+              style={{ flex: 1 }}
+              placeholder="Token Label (e.g. OpenClaw)" 
+              value={label} 
+              onChange={(e) => setLabel(e.target.value)} 
+            />
+            <button className="admin-primary-button" onClick={createToken} disabled={pending}>
+              {pending ? "Creating..." : "Create Token"}
+            </button>
+          </div>
+          {plainText && (
+            <div style={{ marginTop: '1rem', padding: '1rem', background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: '4px' }}>
+              <p style={{ fontSize: '0.75rem', color: '#166534', fontWeight: 600, marginBottom: '4px' }}>Copy your new token now. It won't be shown again:</p>
+              <code style={{ fontSize: '1rem', fontWeight: 700, color: '#14532d' }}>{plainText}</code>
             </div>
-            <div className="admin-token-context-grid">
-              <div className="admin-kv-row">
-                <span className="admin-subtle">默认 scope</span>
-                <strong>ingest:publish</strong>
-              </div>
-              <div className="admin-kv-row">
-                <span className="admin-subtle">启用中</span>
-                <strong>{activeCount} 枚</strong>
-              </div>
-              <div className="admin-kv-row">
-                <span className="admin-subtle">最近活跃</span>
-                <strong>{recentlyUsedCount} 个接入点</strong>
-              </div>
-              <div className="admin-kv-row">
-                <span className="admin-subtle">当前名称</span>
-                <strong>{label || "未命名"}</strong>
-              </div>
-            </div>
-            <p className="admin-subtle">
-              明文令牌只会短暂出现一次，最好立刻写入 OpenClaw 环境变量，再让导入链路跑一轮。
-            </p>
-          </article>
+          )}
         </div>
 
-        <article className="admin-card admin-token-policy-card">
-          <div className="admin-section-head">
-            <div>
-              <p className="admin-kicker">Access Posture</p>
-              <h2>接入状态</h2>
-            </div>
-          </div>
-          <div className="admin-token-metrics">
-            <div className="admin-token-metric">
-              <span className="admin-kicker">Active</span>
-              <strong>{activeCount}</strong>
-              <p className="admin-subtle">仍可调用写接口的机器令牌。</p>
-            </div>
-            <div className="admin-token-metric">
-              <span className="admin-kicker">Revoked</span>
-              <strong>{revokedCount}</strong>
-              <p className="admin-subtle">已撤销但尚未从列表移除的历史令牌。</p>
-            </div>
-            <div className="admin-token-metric">
-              <span className="admin-kicker">Recent Use</span>
-              <strong>{recentlyUsedCount}</strong>
-              <p className="admin-subtle">近 30 天内出现过调用记录的接入点。</p>
-            </div>
-          </div>
-          <div className="admin-token-guidance">
-            <p className="admin-kicker">Rotation Notes</p>
-            <ul className="admin-note-list">
-              <li>新令牌创建后，明文只展示一次，适合立刻写入 OpenClaw 环境变量。</li>
-              <li>撤销不会影响列表回看，但会立刻阻止继续写入。</li>
-              <li>删除适合清理已经完成轮换的旧令牌，避免控制台逐渐失焦。</li>
-            </ul>
-          </div>
-        </article>
-      </section>
-
-      <section className="admin-card admin-section-card admin-token-list-card">
-        <div className="admin-section-head">
-          <div>
-            <p className="admin-kicker">Issued Tokens</p>
-            <h2>现有令牌</h2>
-            <p className="admin-subtle">每一枚令牌的前缀、最近一次使用和它是否还在生效，都留在这里给你回看。</p>
-          </div>
-          <div className="admin-inline-actions">
-            <span className="admin-chip">总计 {tokens.length}</span>
-            <span className="admin-chip">启用中 {activeCount}</span>
+        <div className="admin-card">
+          <p className="admin-kicker">Access Summary</p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '1rem' }}>
+             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <span className="admin-subtle">Active Tokens</span>
+                <span style={{ fontWeight: 600 }}>{activeCount}</span>
+             </div>
+             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <span className="admin-subtle">Recent Activity</span>
+                <span style={{ fontWeight: 600 }}>{recentlyUsedCount}</span>
+             </div>
           </div>
         </div>
-        <div className="admin-list">
-          {tokens.map((token) => (
-            <div className="admin-list-item admin-token-list-item" key={token.id}>
-              <div className="admin-list-head">
-                <div className="admin-list-title">
-                  <div className="admin-inline-actions">
-                    <span className={`admin-status-pill ${token.isActive ? "is-ok" : "is-error"}`}>
-                      {token.isActive ? "启用中" : "已撤销"}
-                    </span>
-                    <span className="admin-status-pill is-info">{token.scopes.join(", ")}</span>
+      </div>
+
+      <div className="admin-card" style={{ padding: 0, overflow: 'hidden' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+          <thead>
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--color-border)', background: '#f9fafb' }}>
+              <th style={{ padding: '12px 24px', fontSize: '0.75rem', fontWeight: 600, color: 'var(--color-text-muted)', textTransform: 'uppercase' }}>Label</th>
+              <th style={{ padding: '12px 24px', fontSize: '0.75rem', fontWeight: 600, color: 'var(--color-text-muted)', textTransform: 'uppercase' }}>Prefix</th>
+              <th style={{ padding: '12px 24px', fontSize: '0.75rem', fontWeight: 600, color: 'var(--color-text-muted)', textTransform: 'uppercase' }}>Last Used</th>
+              <th style={{ padding: '12px 24px', fontSize: '0.75rem', fontWeight: 600, color: 'var(--color-text-muted)', textTransform: 'uppercase' }}>Status</th>
+              <th style={{ padding: '12px 24px', fontSize: '0.75rem', fontWeight: 600, color: 'var(--color-text-muted)', textTransform: 'uppercase' }}>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {tokens.map((token) => (
+              <tr key={token.id} style={{ borderBottom: '1px solid var(--color-border)' }}>
+                <td style={{ padding: '16px 24px', fontWeight: 500 }}>{token.label}</td>
+                <td style={{ padding: '16px 24px' }}>
+                  <code style={{ fontSize: '0.8125rem', background: '#f4f4f5', padding: '2px 4px', borderRadius: '4px' }}>{token.prefix}</code>
+                </td>
+                <td style={{ padding: '16px 24px', fontSize: '0.8125rem', color: 'var(--color-text-muted)' }}>
+                  {token.lastUsedAt ? new Date(token.lastUsedAt).toLocaleDateString() : 'Never'}
+                </td>
+                <td style={{ padding: '16px 24px' }}>
+                  <span style={{ 
+                    padding: '4px 8px', 
+                    borderRadius: '4px', 
+                    fontSize: '0.75rem', 
+                    fontWeight: 600,
+                    background: token.isActive ? '#ecfdf5' : '#fef2f2',
+                    color: token.isActive ? '#059669' : '#b91c1c'
+                  }}>
+                    {token.isActive ? 'Active' : 'Revoked'}
+                  </span>
+                </td>
+                <td style={{ padding: '16px 24px' }}>
+                  <div style={{ display: 'flex', gap: '12px' }}>
+                    {token.isActive && (
+                      <button 
+                        onClick={() => void revokeToken(token.id)}
+                        disabled={revokeId === token.id}
+                        style={{ fontSize: '0.8125rem', color: 'var(--color-text-muted)', textDecoration: 'underline' }}>
+                        Revoke
+                      </button>
+                    )}
+                    <button 
+                      onClick={() => setConfirmToken(token)}
+                      style={{ fontSize: '0.8125rem', color: 'var(--danger)', textDecoration: 'underline' }}>
+                      Delete
+                    </button>
                   </div>
-                  <strong>{token.label}</strong>
-                  <p className="admin-subtle">{token.prefix}</p>
-                </div>
-                <div className="admin-list-tail">
-                  <span className="admin-subtle">
-                    创建于 {new Date(token.createdAt).toLocaleString("zh-CN")}
-                  </span>
-                  <span className="admin-subtle">
-                    最近使用 {token.lastUsedAt ? new Date(token.lastUsedAt).toLocaleString("zh-CN") : "尚未使用"}
-                  </span>
-                </div>
-              </div>
-              <div className="admin-token-list-footer">
-                <div className="admin-inline-actions">
-                  <span className="admin-chip">{token.lastUsedAt ? "有运行轨迹" : "待接入"}</span>
-                  <span className="admin-chip">{token.isActive ? "可继续写入" : "已停止写入"}</span>
-                </div>
-                <div className="admin-inline-actions">
-                  <button
-                    className="admin-ghost-button"
-                    disabled={!token.isActive || revokeId === token.id || deleteId === token.id}
-                    onClick={() => void revokeToken(token.id)}
-                    type="button"
-                  >
-                    {!token.isActive ? "已撤销" : revokeId === token.id ? "撤销中..." : "撤销"}
-                  </button>
-                  <button
-                    className="admin-danger-button"
-                    disabled={deleteId === token.id || revokeId === token.id}
-                    onClick={() => setConfirmToken(token)}
-                    type="button"
-                  >
-                    {deleteId === token.id ? "删除中..." : "删除"}
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

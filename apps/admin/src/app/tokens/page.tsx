@@ -12,23 +12,25 @@ export default async function TokensPage() {
 
   return (
     <AdminShell userName={user.displayName}>
-      <AdminPageHeader
-        actions={
-          <>
-            <span className="admin-status-pill is-info">ingest:publish</span>
-            <span className={`admin-status-pill ${activeCount > 0 ? "is-ok" : "is-warn"}`}>
-              {activeCount} 个活跃接入
-            </span>
-          </>
-        }
-        eyebrow="Machine Access"
-        title="机器令牌"
-        description="把 OpenClaw 与其他写入方的凭据收在这里，方便创建、回看，也方便及时止损。"
-      >
-        <span className="admin-chip">总计 {tokens.length} 个令牌</span>
-        <span className="admin-chip">启用中 {activeCount}</span>
-      </AdminPageHeader>
-      <TokenManager initialTokens={tokens} />
+      <div className="admin-grid-stats" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1.5rem', marginBottom: '2rem' }}>
+        <article className="admin-card">
+          <p className="admin-kicker">Total Tokens</p>
+          <strong>{tokens.length}</strong>
+        </article>
+        <article className="admin-card">
+          <p className="admin-kicker">Active Access</p>
+          <strong style={{ color: activeCount > 0 ? '#10b981' : 'var(--color-text-main)' }}>{activeCount}</strong>
+        </article>
+      </div>
+
+      <div className="admin-card" style={{ padding: 0 }}>
+        <div style={{ padding: '1.5rem', borderBottom: '1px solid var(--color-border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <h2 style={{ fontSize: '1.25rem', fontWeight: 600 }}>API Access Tokens</h2>
+        </div>
+        <div style={{ padding: '1.5rem' }}>
+          <TokenManager initialTokens={tokens} />
+        </div>
+      </div>
     </AdminShell>
   );
 }

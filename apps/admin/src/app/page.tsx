@@ -6,6 +6,7 @@ import type {
 import { adminObjectStorageStatusSchema } from "@xblog/contracts";
 import { AdminShell } from "@/components/admin-shell";
 import { apiFetch, getAdminUserOrRedirect } from "@/lib/api";
+import Link from "next/link";
 
 function formatDateTime(value: string | null | undefined) {
   if (!value) {
@@ -40,14 +41,8 @@ export default async function DashboardPage() {
     .sort((left, right) => new Date(right.updatedAt).getTime() - new Date(left.updatedAt).getTime())[0];
 
   return (
-    <AdminShell hideMasthead userName={user.displayName}>
-      <section className="admin-card">
-        <p className="admin-kicker">Control Room</p>
-        <h1>概览</h1>
-        <p className="admin-subtle">只保留文章、分类、令牌、存储四条主线。其余无用流程全部移除。</p>
-      </section>
-
-      <section style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "16px", marginTop: "24px" }}>
+    <AdminShell hideMasthead={false} userName={user.displayName}>
+      <div className="admin-grid-stats" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '2rem', marginBottom: '2.5rem' }}>
         <article className="admin-card">
           <p className="admin-kicker">Published</p>
           <strong>{publishedCount}</strong>
@@ -62,27 +57,40 @@ export default async function DashboardPage() {
         </article>
         <article className="admin-card">
           <p className="admin-kicker">Storage</p>
-          <strong>{storage.liveCheck.ok ? "可用" : "异常"}</strong>
+          <strong style={{ color: storage.liveCheck.ok ? '#10b981' : 'var(--danger)' }}>
+            {storage.liveCheck.ok ? "Online" : "Offline"}
+          </strong>
         </article>
-      </section>
+      </div>
 
-      <section style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginTop: "24px" }}>
-        <article className="admin-card">
+      <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: "2rem" }}>
+        <article className="admin-card" style={{ padding: '2.5rem' }}>
           <p className="admin-kicker">Latest Article</p>
-          <strong>{latestArticle?.title ?? "暂无文章"}</strong>
-          <p style={{ marginTop: "12px", fontSize: "0.875rem", color: "#888" }}>
-            最近更新：{formatDateTime(latestArticle?.updatedAt)}
+          <h2 style={{ fontSize: '1.5rem', marginBottom: '0.75rem', fontWeight: 700 }}>{latestArticle?.title ?? "No Articles"}</h2>
+          <p className="admin-subtle">
+            Last modified on {formatDateTime(latestArticle?.updatedAt)}
           </p>
+          <div style={{ marginTop: '2rem' }}>
+             <Link href={`/articles/edit/${latestArticle?.id}`} className="admin-primary-button">
+               Continue Editing
+             </Link>
+          </div>
         </article>
 
         <article className="admin-card">
-          <p className="admin-kicker">Storage Probe</p>
-          <strong>{storage.driver}</strong>
-          <p style={{ marginTop: "12px", fontSize: "0.875rem", color: "#888" }}>
-            最近检查：{formatDateTime(storage.liveCheck.checkedAt)} / {storage.liveCheck.durationMs} ms
-          </p>
+          <p className="admin-kicker">System Overview</p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', marginTop: '1.5rem' }}>
+            <div>
+              <p className="admin-kicker" style={{ fontSize: '0.65rem' }}>Storage Driver</p>
+              <code style={{ fontSize: '0.875rem', background: '#f1f5f9', padding: '4px 8px', borderRadius: '6px', color: '#475569' }}>{storage.driver}</code>
+            </div>
+            <div>
+              <p className="admin-kicker" style={{ fontSize: '0.65rem' }}>Probe Latency</p>
+              <strong style={{ fontSize: '1.25rem' }}>{storage.liveCheck.durationMs}ms</strong>
+            </div>
+          </div>
         </article>
-      </section>
+      </div>
     </AdminShell>
   );
 }

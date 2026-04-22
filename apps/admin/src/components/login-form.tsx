@@ -36,19 +36,42 @@ export function LoginForm() {
   }
 
   return (
-    <form className="admin-card admin-form admin-login-form" onSubmit={handleSubmit}>
-      <div className="admin-section-head">
-        <div>
-          <p className="admin-kicker">Sign In</p>
-          <h2>登录内容后台</h2>
-        </div>
+    <form className="admin-form admin-login-form" onSubmit={handleSubmit}>
+      <div style={{ marginBottom: '2rem' }}>
+        <p className="admin-kicker">Welcome Back</p>
+        <h2 style={{ fontSize: '1.75rem', fontWeight: 700, color: '#0f172a' }}>Sign In</h2>
       </div>
-      <button className="admin-primary-button admin-full-button" type="submit" disabled={pending}>
-        {pending ? "正在入场..." : "进入后台"}
+
+      {error && (
+        <div style={{ padding: '0.75rem', background: '#fef2f2', color: '#dc2626', borderRadius: '8px', fontSize: '0.875rem', marginBottom: '1.5rem', border: '1px solid #fecaca' }}>
+          {error}
+        </div>
+      )}
+
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', marginBottom: '2rem' }}>
+        <label style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.875rem', fontWeight: 600, color: '#475569' }}>
+          Email Address
+          <input 
+            type="email" 
+            value={email} 
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="admin@xblog.local"
+          />
+        </label>
+        <label style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.875rem', fontWeight: 600, color: '#475569' }}>
+          Password
+          <input 
+            type="password" 
+            value={password} 
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="••••••••"
+          />
+        </label>
+      </div>
+
+      <button className="admin-primary-button" style={{ width: '100%', padding: '0.875rem' }} type="submit" disabled={pending}>
+        {pending ? "Signing in..." : "Continue to Console"}
       </button>
-      <p className="admin-subtle admin-login-footnote">
-        进去之后，文章、分类、刊期、存储和 OpenClaw 的写入令牌都会在同一张桌面上等你。
-      </p>
     </form>
   );
 }

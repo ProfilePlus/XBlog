@@ -59,12 +59,11 @@ export function AdminNav() {
             className={`admin-nav-link ${active ? "is-active" : ""}`}
           >
             <div className="admin-nav-meta">
-              <span className="admin-nav-index">{String(index + 1).padStart(2, "0")}</span>
               <span className="admin-nav-eyebrow">{item.eyebrow}</span>
+              <span className="admin-nav-index">/{String(index + 1).padStart(2, "0")}</span>
             </div>
             <div className="admin-nav-copy">
               <strong>{item.label}</strong>
-              <p>{item.description}</p>
             </div>
           </Link>
         );

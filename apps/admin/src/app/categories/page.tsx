@@ -11,14 +11,21 @@ export default async function CategoriesPage() {
 
   return (
     <AdminShell userName={user.displayName}>
-      <AdminPageHeader
-        eyebrow="Taxonomy"
-        title="分类管理"
-        description="先看每个分类的名字、摘要与封面，再走进去替它写清长说明与代表文章。"
-      >
-        <span className="admin-chip">共 {categories.length} 个主分类</span>
-      </AdminPageHeader>
-      <CategoryManager categories={categories} />
+      <div className="admin-grid-stats" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1.5rem', marginBottom: '2rem' }}>
+        <article className="admin-card">
+          <p className="admin-kicker">Categories</p>
+          <strong>{categories.length}</strong>
+        </article>
+      </div>
+
+      <div className="admin-card" style={{ padding: 0 }}>
+        <div style={{ padding: '1.5rem', borderBottom: '1px solid var(--color-border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <h2 style={{ fontSize: '1.25rem', fontWeight: 600 }}>Taxonomy Management</h2>
+        </div>
+        <div style={{ padding: '1.5rem' }}>
+          <CategoryManager categories={categories} />
+        </div>
+      </div>
     </AdminShell>
   );
 }

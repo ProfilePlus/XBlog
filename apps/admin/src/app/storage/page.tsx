@@ -12,127 +12,64 @@ export default async function StoragePage() {
 
   return (
     <AdminShell userName={user.displayName}>
-      <AdminPageHeader
-        eyebrow="Storage Ops"
-        title="对象存储"
-        description="对象存储是这条发布链路的河道。这里看配置、看探针，也看它此刻是否仍然通畅。"
-        actions={<StorageRefreshButton />}
-      >
-        <span className="admin-chip">Driver {status.driver}</span>
-        <span className="admin-chip">Provider {status.provider ?? "local-only"}</span>
-      </AdminPageHeader>
-
-      <div className="admin-grid cols-2">
-        <div className="admin-card">
-          <h2>运行模式</h2>
-          <div className="admin-kv-list">
-            <div className="admin-kv-row">
-              <span>Driver</span>
-              <strong>{status.driver}</strong>
-            </div>
-            <div className="admin-kv-row">
-              <span>Provider</span>
-              <strong>{status.provider ?? "local-only"}</strong>
-            </div>
-            <div className="admin-kv-row">
-              <span>Bucket</span>
-              <strong>{status.bucket ?? "N/A"}</strong>
-            </div>
-            <div className="admin-kv-row">
-              <span>Endpoint</span>
-              <strong>{status.endpoint ?? "N/A"}</strong>
-            </div>
-            <div className="admin-kv-row">
-              <span>Public Base URL</span>
-              <strong>{status.publicBaseUrl ?? "derived / local"}</strong>
-            </div>
-            <div className="admin-kv-row">
-              <span>Force Path Style</span>
-              <strong>{status.forcePathStyle === null ? "N/A" : status.forcePathStyle ? "true" : "false"}</strong>
-            </div>
-            <div className="admin-kv-row">
-              <span>Upload Limit</span>
-              <strong>{Math.round(status.maxUploadBytes / 1024 / 1024)} MB</strong>
-            </div>
-          </div>
-        </div>
-
-        <div className="admin-card">
-          <h2>实时检查</h2>
-          <div className="admin-inline-actions">
-            <span className={`admin-status-pill ${status.liveCheck.ok ? "is-ok" : "is-error"}`}>
-              {status.liveCheck.ok ? "可用" : "异常"}
-            </span>
-            <span style={{ fontSize: "0.875rem", color: "#888" }}>{new Date(status.liveCheck.checkedAt).toLocaleString("zh-CN")}</span>
-          </div>
-          <div className="admin-kv-list">
-            <div className="admin-kv-row">
-              <span>写入</span>
-              <strong>{status.liveCheck.writable ? "通过" : "失败"}</strong>
-            </div>
-            <div className="admin-kv-row">
-              <span>公开读取</span>
-              <strong>{status.liveCheck.publicReadable ? "通过" : "失败"}</strong>
-            </div>
-            <div className="admin-kv-row">
-              <span>耗时</span>
-              <strong>{status.liveCheck.durationMs} ms</strong>
-            </div>
-          </div>
-        </div>
-
-        <div className="admin-card">
-          <h2>配置诊断</h2>
-          <div className="admin-inline-actions">
-            <span className={`admin-status-pill ${status.diagnostics.ready ? "is-ok" : "is-error"}`}>
-              {status.diagnostics.ready ? "配置齐全" : "配置未完成"}
-            </span>
-            <span style={{ fontSize: "0.875rem", color: "#888" }}>{status.diagnostics.uploadFlowLabel}</span>
-          </div>
-
-          <div className="admin-kv-list">
-            <div className="admin-kv-row">
-              <span>示例公开 URL</span>
-              <strong>{status.diagnostics.samplePublicUrl ?? "当前无法推导"}</strong>
-            </div>
-          </div>
-
-          {status.diagnostics.missingEnv.length > 0 ? (
-            <>
-              <p>缺失环境变量</p>
-              <ul className="admin-note-list">
-                {status.diagnostics.missingEnv.map((item) => (
-                  <li key={item}>
-                    <code>{item}</code>
-                  </li>
-                ))}
-              </ul>
-            </>
-          ) : null}
-
-          {status.diagnostics.warnings.length > 0 ? (
-            <>
-              <p>注意事项</p>
-              <ul className="admin-note-list">
-                {status.diagnostics.warnings.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </>
-          ) : null}
-        </div>
-
-        <div className="admin-card">
-          <h2>联调提示</h2>
-          <ul className="admin-note-list">
-            {status.diagnostics.hints.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </div>
+      <div className="admin-grid-stats" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1.5rem', marginBottom: '2rem' }}>
+        <article className="admin-card">
+          <p className="admin-kicker">Driver</p>
+          <strong>{status.driver.toUpperCase()}</strong>
+        </article>
+        <article className="admin-card">
+          <p className="admin-kicker">Status</p>
+          <strong style={{ color: status.liveCheck.ok ? '#10b981' : 'var(--danger)' }}>
+            {status.liveCheck.ok ? "ONLINE" : "OFFLINE"}
+          </strong>
+        </article>
+        <article className="admin-card">
+          <p className="admin-kicker">Latency</p>
+          <strong>{status.liveCheck.durationMs}ms</strong>
+        </article>
+        <article className="admin-card" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <StorageRefreshButton />
+        </article>
       </div>
 
-      <div className="admin-grid">
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+        <section className="admin-card">
+          <p className="admin-kicker">Configuration</p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '1rem' }}>
+            {[
+              ['Provider', status.provider ?? 'local-only'],
+              ['Bucket', status.bucket ?? 'N/A'],
+              ['Endpoint', status.endpoint ?? 'N/A'],
+              ['Max Upload', `${Math.round(status.maxUploadBytes / 1024 / 1024)} MB`]
+            ].map(([label, value]) => (
+              <div key={label} style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #f4f4f5', paddingBottom: '8px' }}>
+                <span className="admin-subtle">{label}</span>
+                <span style={{ fontWeight: 500, fontSize: '0.875rem' }}>{value}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="admin-card">
+          <p className="admin-kicker">Live Probe</p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '1rem' }}>
+             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span className="admin-subtle">Last Checked</span>
+                <span style={{ fontSize: '0.875rem' }}>{new Date(status.liveCheck.checkedAt).toLocaleTimeString()}</span>
+             </div>
+             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span className="admin-subtle">Writable</span>
+                <span style={{ color: status.liveCheck.writable ? '#10b981' : 'var(--danger)', fontWeight: 600 }}>{status.liveCheck.writable ? 'PASSED' : 'FAILED'}</span>
+             </div>
+             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span className="admin-subtle">Public Readable</span>
+                <span style={{ color: status.liveCheck.publicReadable ? '#10b981' : 'var(--danger)', fontWeight: 600 }}>{status.liveCheck.publicReadable ? 'PASSED' : 'FAILED'}</span>
+             </div>
+          </div>
+        </section>
+      </div>
+
+      <div style={{ marginTop: '1.5rem' }}>
         <StorageUploadProbe />
       </div>
     </AdminShell>

@@ -65,75 +65,83 @@ export function CategoryManager({ categories }: { categories: AdminCategory[] })
   }
 
   return (
-    <div className="admin-grid">
-      <section className="admin-card admin-library-panel">
-        <div className="admin-section-head">
-          <div>
-            <p className="admin-kicker">Category Library</p>
-            <h2>分类库</h2>
-          </div>
-          <span className="admin-chip">点开卡片继续细写</span>
-        </div>
-      </section>
+    <div className="admin-category-stack">
+      <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1.5rem' }}>
+        <button 
+          className="admin-primary-button" 
+          disabled={creating}
+          onClick={() => void createCategory()}
+        >
+          {creating ? "Creating..." : "New Category"}
+        </button>
+      </div>
 
-      <button
-        className="admin-card admin-link-card admin-create-rail"
-        disabled={creating}
-        onClick={() => void createCategory()}
-        type="button"
-      >
-        <div className="admin-create-symbol" aria-hidden="true">
-          +
-        </div>
-        <div className="admin-create-copy">
-          <p className="admin-kicker">New Draft</p>
-          <h2>{creating ? "正在创建分类..." : "创建分类草稿"}</h2>
-        </div>
-        <div className="admin-create-rail-side">
-          <div className="admin-inline-actions">
-            <span className="admin-chip">自动落下 slug</span>
-            <span className="admin-chip">创建后直接入页</span>
-          </div>
-          <span className="admin-status-pill is-info">{creating ? "working" : "new"}</span>
-        </div>
-      </button>
-
-      <div className="admin-category-grid">
-        {items.map((category, index) => (
-          <Link
-            className="admin-card admin-category-card admin-link-card"
-            href={`/categories/${category.id}`}
-            key={category.id}
-          >
-            <div className="admin-section-head">
-              <div>
-                <p className="admin-kicker">Category {String(index + 1).padStart(2, "0")}</p>
-                <h2>{category.name}</h2>
-              </div>
-              <span className="admin-status-pill is-info">{category.tone}</span>
-            </div>
-
-            <p className="admin-subtle admin-category-summary">{category.summary}</p>
-
-            <div className="admin-inline-actions">
-              <span className="admin-chip">{category.articleCountLabel}</span>
-              <span className="admin-chip">/{category.slug}</span>
-            </div>
-
-            {category.focusAreas.length > 0 ? (
-              <div className="admin-focus-list">
-                {category.focusAreas.map((item) => (
-                  <span className="admin-chip" key={item}>
-                    {item}
+      <div className="admin-card" style={{ padding: 0, overflow: 'hidden' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+          <thead>
+            <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--color-border)', background: '#f9fafb' }}>
+              <th style={{ padding: '12px 24px', fontSize: '0.75rem', fontWeight: 600, color: 'var(--color-text-muted)', textTransform: 'uppercase' }}>Category</th>
+              <th style={{ padding: '12px 24px', fontSize: '0.75rem', fontWeight: 600, color: 'var(--color-text-muted)', textTransform: 'uppercase' }}>Slug / Tone</th>
+              <th style={{ padding: '12px 24px', fontSize: '0.75rem', fontWeight: 600, color: 'var(--color-text-muted)', textTransform: 'uppercase' }}>Articles</th>
+              <th style={{ padding: '12px 24px', fontSize: '0.75rem', fontWeight: 600, color: 'var(--color-text-muted)', textTransform: 'uppercase' }}>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {items.map((category) => (
+              <tr key={category.id} style={{ borderBottom: '1px solid var(--color-border)' }}>
+                <td style={{ padding: '16px 24px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                    <div style={{ 
+                      width: '40px', 
+                      height: '40px', 
+                      borderRadius: '4px', 
+                      background: '#f4f4f5',
+                      overflow: 'hidden',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '1rem'
+                    }}>
+                      {category.coverUrl ? (
+                        <img src={category.coverUrl} style={{ width: '100%', height: '100%', objectFit: 'cover' }} alt="" />
+                      ) : '📂'}
+                    </div>
+                    <div>
+                      <div style={{ fontWeight: 600, fontSize: '1rem' }}>{category.name}</div>
+                      <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', maxWidth: '300px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                        {category.summary}
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td style={{ padding: '16px 24px' }}>
+                  <div style={{ fontSize: '0.875rem', fontFamily: 'monospace' }}>/{category.slug}</div>
+                  <span style={{ 
+                    fontSize: '0.65rem', 
+                    textTransform: 'uppercase', 
+                    fontWeight: 700, 
+                    color: '#6366f1',
+                    background: '#eef2ff',
+                    padding: '2px 6px',
+                    borderRadius: '4px',
+                    marginTop: '4px',
+                    display: 'inline-block'
+                  }}>
+                    {category.tone}
                   </span>
-                ))}
-              </div>
-            ) : null}
-
-            <div className="admin-category-footer">
-            </div>
-          </Link>
-        ))}
+                </td>
+                <td style={{ padding: '16px 24px' }}>
+                  <span style={{ fontSize: '0.875rem', fontWeight: 500 }}>{category.articleCountLabel}</span>
+                </td>
+                <td style={{ padding: '16px 24px' }}>
+                  <Link href={`/categories/${category.id}`} style={{ fontSize: '0.875rem', color: 'var(--color-primary)', fontWeight: 500, textDecoration: 'underline' }}>
+                    Manage
+                  </Link>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

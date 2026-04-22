@@ -136,16 +136,7 @@ export async function getHomePageData(): Promise<HomePageData> {
   }
 
   const allArticles = [...payload.latestOriginals, ...payload.latestCurated];
-  const seenCovers = new Set<string>();
-  const featuredArticles: typeof allArticles = [];
-  for (const article of allArticles) {
-    const key = article.coverUrl ?? article.slug;
-    if (!seenCovers.has(key)) {
-      seenCovers.add(key);
-      featuredArticles.push(article);
-    }
-    if (featuredArticles.length >= 6) break;
-  }
+  const featuredArticles = allArticles.slice(0, 6);
 
   return {
     featuredArticles: featuredArticles.map((article) => ({

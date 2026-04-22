@@ -43,25 +43,8 @@ export type CompactEntry = {
 };
 
 export type HomePageData = {
-  issue: {
-    issueNumber: string;
-    eyebrow: string;
-    title: string;
-    lede: string;
-    logoVariant: SiteLogoVariant;
-    primaryCtaLabel: string;
-    primaryCtaHref: string;
-    secondaryCtaLabel: string;
-    secondaryCtaHref: string;
-  };
-  featuredStories: [FeatureStory, FeatureStory, FeatureStory];
-  siteStats: string[];
+  featuredArticles: (CompactEntry & { category: string; authorLabel: string })[];
   topicShelves: TopicShelf[];
-  creatorTools: CreatorTool[];
-  categoryCoverLibrary: {
-    total: number;
-    items: CategoryCoverPreview[];
-  };
   latestEssays: CompactEntry[];
   readingLogs: CompactEntry[];
 };

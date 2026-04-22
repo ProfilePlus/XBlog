@@ -30,12 +30,15 @@ async function main() {
   for (let i = 0; i < categories.length; i++) {
      // Categoriy covers were pointing to missing library subfolders, fix to direct path
      if (categories[i].coverUrl?.includes('category-covers/library')) {
-        const fileName = categories[i].coverUrl.split('/').pop();
-        await prisma.category.update({
-          where: { id: categories[i].id },
-          data: { coverUrl: `/images/${fileName}` }
-        });
-        console.log(`Updated category "${categories[i].name}" with cover /images/${fileName}`);
+        const coverUrl = categories[i].coverUrl || '';
+        const fileName = coverUrl.split('/').pop();
+        if (fileName) {
+          await prisma.category.update({
+            where: { id: categories[i].id },
+            data: { coverUrl: `/images/${fileName}` }
+          });
+          console.log(`Updated category "${categories[i].name}" with cover /images/${fileName}`);
+        }
      }
   }
 }

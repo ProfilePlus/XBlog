@@ -58,92 +58,6 @@ export class MemoryStore implements Store {
     return segment?.toLowerCase() ?? null;
   }
 
-  private categoryCoverAssets() {
-    return [...this.state.assets]
-      .filter((asset) => asset.kind === "CATEGORY_COVER")
-      .sort((a, b) => Date.parse(a.createdAt ?? "") - Date.parse(b.createdAt ?? ""));
-  }
-
-  private resolveCategoryCoverUrls(categories: StoredCategory[]) {
-    const coverAssets = this.categoryCoverAssets();
-    const manualAssignments = new Set(categories.map((category) => category.coverAssetId).filter(Boolean));
-    const unusedAssets = coverAssets.filter((asset) => !manualAssignments.has(asset.id));
-    const usedAutoAssetIds = new Set<string>();
-    const resolved = new Map<string, string | null>();
-
-    for (const category of [...categories].sort((a, b) => a.sortOrder - b.sortOrder)) {
-      if (category.coverAssetId) {
-        const asset = coverAssets.find((entry) => entry.id === category.coverAssetId);
-        resolved.set(category.id, asset?.url ?? category.coverUrl ?? null);
-        continue;
-      }
-
-      if (category.coverUrl) {
-        resolved.set(category.id, category.coverUrl);
-        continue;
-      }
-
-      const toneMatches = unusedAssets.filter(
-        (asset) => asset.tone === category.tone && !usedAutoAssetIds.has(asset.id),
-      );
-      const pool = toneMatches.length > 0 ? toneMatches : unusedAssets.filter((asset) => !usedAutoAssetIds.has(asset.id));
-
-      if (pool.length === 0) {
-        resolved.set(category.id, null);
-        continue;
-      }
-
-      const selected = pool[this.hashSlug(category.slug) % pool.length];
-      usedAutoAssetIds.add(selected.id);
-      resolved.set(category.id, selected.url);
-    }
-
-    return resolved;
-  }
-
-  private buildCategoryCoverAssetAssignments(categories: StoredCategory[]) {
-    const coverAssets = this.categoryCoverAssets();
-    const resolvedCoverUrls = this.resolveCategoryCoverUrls(categories);
-    const assignments = new Map<string, StoredCategory>();
-
-    for (const category of [...categories].sort((a, b) => a.sortOrder - b.sortOrder)) {
-      const resolvedCoverUrl = resolvedCoverUrls.get(category.id);
-      const matchedAsset = category.coverAssetId
-        ? coverAssets.find((asset) => asset.id === category.coverAssetId)
-        : coverAssets.find(
-            (asset) =>
-              asset.url === resolvedCoverUrl ||
-              asset.sourceUrl === resolvedCoverUrl ||
-              this.coverReferenceKey(asset.url) === this.coverReferenceKey(resolvedCoverUrl) ||
-              this.coverReferenceKey(asset.sourceUrl) === this.coverReferenceKey(resolvedCoverUrl),
-          );
-
-      if (matchedAsset && !assignments.has(matchedAsset.id)) {
-        assignments.set(matchedAsset.id, category);
-      }
-    }
-
-    return assignments;
-  }
-
-  private toCategoryCoverAssetSummary(asset: Asset, assignments?: Map<string, StoredCategory>) {
-    const assignedCategory = assignments?.get(asset.id) ?? null;
-
-    return {
-      id: asset.id,
-      url: asset.url,
-      tone: asset.tone,
-      label: asset.label,
-      width: asset.width,
-      height: asset.height,
-      createdAt: asset.createdAt,
-      isAssigned: Boolean(assignedCategory),
-      assignedCategoryId: assignedCategory?.id ?? null,
-      assignedCategoryName: assignedCategory?.name ?? null,
-      assignedCategorySlug: assignedCategory?.slug ?? null,
-    };
-  }
-
   private toStoredCategory(category: StoredCategory, resolvedCoverUrl?: string | null): StoredCategory {
     return {
       ...category,
@@ -165,9 +79,7 @@ export class MemoryStore implements Store {
 
   async listCategories() {
     const categories = [...this.state.categories].sort((a, b) => a.sortOrder - b.sortOrder);
-    const resolvedCoverUrls = this.resolveCategoryCoverUrls(categories);
-
-    return categories.map((entry) => this.toStoredCategory(entry, resolvedCoverUrls.get(entry.id)));
+    return categories.map((entry) => this.toStoredCategory(entry));
   }
 
   async getCategoryBySlug(slug: string) {
@@ -340,19 +252,9 @@ export class MemoryStore implements Store {
     const originals = sortDateDesc(visible.filter((entry) => entry.kind === "ORIGINAL"), (entry) => entry.publishedAt).slice(0, 3);
     const curated = sortDateDesc(visible.filter((entry) => entry.kind === "CURATED"), (entry) => entry.publishedAt).slice(0, 3);
     const categoryShelves = await this.listCategories();
-    const categoryCoverLibrary = this.categoryCoverAssets();
-
-    const heroSlots = [
-      { slot: "main" as const, articleId: this.state.homeIssue.heroArticleIds.main },
-      { slot: "side-1" as const, articleId: this.state.homeIssue.heroArticleIds.side1 },
-      { slot: "side-2" as const, articleId: this.state.homeIssue.heroArticleIds.side2 },
-    ].map((entry) => ({
-      slot: entry.slot,
-      article: this.toArticleSummary(visible.find((item) => item.id === entry.articleId) ?? visible[0]),
-    }));
 
     return {
-      categoryShelves: categoryShelves.map(c => ({...c, longSummary: ''})),
+      categoryShelves: categoryShelves.map((c) => ({ ...c, longSummary: "" })),
       latestOriginals: originals.map((entry) => this.toArticleSummary(entry)),
       latestCurated: curated.map((entry) => this.toArticleSummary(entry)),
     };
@@ -413,105 +315,6 @@ export class MemoryStore implements Store {
       .map((article) => this.toArticleSummary(article));
 
     return { articles };
-  }
-
-  async listCategoryCoverAssets(
-    page: number,
-    pageSize: number,
-    filters: CategoryCoverAssetListFilters = { assignment: "all" },
-  ) {
-    const assignments = this.buildCategoryCoverAssetAssignments(this.state.categories);
-    let assets = this.categoryCoverAssets();
-
-    if (filters.tone) {
-      assets = assets.filter((asset) => asset.tone === filters.tone);
-    }
-
-    if (filters.assignment === "assigned") {
-      assets = assets.filter((asset) => assignments.has(asset.id));
-    }
-
-    if (filters.assignment === "unassigned") {
-      assets = assets.filter((asset) => !assignments.has(asset.id));
-    }
-
-    const start = (page - 1) * pageSize;
-
-    return {
-      total: assets.length,
-      page,
-      pageSize,
-      items: assets.slice(start, start + pageSize).map((asset) => this.toCategoryCoverAssetSummary(asset, assignments)),
-    };
-  }
-
-  async createCategoryCoverAsset(payload: CategoryCoverAssetInput) {
-    const asset = this.state.assets.find((entry) => entry.id === payload.assetId);
-    if (!asset) {
-      throw new Error("Asset not found");
-    }
-
-    asset.kind = "CATEGORY_COVER";
-    asset.tone = payload.tone;
-    asset.label = payload.label ?? asset.label ?? null;
-    return this.toCategoryCoverAssetSummary(asset);
-  }
-
-  async deleteCategoryCoverAsset(id: string) {
-    const index = this.state.assets.findIndex((entry) => entry.id === id && entry.kind === "CATEGORY_COVER");
-    if (index === -1) {
-      return null;
-    }
-
-    const [asset] = this.state.assets.splice(index, 1);
-    this.state.categories = this.state.categories.map((category) =>
-      category.coverAssetId === asset.id
-        ? {
-            ...category,
-            coverAssetId: null,
-          }
-        : category,
-    );
-    await this.storage.deleteObject(asset);
-    return this.toCategoryCoverAssetSummary(asset);
-  }
-
-  async importBuiltInCategoryCoverAssets(): Promise<CategoryCoverAssetImportResult> {
-    const library = getBuiltInCategoryCoverLibrary();
-    const items = [];
-    let imported = 0;
-    let skipped = 0;
-
-    for (const entry of library) {
-      const existing = this.state.assets.find(
-        (asset) => asset.kind === "CATEGORY_COVER" && asset.sourceUrl === entry.sourceUrl,
-      );
-      if (existing) {
-        skipped += 1;
-        items.push(this.toCategoryCoverAssetSummary(existing));
-        continue;
-      }
-
-      const buffer = await fs.readFile(entry.absolutePath);
-      const stored = await this.storage.storeBuffer(buffer, entry.fileName, entry.mimeType);
-      const asset: Asset = {
-        ...stored,
-        kind: "CATEGORY_COVER",
-        tone: entry.tone,
-        label: entry.label,
-        sourceUrl: entry.sourceUrl,
-      };
-
-      await this.saveAsset(asset);
-      imported += 1;
-      items.push(this.toCategoryCoverAssetSummary(asset));
-    }
-
-    return {
-      imported,
-      skipped,
-      items,
-    };
   }
 
   async upsertCategory(payload: UpsertCategoryPayload) {

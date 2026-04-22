@@ -6,12 +6,14 @@ import type {
   AdminToken,
   ArticleBlock,
   Asset,
+  HomeIssue,
   IngestArticleRequest,
   IngestArticleResponse,
   PublicArticleDetail,
   PublicHomeResponse,
   PublicSearchResponse,
   PublicSiteBrandingResponse,
+  SiteLogoVariant,
   UpsertArticleRequest,
 } from "@xblog/contracts";
 import { seedPrismaFromBootstrap } from "@/bootstrap/prisma-seed";
@@ -41,12 +43,6 @@ type CategoryRecord = Prisma.CategoryGetPayload<{
 
 type CategoryCoverUsageRecord = Pick<CategoryRecord, "id" | "slug" | "tone" | "coverUrl" | "coverAssetId" | "coverAsset" | "sortOrder">;
 type CategoryCoverAssetRecord = Prisma.AssetGetPayload<{}>;
-
-type HomeIssueRecord = Prisma.HomeIssueGetPayload<{
-  include: {
-    heroSlots: true;
-  };
-}>;
 
 function articleCountLabel(count: number) {
   return `${count} 篇文章`;
@@ -107,14 +103,13 @@ export class PrismaStore implements Store {
     return segment?.toLowerCase() ?? null;
   }
 
-  private normalizeLogoVariant(value: string | null): any {
-    return value || "prototype";
+  private normalizeLogoVariant(value: string | null): SiteLogoVariant {
+    return (value as SiteLogoVariant) || "prototype";
   }
 
   private async listCategoryCoverAssetRecords() {
     return this.prisma.asset.findMany({
       where: { kind: "CATEGORY_COVER" },
-      include: { categories: true },
       orderBy: { createdAt: "asc" },
     });
   }
@@ -179,27 +174,6 @@ export class PrismaStore implements Store {
     }
 
     return assignments;
-  }
-
-  private toCategoryCoverAssetSummary(
-    record: CategoryCoverAssetRecord,
-    assignments?: Map<string, CategoryCoverUsageRecord>,
-  ) {
-    const assignedCategory = assignments?.get(record.id) ?? record.categories[0] ?? null;
-
-    return {
-      id: record.id,
-      url: record.url,
-      tone: record.tone,
-      label: record.label,
-      width: record.width,
-      height: record.height,
-      createdAt: record.createdAt.toISOString(),
-      isAssigned: Boolean(assignedCategory),
-      assignedCategoryId: assignedCategory?.id ?? null,
-      assignedCategoryName: assignedCategory?.name ?? null,
-      assignedCategorySlug: assignedCategory?.slug ?? null,
-    };
   }
 
   private async toAdminCategory(record: CategoryRecord, resolvedCoverUrl?: string | null): Promise<AdminCategory> {
@@ -272,30 +246,6 @@ export class PrismaStore implements Store {
       authorRoleLabel: record.authorRoleLabel,
       coverUrl: record.coverAsset?.url ?? record.coverUrl ?? null,
       sourceUrl: record.sourceUrl,
-    };
-  }
-
-  private toHomeIssue(issue: HomeIssueRecord): HomeIssue {
-    const slotMap = new Map(issue.heroSlots.map((slot) => [slot.slot, slot.articleId]));
-
-    return {
-      id: issue.id,
-      issueNumber: issue.issueNumber,
-      eyebrow: issue.eyebrow,
-      title: issue.title,
-      lede: issue.lede,
-      note: issue.note,
-      primaryCtaLabel: issue.primaryCtaLabel,
-      primaryCtaHref: issue.primaryCtaHref,
-      secondaryCtaLabel: issue.secondaryCtaLabel,
-      secondaryCtaHref: issue.secondaryCtaHref,
-      stats: (issue.stats as string[]) ?? [],
-      logoVariant: this.normalizeLogoVariant(issue.logoVariant),
-      heroArticleIds: {
-        main: slotMap.get("MAIN") ?? "",
-        side1: slotMap.get("SIDE_1") ?? "",
-        side2: slotMap.get("SIDE_2") ?? "",
-      },
     };
   }
 

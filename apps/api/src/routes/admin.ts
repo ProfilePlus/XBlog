@@ -1,7 +1,6 @@
 import type { FastifyInstance } from "fastify";
 import {
   adminObjectStorageStatusSchema,
-  adminArticleListResponseSchema,
   adminObjectStorageUploadProbeSchema,
   createTokenRequestSchema,
   upsertArticleRequestSchema,
@@ -22,26 +21,6 @@ const adminAuth = { preHandler: [async (request: any, reply: any) => {
 
 export async function registerAdminRoutes(app: FastifyInstance) {
   app.get("/v1/admin/articles", adminAuth, async () => app.store.listArticles());
-
-  app.get("/v1/admin/article-library", adminAuth, async (request) => {
-    const query = request.query as {
-      page?: string;
-      pageSize?: string;
-    };
-    const page = Math.max(1, Number(query.page ?? "1") || 1);
-    const pageSize = Math.min(60, Math.max(1, Number(query.pageSize ?? "12") || 12));
-    const articles = await app.store.listArticles();
-    const totalPages = Math.max(1, Math.ceil(articles.length / pageSize));
-    const normalizedPage = Math.min(page, totalPages);
-    const start = (normalizedPage - 1) * pageSize;
-
-    return adminArticleListResponseSchema.parse({
-      total: articles.length,
-      page: normalizedPage,
-      pageSize,
-      items: articles.slice(start, start + pageSize),
-    });
-  });
 
   app.get("/v1/admin/articles/:id", adminAuth, async (request, reply) => {
     const article = await app.store.getArticleById((request.params as { id: string }).id);

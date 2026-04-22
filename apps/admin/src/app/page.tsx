@@ -38,7 +38,7 @@ export default async function DashboardPage() {
   const draftCount = articles.filter((article) => article.status === "DRAFT").length;
   const activeTokenCount = tokens.filter((token) => token.isActive).length;
   const latestArticle = [...articles]
-    .sort((left, right) => new Date(right.updatedAt).getTime() - new Date(left.updatedAt).getTime())[0];
+    .sort((left, right) => right.id.localeCompare(left.id))[0];
 
   return (
     <AdminShell hideMasthead={false} userName={user.displayName}>
@@ -68,7 +68,7 @@ export default async function DashboardPage() {
           <p className="admin-kicker">Latest Article</p>
           <h2 style={{ fontSize: '1.5rem', marginBottom: '0.75rem', fontWeight: 700 }}>{latestArticle?.title ?? "No Articles"}</h2>
           <p className="admin-subtle">
-            Last modified on {formatDateTime(latestArticle?.updatedAt)}
+            {latestArticle?.publishedAt ? `Published on ${formatDateTime(latestArticle.publishedAt)}` : "Draft status"}
           </p>
           <div style={{ marginTop: '2rem' }}>
              <Link href={`/articles/edit/${latestArticle?.id}`} className="admin-primary-button">

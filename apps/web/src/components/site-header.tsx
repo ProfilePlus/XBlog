@@ -11,8 +11,13 @@ export async function SiteHeader({ variant = "default" }: SiteHeaderProps) {
   return (
     <header className="site-header">
       <Link href="/" className="site-header-branding">
-        <h1>Alex Plum</h1>
-        <p>Hefei / Java / K8s / Vibe Coding</p>
+        <div className="vibe-seal-container" style={{ marginBottom: 0, marginRight: '1rem' }}>
+          <img src="/images/logo.png" alt="Seal" style={{ width: '28px', height: '28px' }} />
+        </div>
+        <div>
+          <h1>Alex Plum</h1>
+          <p>Hefei / Java / K8s / Vibe Coding</p>
+        </div>
       </Link>
 
       <nav className="site-header-nav" aria-label="主导航">

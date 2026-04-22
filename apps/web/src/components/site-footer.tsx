@@ -4,6 +4,9 @@ export function SiteFooter() {
   return (
     <footer className="site-footer">
       <div className="site-footer-inner">
+        <div style={{ marginBottom: '2rem', opacity: 0.15 }}>
+           <img src="/images/logo-transparent.png" alt="Seal" style={{ width: '32px', height: '32px' }} />
+        </div>
         <div className="footer-links">
           <a
             href="https://beian.miit.gov.cn/"

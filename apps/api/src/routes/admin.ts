@@ -10,12 +10,20 @@ import {
 import { env } from "@/lib/env";
 import { runObjectStorageUploadProbe } from "@/lib/object-storage-probe";
 import { getObjectStorageLiveCheck, inspectObjectStorageConfiguration } from "@/lib/object-storage";
-import { requireAdmin } from "@/plugins/auth";
+import { requireAdmin, requireApiToken } from "@/plugins/auth";
+
+const adminAuth = { preHandler: [async (request: any, reply: any) => {
+  const authHeader = request.headers.authorization;
+  if (authHeader && authHeader.startsWith('Bearer ')) {
+    return requireApiToken(request, reply);
+  }
+  return requireAdmin(request, reply);
+}] };
 
 export async function registerAdminRoutes(app: FastifyInstance) {
-  app.get("/v1/admin/articles", { preHandler: requireAdmin }, async () => app.store.listArticles());
+  app.get("/v1/admin/articles", adminAuth, async () => app.store.listArticles());
 
-  app.get("/v1/admin/article-library", { preHandler: requireAdmin }, async (request) => {
+  app.get("/v1/admin/article-library", adminAuth, async (request) => {
     const query = request.query as {
       page?: string;
       pageSize?: string;
@@ -35,7 +43,7 @@ export async function registerAdminRoutes(app: FastifyInstance) {
     });
   });
 
-  app.get("/v1/admin/articles/:id", { preHandler: requireAdmin }, async (request, reply) => {
+  app.get("/v1/admin/articles/:id", adminAuth, async (request, reply) => {
     const article = await app.store.getArticleById((request.params as { id: string }).id);
     if (!article) {
       return reply.code(404).send({ message: "Article not found" });
@@ -43,7 +51,48 @@ export async function registerAdminRoutes(app: FastifyInstance) {
     return article;
   });
 
-  app.post("/v1/admin/articles", { preHandler: requireAdmin }, async (request, reply) => {
+  app.get("/v1/admin/articles/:id/markdown", adminAuth, async (request, reply) => {
+    const article = await app.store.getArticleById((request.params as { id: string }).id);
+    if (!article) {
+      return reply.code(404).send({ message: "Article not found" });
+    }
+
+    const blocks = article.blocks;
+    let markdown = `---\ntitle: ${article.title}\nexcerpt: ${article.excerpt}\nlede: ${article.lede}\nkind: ${article.kind}\ntone: ${article.tone}\ncategoryId: ${article.categoryId}\nreadingTime: ${article.readingTime}\nauthorDisplayName: ${article.authorDisplayName}\nauthorRoleLabel: ${article.authorRoleLabel}\n---\n\n`;
+
+    for (const block of blocks) {
+      switch (block.type) {
+        case "heading":
+          markdown += `## ${block.text}\n\n`;
+          break;
+        case "paragraph":
+          markdown += `${block.text}\n\n`;
+          break;
+        case "quote":
+          markdown += `> ${block.text}\n\n`;
+          break;
+        case "code":
+          markdown += `\`\`\`${block.language || ""}\n${block.code}\n\`\`\`\n\n`;
+          break;
+        case "image":
+          markdown += `![${block.alt || ""}](${block.url})\n\n`;
+          break;
+        case "divider":
+          markdown += `---\n\n`;
+          break;
+        case "list":
+          for (const item of block.items) {
+            markdown += `${block.style === "ordered" ? "1." : "-"} ${item}\n`;
+          }
+          markdown += "\n";
+          break;
+      }
+    }
+
+    return { markdown };
+  });
+
+  app.post("/v1/admin/articles", adminAuth, async (request, reply) => {
     const parsed = upsertArticleRequestSchema.safeParse(request.body);
     if (!parsed.success) {
       return reply.code(400).send({
@@ -59,7 +108,7 @@ export async function registerAdminRoutes(app: FastifyInstance) {
     return app.store.upsertArticle(payload);
   });
 
-  app.put("/v1/admin/articles/:id", { preHandler: requireAdmin }, async (request, reply) => {
+  app.put("/v1/admin/articles/:id", adminAuth, async (request, reply) => {
     const parsed = upsertArticleRequestSchema.safeParse(request.body);
     if (!parsed.success) {
       return reply.code(400).send({
@@ -78,7 +127,7 @@ export async function registerAdminRoutes(app: FastifyInstance) {
     });
   });
 
-  app.delete("/v1/admin/articles/:id", { preHandler: requireAdmin }, async (request, reply) => {
+  app.delete("/v1/admin/articles/:id", adminAuth, async (request, reply) => {
     try {
       const article = await app.store.deleteArticle((request.params as { id: string }).id);
       if (!article) {
@@ -94,7 +143,7 @@ export async function registerAdminRoutes(app: FastifyInstance) {
     }
   });
 
-  app.post("/v1/admin/articles/:id/publish", { preHandler: requireAdmin }, async (request, reply) => {
+  app.post("/v1/admin/articles/:id/publish", adminAuth, async (request, reply) => {
     const article = await app.store.publishArticle((request.params as { id: string }).id);
     if (!article) {
       return reply.code(404).send({ message: "Article not found" });
@@ -102,7 +151,7 @@ export async function registerAdminRoutes(app: FastifyInstance) {
     return article;
   });
 
-  app.post("/v1/admin/articles/:id/hide", { preHandler: requireAdmin }, async (request, reply) => {
+  app.post("/v1/admin/articles/:id/hide", adminAuth, async (request, reply) => {
     const article = await app.store.hideArticle((request.params as { id: string }).id);
     if (!article) {
       return reply.code(404).send({ message: "Article not found" });
@@ -110,9 +159,9 @@ export async function registerAdminRoutes(app: FastifyInstance) {
     return article;
   });
 
-  app.get("/v1/admin/categories", { preHandler: requireAdmin }, async () => app.store.listCategories());
+  app.get("/v1/admin/categories", adminAuth, async () => app.store.listCategories());
 
-  app.post("/v1/admin/categories", { preHandler: requireAdmin }, async (request, reply) => {
+  app.post("/v1/admin/categories", adminAuth, async (request, reply) => {
     const parsed = upsertCategoryRequestSchema.safeParse(request.body);
     if (!parsed.success) {
       return reply.code(400).send({
@@ -138,7 +187,7 @@ export async function registerAdminRoutes(app: FastifyInstance) {
     }
   });
 
-  app.put("/v1/admin/categories/:id", { preHandler: requireAdmin }, async (request, reply) => {
+  app.put("/v1/admin/categories/:id", adminAuth, async (request, reply) => {
     const parsed = upsertCategoryRequestSchema.safeParse(request.body);
     if (!parsed.success) {
       return reply.code(400).send({
@@ -170,7 +219,7 @@ export async function registerAdminRoutes(app: FastifyInstance) {
     }
   });
 
-  app.delete("/v1/admin/categories/:id", { preHandler: requireAdmin }, async (request, reply) => {
+  app.delete("/v1/admin/categories/:id", adminAuth, async (request, reply) => {
     try {
       const category = await app.store.deleteCategory((request.params as { id: string }).id);
       if (!category) {
@@ -186,9 +235,9 @@ export async function registerAdminRoutes(app: FastifyInstance) {
     }
   });
 
-  app.get("/v1/admin/tokens", { preHandler: requireAdmin }, async () => app.store.listTokens());
+  app.get("/v1/admin/tokens", adminAuth, async () => app.store.listTokens());
 
-  app.post("/v1/admin/tokens", { preHandler: requireAdmin }, async (request) => {
+  app.post("/v1/admin/tokens", adminAuth, async (request) => {
     const payload = createTokenRequestSchema.parse(request.body);
     const { token, plainTextToken } = await app.store.createToken(payload.label, payload.scopes);
     return {
@@ -197,7 +246,7 @@ export async function registerAdminRoutes(app: FastifyInstance) {
     };
   });
 
-  app.post("/v1/admin/tokens/:id/revoke", { preHandler: requireAdmin }, async (request, reply) => {
+  app.post("/v1/admin/tokens/:id/revoke", adminAuth, async (request, reply) => {
     const token = await app.store.revokeToken((request.params as { id: string }).id);
     if (!token) {
       return reply.code(404).send({ message: "Token not found" });
@@ -205,7 +254,7 @@ export async function registerAdminRoutes(app: FastifyInstance) {
     return token;
   });
 
-  app.delete("/v1/admin/tokens/:id", { preHandler: requireAdmin }, async (request, reply) => {
+  app.delete("/v1/admin/tokens/:id", adminAuth, async (request, reply) => {
     const token = await app.store.deleteToken((request.params as { id: string }).id);
     if (!token) {
       return reply.code(404).send({ message: "Token not found" });
@@ -213,7 +262,7 @@ export async function registerAdminRoutes(app: FastifyInstance) {
     return token;
   });
 
-  app.get("/v1/admin/system/storage", { preHandler: requireAdmin }, async () => {
+  app.get("/v1/admin/system/storage", adminAuth, async () => {
     const diagnostics = inspectObjectStorageConfiguration();
     const liveCheck = await getObjectStorageLiveCheck();
 
@@ -230,7 +279,7 @@ export async function registerAdminRoutes(app: FastifyInstance) {
     });
   });
 
-  app.post("/v1/admin/system/storage/probe-upload", { preHandler: requireAdmin }, async () => {
+  app.post("/v1/admin/system/storage/probe-upload", adminAuth, async () => {
     return adminObjectStorageUploadProbeSchema.parse(await runObjectStorageUploadProbe());
   });
 }

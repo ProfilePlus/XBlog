@@ -13,6 +13,11 @@ export async function registerPublicRoutes(app: FastifyInstance) {
     return category;
   });
 
+  app.get("/v1/public/search", async (request) => {
+    const { q } = request.query as { q?: string };
+    return app.store.searchPublicArticles(q ?? "");
+  });
+
   app.get("/v1/public/articles/:slug", async (request, reply) => {
     const article = await app.store.getPublicArticleDetail((request.params as { slug: string }).slug);
     if (!article) {

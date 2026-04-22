@@ -175,13 +175,22 @@ export const adminCategorySchema = categorySummarySchema.extend({
 
 export type AdminCategory = z.infer<typeof adminCategorySchema>;
 
-export const publicHomeResponseSchema = z.object({
+export type PublicArticleSummary = z.infer<typeof articleSummarySchema>;
+
+export const publicSearchResponseSchema = z.object({
+  articles: z.array(articleSummarySchema),
+});
+
+export type PublicSearchResponse = z.infer<typeof publicSearchResponseSchema>;
+
+export const getPublicHomeResponseSchema = z.object({
+
   categoryShelves: z.array(categorySummarySchema),
   latestOriginals: z.array(articleSummarySchema),
   latestCurated: z.array(articleSummarySchema),
 });
 
-export type PublicHomeResponse = z.infer<typeof publicHomeResponseSchema>;
+export type PublicHomeResponse = z.infer<typeof getPublicHomeResponseSchema>;
 
 export const publicSiteBrandingResponseSchema = z.object({
   logoVariant: siteLogoVariantSchema,

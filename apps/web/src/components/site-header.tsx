@@ -10,24 +10,19 @@ export async function SiteHeader({ variant = "default" }: SiteHeaderProps) {
 
   return (
     <header className="site-header">
-      <Link href="/">
-        <div>
-          <h1 style={{ fontSize: "1.5rem", margin: 0 }}>Alex Plum</h1>
-          <p style={{ fontSize: "0.875rem", color: "var(--text-dark-muted)", margin: 0 }}>
-            合肥程序员 / Java / K8s / AI / 大模型 / Vibe Coding
-          </p>
-        </div>
+      <Link href="/" className="site-header-branding">
+        <h1>Alex Plum</h1>
+        <p>Hefei / Java / K8s / Vibe Coding</p>
       </Link>
 
-      <nav aria-label="主导航">
-        <Link href="/categories">分类</Link>
-        <Link href="/search">搜索</Link>
-        <Link href="/#about">关于</Link>
+      <nav className="site-header-nav" aria-label="主导航">
+        <Link href="/categories">Categories</Link>
+        <Link href="/search">Search</Link>
+        <Link href="/#about">About</Link>
+        <Link href={adminAppUrl} className="site-header-admin" rel="noreferrer" target="_blank">
+          Admin
+        </Link>
       </nav>
-
-      <Link href={adminAppUrl} rel="noreferrer" target="_blank">
-        管理后台
-      </Link>
     </header>
   );
 }

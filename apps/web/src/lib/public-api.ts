@@ -5,6 +5,7 @@ import type {
   PublicArticleDetail,
   PublicCategoryDetail,
   PublicHomeResponse,
+  PublicSearchResponse,
   PublicSiteBrandingResponse,
 } from "@xblog/contracts";
 import { webConfig } from "@/lib/config";
@@ -264,4 +265,12 @@ export async function getArticlePageData(slug: string): Promise<ArticlePageData 
       excerpt: article.excerpt,
     })),
   };
+}
+
+export async function searchArticles(query: string): Promise<ArticleSummary[]> {
+  if (!query.trim()) {
+    return [];
+  }
+  const payload = await apiFetch<PublicSearchResponse>(`/v1/public/search?q=${encodeURIComponent(query)}`);
+  return payload?.articles ?? [];
 }

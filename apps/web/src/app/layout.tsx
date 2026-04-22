@@ -32,6 +32,8 @@ const ibmPlexSans = IBM_Plex_Sans({
   variable: "--font-ibm-plex-sans",
 });
 
+import { SiteFooter } from "@/components/site-footer";
+
 export const metadata: Metadata = {
   title: "Alex Plum · 首页",
   description: "Alex Plum - Java 后端开发 & Vibe Coding",
@@ -46,6 +48,7 @@ export default function RootLayout({
     <html lang="zh-CN">
       <body className={`index ${ibmPlexSans.variable} ${newsreader.variable} ${inter.variable} ${notoSansSC.variable} ${playfairDisplay.variable}`}>
         {children}
+        <SiteFooter />
       </body>
     </html>
   );

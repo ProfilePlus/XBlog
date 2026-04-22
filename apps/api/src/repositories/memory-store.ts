@@ -11,6 +11,7 @@ import type {
   PublicArticleDetail,
   PublicCategoryDetail,
   PublicHomeResponse,
+  PublicSearchResponse,
   PublicSiteBrandingResponse,
   UpsertArticleRequest,
 } from "@xblog/contracts";
@@ -351,17 +352,7 @@ export class MemoryStore implements Store {
     }));
 
     return {
-      issue: this.state.homeIssue,
-      heroSlots,
-      categoryShelves,
-      categoryCoverLibrary: {
-        total: categoryCoverLibrary.length,
-        items: categoryCoverLibrary.slice(0, 20).map((asset) => ({
-          id: asset.id,
-          url: asset.url,
-          tone: asset.tone,
-        })),
-      },
+      categoryShelves: categoryShelves.map(c => ({...c, longSummary: ''})),
       latestOriginals: originals.map((entry) => this.toArticleSummary(entry)),
       latestCurated: curated.map((entry) => this.toArticleSummary(entry)),
     };
@@ -407,6 +398,21 @@ export class MemoryStore implements Store {
       blocks: article.blocks,
       related,
     };
+  }
+
+  async searchPublicArticles(query: string): Promise<PublicSearchResponse> {
+    const term = query.toLowerCase();
+    const articles = this.visibleArticles()
+      .filter(
+        (article) =>
+          article.title.toLowerCase().includes(term) ||
+          article.excerpt.toLowerCase().includes(term) ||
+          article.lede.toLowerCase().includes(term),
+      )
+      .slice(0, 20)
+      .map((article) => this.toArticleSummary(article));
+
+    return { articles };
   }
 
   async listCategoryCoverAssets(

@@ -44,4 +44,12 @@ export async function requireApiToken(request: FastifyRequest, reply: FastifyRep
   if (!found) {
     return reply.code(401).send({ message: "Invalid API token" });
   }
+
+  // Associate with the default admin for internal CLI usage
+  // In a real multi-user system, the token would be linked to a specific user.
+  request.adminUser = {
+    id: "cmo8q5uab000ojebb0uen89ln",
+    email: "admin@xblog.local",
+    displayName: "Alex (CLI)",
+  };
 }

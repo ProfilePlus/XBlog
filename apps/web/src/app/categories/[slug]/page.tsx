@@ -80,11 +80,6 @@ export default async function CategoryDetailPage({
           </Link>
         ))}
       </section>
-
-      <footer className="site-footer">
-        <p>皖ICP备2026007447号</p>
-        <p>皖公网安备34010402704764号</p>
-      </footer>
     </div>
   );
 }

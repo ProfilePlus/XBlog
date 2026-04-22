@@ -71,26 +71,6 @@ body {
     line-height: 150%;
 }
 
-footer {
-    padding-top: 0 !important;
-    font-size: var(--unit-sm);
-    color: var(--color-textdim) !important;
-}
-footer div.wrap {
-    max-width: var(--unit-layoutmax);
-    margin: 0 auto;
-    border-top: 1px solid var(--color-surface);
-    padding-top: var(--unit-sm);
-}
-footer a { color: var(--color-textdim); }
-
-@media (min-width: 40rem) {
-    footer div.wrap {
-        display: flex;
-        justify-content: space-between;
-    }
-}
-
 /* -----------------------------------
 Block elements
 -------------------------------------- */
@@ -606,5 +586,285 @@ section.about {
     .newsletter .main-form {
         flex-direction: row;
         align-items: stretch;
+    }
+}
+
+/* ICP 备案 footer */
+.site-footer {
+    margin-top: 6rem;
+    padding: 3rem 1rem 4rem;
+    border-top: 1px solid var(--color-surface);
+    font-size: 0.8125rem;
+    color: var(--color-textdim);
+    text-align: center;
+}
+
+.site-footer-inner {
+    max-width: var(--unit-layoutmax);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.footer-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.footer-separator {
+    color: var(--color-surface);
+    user-select: none;
+}
+
+.site-footer a {
+    color: var(--color-textdim);
+    text-decoration: none;
+    transition: color 0.2s ease, border-bottom 0.2s ease;
+    border-bottom: 1px solid transparent;
+}
+
+.site-footer a:hover {
+    color: var(--color-text);
+    border-bottom-color: var(--color-textdim);
+}
+
+.footer-copyright {
+    opacity: 0.7;
+    font-size: 0.75rem;
+    letter-spacing: 0.02em;
+}
+
+/* Site Header Vibe */
+.site-header {
+    max-width: var(--unit-layoutmax);
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: var(--font-sans);
+}
+
+.site-header-branding {
+    text-decoration: none;
+    color: var(--color-text);
+}
+
+.site-header-branding h1 {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    margin: 0;
+    font-weight: 700;
+}
+
+.site-header-branding p {
+    font-size: 0.75rem;
+    color: var(--color-textdim);
+    margin: 0.25rem 0 0;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-family: var(--font-sans);
+}
+
+.site-header-nav {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.site-header-nav a {
+    text-decoration: none;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-textdim);
+    transition: color 0.3s ease;
+    font-weight: 500;
+}
+
+.site-header-nav a:hover {
+    color: var(--color-text);
+}
+
+.site-header-admin {
+    font-size: 0.625rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--color-surface);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    border: 1px solid var(--color-surface);
+    padding: 0.25rem 0.5rem;
+    border-radius: 2px;
+}
+
+.site-header-admin:hover {
+    color: var(--color-textdim);
+    border-color: var(--color-textdim);
+}
+
+/* Vibe Notification */
+.vibe-notification-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease;
+}
+
+.vibe-notification-content {
+    background: var(--color-bg);
+    border: 1px solid var(--color-surface);
+    padding: 3rem;
+    max-width: 32rem;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.vibe-notification-text {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    line-height: 1.5;
+    margin-bottom: 2rem;
+    color: var(--color-text);
+}
+
+.vibe-notification-close {
+    background: transparent;
+    border: 1px solid var(--color-surface);
+    color: var(--color-textdim);
+    padding: 0.75rem 2rem;
+    font-family: var(--font-sans);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.vibe-notification-close:hover {
+    border-color: var(--color-text);
+    color: var(--color-text);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.search-container {
+    max-width: var(--unit-layoutmax);
+    margin: 4rem auto 8rem;
+    padding: 0 1.5rem;
+}
+
+.search-input-wrapper {
+    margin-bottom: 6rem;
+    position: relative;
+}
+
+.search-input-field {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid var(--color-surface);
+    font-family: var(--font-serif);
+    font-size: 3.5rem;
+    padding: 1rem 0;
+    color: var(--color-text);
+    outline: none;
+    transition: border-color 0.4s ease;
+}
+
+.search-input-field:focus {
+    border-color: var(--color-textdim);
+}
+
+.search-input-field::placeholder {
+    color: var(--color-surface);
+    opacity: 0.5;
+}
+
+.search-results-list {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    animation: searchFadeIn 0.6s ease forwards;
+}
+
+@keyframes searchFadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.search-result-item {
+    text-decoration: none;
+    display: block;
+}
+
+.search-result-title {
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    color: var(--color-text);
+    margin-bottom: 0.5rem;
+    transition: color 0.3s ease;
+}
+
+.search-result-item:hover .search-result-title {
+    color: var(--color-action);
+}
+
+.search-result-meta {
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    color: var(--color-textdim);
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.search-result-excerpt {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    color: var(--color-textdim);
+    margin-top: 0.75rem;
+    line-height: 1.6;
+    max-width: 42rem;
+}
+
+.search-empty-state {
+    text-align: center;
+    margin-top: 10rem;
+    color: var(--color-textdim);
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.5rem;
+}
+
+@media (max-width: 48rem) {
+    .search-input-field {
+        font-size: 2rem;
+    }
+    
+    .search-result-title {
+        font-size: 1.5rem;
     }
 }

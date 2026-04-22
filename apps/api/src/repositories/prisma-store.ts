@@ -10,6 +10,7 @@ import type {
   IngestArticleResponse,
   PublicArticleDetail,
   PublicHomeResponse,
+  PublicSearchResponse,
   PublicSiteBrandingResponse,
   UpsertArticleRequest,
 } from "@xblog/contracts";
@@ -35,6 +36,15 @@ type CategoryRecord = Prisma.CategoryGetPayload<{
         articles: true;
       };
     };
+  };
+}>;
+
+type CategoryCoverUsageRecord = Pick<CategoryRecord, "id" | "slug" | "tone" | "coverUrl" | "coverAssetId" | "coverAsset" | "sortOrder">;
+type CategoryCoverAssetRecord = Prisma.AssetGetPayload<{}>;
+
+type HomeIssueRecord = Prisma.HomeIssueGetPayload<{
+  include: {
+    heroSlots: true;
   };
 }>;
 
@@ -95,6 +105,10 @@ export class PrismaStore implements Store {
     const normalized = value.split(/[?#]/, 1)[0]?.replace(/\\/g, "/") ?? "";
     const segment = normalized.split("/").filter(Boolean).pop();
     return segment?.toLowerCase() ?? null;
+  }
+
+  private normalizeLogoVariant(value: string | null): any {
+    return value || "prototype";
   }
 
   private async listCategoryCoverAssetRecords() {
@@ -697,6 +711,29 @@ export class PrismaStore implements Store {
       highlights: (article.highlights as string[]) ?? [],
       blocks: (article.contentBlocks as ArticleBlock[]) ?? [],
       related: related.map((entry) => this.toArticleSummary(entry)),
+    };
+  }
+
+  async searchPublicArticles(query: string): Promise<PublicSearchResponse> {
+    const articles = await this.prisma.article.findMany({
+      where: {
+        status: "PUBLISHED",
+        OR: [
+          { title: { contains: query } },
+          { excerpt: { contains: query } },
+          { lede: { contains: query } },
+        ],
+      },
+      include: {
+        category: true,
+        coverAsset: true,
+      },
+      orderBy: { publishedAt: "desc" },
+      take: 20,
+    });
+
+    return {
+      articles: articles.map((article) => this.toArticleSummary(article)),
     };
   }
 

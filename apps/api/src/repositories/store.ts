@@ -8,6 +8,7 @@ import type {
   PublicArticleDetail,
   PublicCategoryDetail,
   PublicHomeResponse,
+  PublicSearchResponse,
   PublicSiteBrandingResponse,
   UpsertArticleRequest,
   UpsertCategoryRequest,
@@ -52,6 +53,7 @@ export interface Store {
   getPublicSiteBranding(): Promise<PublicSiteBrandingResponse>;
   getPublicCategoryDetail(slug: string): Promise<PublicCategoryDetail | null>;
   getPublicArticleDetail(slug: string): Promise<PublicArticleDetail | null>;
+  searchPublicArticles(query: string): Promise<PublicSearchResponse>;
   upsertCategory(payload: UpsertCategoryPayload): Promise<AdminCategory>;
   upsertArticle(payload: UpsertArticleRequest & { id?: string }): Promise<AdminArticle>;
   deleteCategory(id: string): Promise<AdminCategory | null>;

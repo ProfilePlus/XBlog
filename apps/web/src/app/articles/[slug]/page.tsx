@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { ArticleBlock } from "@xblog/contracts";
 import { getArticlePageData } from "@/lib/public-api";
+import { SiteFooter } from "@/components/site-footer";
 
 type ArticlePageProps = {
   params: Promise<{ slug: string }>;
@@ -157,6 +158,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
             )}
           </div>
         </div>
+        <SiteFooter />
       </main>
     </div>
   );

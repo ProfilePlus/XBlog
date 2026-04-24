@@ -15,7 +15,6 @@ export async function registerAuthRoutes(app: FastifyInstance) {
 
     reply.setCookie(env.sessionCookieName, session.sessionToken, {
       httpOnly: true,
-      sameSite: "lax",
       path: "/",
     });
 

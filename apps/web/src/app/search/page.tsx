@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SiteHeader } from "@/components/site-header";
+import { SiteFooter } from "@/components/site-footer";
 import { SearchClient } from "@/components/search-client";
 
 export const dynamic = "force-dynamic";
@@ -14,6 +15,7 @@ export default async function SearchPage() {
     <div className="page-container">
       <SiteHeader variant="secondary" />
       <SearchClient />
+      <SiteFooter />
     </div>
   );
 }

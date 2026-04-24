@@ -1,0 +1,191 @@
+/* --- XBlog Admin: P5 High-Functioning Edition --- */
+
+:root {
+  --p5-red: #D50000;
+  --p5-black: #000000;
+  --p5-white: #FFFFFF;
+  --p5-bg-light: #F0F0F0; /* Use light background for content area readability */
+  
+  --font-serif: var(--font-playfair-display), serif;
+  --font-sans: var(--font-ibm-plex-sans), sans-serif;
+  --font-mono: var(--font-ibm-plex-mono), monospace;
+}
+
+.admin-app {
+  background-color: var(--p5-black) !important;
+  color: var(--p5-black) !important;
+  font-family: var(--font-sans) !important;
+  min-height: 100vh;
+}
+
+/* --- Layout: Stable & Airy --- */
+.admin-shell { display: flex; width: 100%; height: 100vh; overflow: hidden; }
+
+.admin-sidebar {
+  width: 320px !important;
+  background-color: var(--p5-black) !important; /* Sidebar back to black for better contrast */
+  border-right: 5px solid var(--p5-red);
+  padding: 4rem 2rem;
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+}
+
+.admin-content {
+  flex: 1;
+  background-color: var(--p5-bg-light) !important; /* READABLE BACKGROUND */
+  overflow-y: auto;
+  position: relative;
+}
+
+.admin-main {
+  padding: 6rem 5vw;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* --- P5 Typography (Refined) --- */
+.admin-app h1 {
+  font-family: var(--font-serif) !important;
+  font-size: 3.5rem !important;
+  font-weight: 900 !important;
+  color: var(--p5-white) !important;
+  background: var(--p5-black);
+  display: inline-block;
+  padding: 0.5rem 2rem;
+  transform: rotate(-1.5deg) skew(-5deg);
+  margin-bottom: 5rem !important;
+}
+
+.admin-app h2 {
+    font-family: var(--font-serif) !important;
+    font-size: 1.5rem !important;
+    background: var(--p5-red);
+    color: var(--p5-white) !important;
+    padding: 0.3rem 1.5rem;
+    transform: skew(-10deg);
+    margin-bottom: 3rem !important;
+}
+
+/* Sidebar Links: Bold P5 Aesthetic */
+.admin-nav-link {
+  display: flex !important;
+  align-items: center;
+  padding: 1.25rem 0 !important;
+  color: var(--p5-white) !important;
+  transition: all 0.2s ease !important;
+}
+
+.admin-nav-link strong {
+  font-family: var(--font-serif) !important;
+  font-size: 1.5rem !important;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.admin-nav-link:hover {
+  color: var(--p5-red) !important;
+  transform: translateX(15px);
+}
+
+.admin-nav-link.is-active {
+  background: var(--p5-red);
+  padding-left: 1rem !important;
+  transform: skew(-5deg);
+}
+
+/* --- Stats Grid: Persona Shatter --- */
+.admin-stats-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.5rem;
+  margin-bottom: 8rem;
+}
+
+.admin-stat-item {
+  background: var(--p5-black);
+  color: var(--p5-white) !important;
+  padding: 2.5rem;
+  min-width: 200px;
+  transform: rotate(1deg) skew(-2deg);
+  border: none;
+}
+
+.admin-stat-item:nth-child(even) {
+    background: var(--p5-red);
+    transform: rotate(-1deg) skew(2deg);
+}
+
+.admin-stat-item strong {
+  font-family: var(--font-serif) !important;
+  font-size: 5rem !important;
+  line-height: 1;
+}
+
+/* --- List Items: Meticulous Archive --- */
+.admin-item-row {
+  background: var(--p5-white) !important;
+  border-bottom: 4px solid var(--p5-black) !important;
+  padding: 2.5rem !important;
+  margin-bottom: 1.5rem !important;
+  display: grid !important;
+  grid-template-columns: 1fr auto auto 150px !important;
+  align-items: center !important;
+  transform: skew(-1.5deg);
+  transition: all 0.2s ease;
+}
+
+.admin-item-row:hover {
+    transform: scale(1.02) skew(-1.5deg);
+    background-color: var(--p5-red) !important;
+    color: #fff !important;
+}
+
+.admin-item-title { font-family: var(--font-serif) !important; font-size: 1.75rem !important; font-weight: 800 !important; }
+
+/* --- Action Buttons --- */
+.admin-app .admin-primary-button {
+  background-color: var(--p5-red) !important;
+  color: var(--p5-white) !important;
+  padding: 1.25rem 3.5rem !important;
+  font-weight: 900 !important;
+  font-family: var(--font-mono) !important;
+  clip-path: polygon(5% 0%, 100% 0%, 95% 100%, 0% 100%) !important;
+  border: none !important;
+  cursor: pointer !important;
+}
+
+/* The Seal */
+.vibe-seal-outer {
+    margin-bottom: 3rem;
+    opacity: 1;
+}
+.vibe-seal-outer img { width: 56px; height: 56px; filter: invert(1); }
+
+/* --- Form Fields (Restored & Darkened) --- */
+.admin-app input, 
+.admin-app textarea, 
+.admin-app select {
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 3px solid #000 !important;
+    font-family: var(--font-serif) !important;
+    font-size: 1.5rem !important;
+    color: #000000 !important; /* FIXED: Absolute black */
+    width: 100%;
+    outline: none;
+    border-radius: 0 !important;
+    padding: 1.5rem 0 !important;
+}
+
+.admin-app input:focus,
+.admin-app textarea:focus {
+    border-bottom-color: var(--p5-red) !important;
+}
+
+.admin-app label {
+    font-family: var(--font-ibm-plex-mono) !important;
+    font-weight: 900 !important;
+    color: #333 !important;
+    text-transform: uppercase;
+}

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { SiteHeader } from "@/components/site-header";
+import { SiteFooter } from "@/components/site-footer";
 import { getCategoryOverviewCards } from "@/lib/public-api";
 
 export const dynamic = "force-dynamic";
@@ -39,6 +40,7 @@ export default async function CategoriesPage() {
           </Link>
         ))}
       </section>
+      <SiteFooter />
     </div>
   );
 }

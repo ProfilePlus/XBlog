@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Newsreader, Noto_Sans_SC, Playfair_Display, IBM_Plex_Sans } from "next/font/google";
+import { Inter, Newsreader, Playfair_Display, IBM_Plex_Sans } from "next/font/google";
 import "./globals.css";
 
 const playfairDisplay = Playfair_Display({
@@ -20,19 +20,18 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-const notoSansSC = Noto_Sans_SC({
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
-  variable: "--font-noto-sans-sc",
-});
+// Temporarily disabled due to Turbopack font loading issue
+// const notoSansSC = Noto_Sans_SC({
+//   subsets: ["latin"],
+//   weight: ["400", "500", "700"],
+//   variable: "--font-noto-sans-sc",
+// });
 
 const ibmPlexSans = IBM_Plex_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
   variable: "--font-ibm-plex-sans",
 });
-
-import { SiteFooter } from "@/components/site-footer";
 
 export const metadata: Metadata = {
   title: "Alex Plum · 首页",
@@ -46,9 +45,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-CN">
-      <body className={`index ${ibmPlexSans.variable} ${newsreader.variable} ${inter.variable} ${notoSansSC.variable} ${playfairDisplay.variable}`}>
+      <body className={`index ${ibmPlexSans.variable} ${newsreader.variable} ${inter.variable} ${playfairDisplay.variable}`}>
         {children}
-        <SiteFooter />
       </body>
     </html>
   );

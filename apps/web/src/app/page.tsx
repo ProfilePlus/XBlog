@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { getHomePageData } from "@/lib/public-api";
 import { NewsletterForm } from "@/components/newsletter-form";
+import { SiteFooter } from "@/components/site-footer";
 
 export const metadata = {
   title: "Alex Plum · 首页",
@@ -190,6 +191,7 @@ export default async function HomePage() {
 
           </div>
         </div>
+        <SiteFooter />
       </main>
     </div>
   );

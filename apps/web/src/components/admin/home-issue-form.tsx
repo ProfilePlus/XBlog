@@ -3,7 +3,7 @@
 import { useState } from "react";
 import type { AdminArticle, HomeIssue, SiteLogoVariant } from "@xblog/contracts";
 import { useAdminFeedback } from "@/components/admin/admin-feedback";
-import { LogoPreview } from "@/components/logo-preview";
+import { LogoPreview } from "@/components/admin/logo-preview";
 import { adminConfig } from "@/lib/config";
 
 const logoVariantOptions: {
